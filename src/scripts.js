@@ -15,6 +15,8 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
+const sidebars = document.querySelectorAll('.sidebar-container');
+
 function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
 
@@ -29,7 +31,7 @@ function startApp() {
   let today = makeToday(userRepo, userNowId, hydrationData);
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  addInfoToSidebar(userNow, userRepo);
+  addInfoToProfileSidebar(userNow, userRepo);
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
@@ -52,24 +54,42 @@ function getUserById(id, listRepo) {
   return listRepo.getDataFromID(id);
 };
 
-
-function addInfoToSidebar(user, userStorage) {
-  const sidebarName = document.getElementById('sidebarName');
-  const stepGoalCard = document.getElementById('stepGoalCard');
+function addInfoToProfileSidebar(user, userStorage) {
   const headerText = document.getElementById('headerText');
-  const userAddress = document.getElementById('userAddress');
-  const userEmail = document.getElementById('userEmail');
-  const userStridelength = document.getElementById('userStridelength');
-  var friendList = document.getElementById('friendList');
-
-  sidebarName.innerText = user.name;
+  const leftSidebarHtmlBlock = 
+    `<h2 class="sidebar-header-name" id="sidebarName">${user.name}</h2>
+    <div class="sidebar-header-line"></div>
+    <img src="./images/The Rock.jpg" class="sidebar-header-userImage"></img>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="userAddress">${user.address}</p>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="userEmail">${user.email}</p>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="userStridelength">
+      Your stride length is ${user.strideLength} meters.
+    </p>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="stepGoalCard">Your daily step goal is ${user.dailyStepGoal}</p>
+    <p class="sidebar-header-userInfo" id="avStepGoalCard">
+      The average daily step goal is ${userStorage.calculateAverageStepGoal()}
+    <p>
+    <div class="sidebar-header-line"></div>
+    <section class="sidebar-body-friendContainer">
+      <p class="sidebar-header-userInfo">Friends</p>
+      <section class="sidebar-friendContainer-listItems">
+        <ul class="card-vertical-list" id="friendList">
+          makeFriendHTML(user, userStorage)
+        </ul>
+      </section>
+      <div class="sidebar-header-line"></div>
+      <p class="thisWeek">Keep up the good work! You were increasingly active on these dates:</p>
+      <ul class="card-vertical-list" id="streakListMinutes">
+        <!-- friend list goes here -->
+      </ul>
+    </section>`;
+  
+  sidebars[0].innerHTML = leftSidebarHtmlBlock; 
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
-  stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  avStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
-  userAddress.innerText = user.address;
-  userEmail.innerText = user.email;
-  userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
-  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
 };
 
 function makeFriendHTML(user, userStorage) {
