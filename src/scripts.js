@@ -85,7 +85,6 @@ async function catchData(id) {
 
 async function makeUsers(array) {
   const userData = await catchData('userData');
-  console.log(userData)
   userData.forEach(function(dataItem) {
     let user = new User(dataItem);
     array.push(user);
