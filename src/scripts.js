@@ -21,7 +21,7 @@ import UserRepo from './User-repo';
 
 
 
-var userData;
+// var userData;
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
 var headerText = document.getElementById('headerText');
@@ -55,10 +55,10 @@ var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes')
 
-function startApp() {
+async function startApp() {
 
   let userList = [];
-  makeUsers(userList);
+  await makeUsers(userList);
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
   let sleepRepo = new Sleep(sleepData);
@@ -76,7 +76,15 @@ function startApp() {
   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
-function makeUsers(array) {
+async function catchData(id) {
+  const response = await fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/${id}`)
+  const data = await response.json();
+  const arrayData = await data[id];
+  return await arrayData
+}
+
+async function makeUsers(array) {
+  const userData = await catchData('userData');
   console.log(userData)
   userData.forEach(function(dataItem) {
     let user = new User(dataItem);
@@ -91,7 +99,6 @@ function pickUser() {
 function getUserById(id, listRepo) {
   return listRepo.getDataFromID(id);
 };
-
 
 function addInfoToSidebar(user, userStorage) {
   sidebarName.innerText = user.name;
@@ -191,9 +198,4 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 }
 
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-  .then((response) => response.json())
-  .then(data => userData = data.userData)
-  .then(startApp());
-
-// startApp();
+startApp();
