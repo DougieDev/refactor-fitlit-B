@@ -2,9 +2,13 @@
 import './css/style.scss';
 
 import './images/person walking on path.jpg';
-import './images/The Rock.jpg';
+import './images/arnie.jpg';
 
-import userData from './data/users';
+
+
+
+
+// import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
 import activityData from './data/activity';
@@ -15,6 +19,9 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
+
+
+var userData;
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
 var headerText = document.getElementById('headerText');
@@ -49,6 +56,7 @@ var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes')
 
 function startApp() {
+
   let userList = [];
   makeUsers(userList);
   let userRepo = new UserRepo(userList);
@@ -69,6 +77,7 @@ function startApp() {
 }
 
 function makeUsers(array) {
+  console.log(userData)
   userData.forEach(function(dataItem) {
     let user = new User(dataItem);
     array.push(user);
@@ -182,4 +191,9 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 }
 
-startApp();
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then((response) => response.json())
+  .then(data => userData = data.userData)
+  .then(startApp());
+
+// startApp();
