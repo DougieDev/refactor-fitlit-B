@@ -15,7 +15,7 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
-const sidebars = document.querySelectorAll('.sidebar-container');
+
 
 function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
@@ -31,7 +31,7 @@ function startApp() {
   let today = makeToday(userRepo, userNowId, hydrationData);
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  addInfoToProfileSidebar(userNow, userRepo);
+  addInfoToUserSidebar(userNow, userRepo);
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
@@ -54,7 +54,8 @@ function getUserById(id, listRepo) {
   return listRepo.getDataFromID(id);
 };
 
-function addInfoToProfileSidebar(user, userStorage) {
+function addInfoToUserSidebar(user, userStorage) {
+  const sidebar = document.getElementById('user-sidebar');
   const headerText = document.getElementById('headerText');
   const leftSidebarHtmlBlock = 
     `<h2 class="sidebar-header-name" id="sidebarName">${user.name}</h2>
@@ -78,7 +79,7 @@ function addInfoToProfileSidebar(user, userStorage) {
       <p class="sidebar-header-userInfo">Friends</p>
       <section class="sidebar-friendContainer-listItems">
         <ul class="card-vertical-list" id="friendList">
-          makeFriendHTML(user, userStorage)
+          <!-- friend list goes here -->
         </ul>
       </section>
       <div class="sidebar-header-line"></div>
@@ -88,8 +89,11 @@ function addInfoToProfileSidebar(user, userStorage) {
       </ul>
     </section>`;
   
-  sidebars[0].innerHTML = leftSidebarHtmlBlock; 
+  sidebar.innerHTML = leftSidebarHtmlBlock; 
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
+    // the following should be refactored so that `makeStepStreakHtml` can be inserted straight into the HTML. 
+  var friendList = document.getElementById('friendList');
+  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
 };
 
 function makeFriendHTML(user, userStorage) {
@@ -108,7 +112,6 @@ function makeToday(userStorage, id, dataSet) {
 function makeRandomDate(userStorage, id, dataSet) {
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
   return sortedArray[Math.floor(Math.random() * sortedArray.length + 1)].date
-
 }
 
 function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
@@ -150,6 +153,7 @@ function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
 }
 
 function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
+
   const userStepsToday = document.getElementById('userStepsToday');
   const avgStepsToday = document.getElementById('avgStepsToday');
   const userStairsToday = document.getElementById('userStairsToday');
@@ -186,17 +190,42 @@ function makeMinutesHTML(id, activityInfo, userStorage, method) {
 }
 
 function addFriendGameInfo(id, activityInfo, userStorage, dateString, laterDateString, user) {
-  const streakList = document.getElementById('streakList');
+  const sidebar = document.getElementById('friends-sidebar');
+  const rightSidebarHtmlBlock = `
+    <h2 class="sidebar-header-name" id="sidebarName">FRIENDLY STEP CHALLENGE!</h2>
+    <div class="sidebar-header-line"></div>
+    <img src="./images/person walking on path.jpg" class="sidebar-header-userImage"></img>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="bigWinner">
+      THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps
+    </p>
+    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
+    <p class="sidebar-header-userInfo" id="avStepGoalCard">
+    <p>
+    <section class="sidebar-body-friendContainer">
+      <section class="sidebar-friendContainer-listItems">
+        <p class="thisWeek">Rank this week</p>
+        <ul class="card-vertical-list" id="friendChallengeListToday">
+          ${makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
+        </ul>
+        <div class="sidebar-header-line"></div>
+        <p class="historicalWeek">- Historical Rank</p>
+        <ul class="card-vertical-list" id="friendChallengeListHistory">
+          ${makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
+        </ul>
+        <div class="sidebar-header-line"></div>
+      </section>
+      <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
+      <ul class="card-vertical-list" id="streakList">
+        ${makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'numSteps'))}
+      </ul>
+    </section>`;
+  sidebar.innerHTML = rightSidebarHtmlBlock;
+  // the following is intended to impact the right sidebar. when relocated it breaks the site. 
+  // the following should be refacotred so that `makeStepStreakHtml` can be inserted straight into the HTML. 
   const streakListMinutes = document.getElementById('streakListMinutes')
-  const friendChallengeListToday = document.getElementById('friendChallengeListToday');
-  const friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
-  const bigWinner = document.getElementById('bigWinner');
-
-  friendChallengeListToday.insertAdjacentHTML("afterBegin", makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
-  streakList.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'numSteps')));
-  streakListMinutes.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'minutesActive')));
-  friendChallengeListHistory.insertAdjacentHTML("afterBegin", makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
-  bigWinner.insertAdjacentHTML('afterBegin', `THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps`)
+  streakListMinutes.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'minutesActive'))); 
 }
 
 function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
