@@ -1,4 +1,3 @@
-
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map(friendName => {
     `<li class='historical-list-listItem'>${friendName}</li>`
@@ -46,7 +45,6 @@ function addInfoToUserSidebar(user, userStorage) {
 
   sidebar.innerHTML = leftSidebarHtmlBlock;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
-  // `makeStepStreakHtml` should be refactored and inserted straight into the HTML. 
   var friendList = document.getElementById('friendList');
   friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
 };
@@ -115,13 +113,13 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
 
 function makeSleepHTML(id, sleepInfo, userStorage, method) {
   return method.map(sleepData => {
-    `<li class="historical-list-listItem">On ${sleepData} hours</li>`
+    return `<li class="historical-list-listItem">On ${sleepData} hours</li>`
   }).join('');
 }
 
 function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
   return method.map(sleepQualityData => {
-    `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`
+    return `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`
   }).join('');
 }
 //how was ^ intended to be used?
@@ -195,19 +193,19 @@ function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
 
 function makeStepsHTML(id, activityInfo, userStorage, method) {
   return method.map(activityData => {
-    `<li class="historical-list-listItem">On ${activityData} steps</li>`
+    return `<li class="historical-list-listItem">On ${activityData} steps</li>`
   }).join('');
 }
 
 function makeStairsHTML(id, activityInfo, userStorage, method) {
   return method.map(data => {
-    `<li class="historical-list-listItem">On ${data} flights</li>`
+    return `<li class="historical-list-listItem">On ${data} flights</li>`
   }).join('');
 }
 
 function makeMinutesHTML(id, activityInfo, userStorage, method) {
   return method.map(data => {
-    `<li class="historical-list-listItem">On ${data} minutes</li>`
+    return `<li class="historical-list-listItem">On ${data} minutes</li>`
   }).join('');
 }
 // this pattern is being repeated over and over again.
@@ -321,13 +319,13 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
 
 function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
   return method.map(friendChallengeData => {
-    `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`
+    return `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`
   }).join('');
 }
 
 function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => {
-    `<li class="historical-list-listItem">${streakData}!</li>`
+    return `<li class="historical-list-listItem">${streakData}!</li>`
   }).join('');
 }
 
