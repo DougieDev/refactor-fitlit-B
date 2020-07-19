@@ -1,6 +1,6 @@
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map(friendName => {
-    `<li class='historical-list-listItem'>${friendName}</li>`
+    return `<li class='historical-list-listItem'>${friendName}</li>`
   }).join('');
 }
 
@@ -31,7 +31,7 @@ function addInfoToUserSidebar(user, userStorage) {
       <p class="sidebar-header-userInfo">Friends</p>
       <section class="sidebar-friendContainer-listItems">
         <ul class="card-vertical-list" id="friendList">
-          <!-- friend list goes here -->
+          ${makeFriendHTML(user, userStorage)}
         </ul>
       </section>
       <div class="sidebar-header-line"></div>
@@ -45,8 +45,6 @@ function addInfoToUserSidebar(user, userStorage) {
 
   sidebar.innerHTML = leftSidebarHtmlBlock;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
-  var friendList = document.getElementById('friendList');
-  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
 };
 
 function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
@@ -102,7 +100,6 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
             hydrationInfo, 
             userStorage, 
             hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage))
-          // does this function need so many parameters / one that invokes another function with the same parameters?
           }
         </ul>
       </div>
@@ -122,7 +119,7 @@ function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
     return `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`
   }).join('');
 }
-//how was ^ intended to be used?
+
 function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
   const sleepColumn = document.querySelector('.main-column-sleep');
   const sleepColumnHtml = `
@@ -183,7 +180,6 @@ function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
           sleepInfo, 
           userStorage, 
           sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)
-        // does this function need so many parameters / one that invokes another function with the same parameters?
         )}
       </ul>
     </div>
@@ -286,14 +282,24 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
           <p class="thisWeek">Your steps this week</p>
           <div class="sidebar-header-line"></div>
           <ul class="card-vertical-list" id="userStepsThisWeek">
-           ${makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps"))}
+           ${makeStepsHTML(
+             id, 
+             activityInfo, 
+             userStorage, 
+             activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")
+            )}
           </ul>
         </div>
         <div class="card-history-activity">
           <p class="thisWeek">Your stair count this week</p>
           <div class="sidebar-header-line"></div>
           <ul class="card-vertical-list" id="userStairsThisWeek">
-            ${makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs"))}
+            ${makeStairsHTML(
+              id, 
+              activityInfo, 
+              userStorage, 
+              activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")
+            )}
           </ul>
         </div>
       </section>
@@ -302,14 +308,22 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
           <p class="thisWeek">Your minutes of activity this week</p>
           <div class="sidebar-header-line"></div>
           <ul class="card-vertical-list" id="userMinutesThisWeek">
-            ${makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive"))}
+            ${makeMinutesHTML(id, 
+              activityInfo, 
+              userStorage, 
+              activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")
+            )}
           </ul>
         </div>
         <div class="card-history-activity">
           <p class="thisWeek">Winner's steps this week</p>
           <div class="sidebar-header-line"></div>
           <ul class="card-vertical-list" id="bestUserSteps">
-            ${makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))}
+            ${makeStepsHTML(
+              user, 
+              activityInfo, 
+              userStorage, 
+              activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))}
           </ul>
         </div>
       </section>
@@ -347,25 +361,42 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
       <section class="sidebar-friendContainer-listItems">
         <p class="thisWeek">Rank this week</p>
         <ul class="card-vertical-list" id="friendChallengeListToday">
-          ${makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
+          ${makeFriendChallengeHTML(
+            id, 
+            activityInfo, 
+            userStorage, 
+            activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
         </ul>
         <div class="sidebar-header-line"></div>
         <p class="historicalWeek">- Historical Rank</p>
         <ul class="card-vertical-list" id="friendChallengeListHistory">
-          ${makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
+          ${makeFriendChallengeHTML(
+            id, 
+            activityInfo, 
+            userStorage, 
+            activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
         </ul>
         <div class="sidebar-header-line"></div>
       </section>
       <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
       <ul class="card-vertical-list" id="streakList">
-        ${makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'numSteps'))}
+        ${makeStepStreakHTML(
+          id, 
+          activityInfo, 
+          userStorage, 
+          activityInfo.getStreak(userStorage, id, 'numSteps'))}
       </ul>
     </section>`;
   sidebar.innerHTML = rightSidebarHtmlBlock;
-  // the following is intended to impact the right sidebar. when relocated it breaks the site. 
-  // the following should be refacotred so that `makeStepStreakHtml` can be inserted straight into the HTML. 
   const streakListMinutes = document.getElementById('streakListMinutes')
-  streakListMinutes.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'minutesActive')));
+  streakListMinutes.insertAdjacentHTML("afterBegin", 
+    makeStepStreakHTML(
+      id, 
+      activityInfo, 
+      userStorage, 
+      activityInfo.getStreak(userStorage, id, 'minutesActive')
+    )
+  );
 }
 
 
