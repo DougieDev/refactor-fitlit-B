@@ -42,9 +42,9 @@ function addInfoToUserSidebar(user, userStorage) {
       <ul class="card-vertical-list" id="streakListMinutes">
         <!-- friend list goes here -->
       </ul>
+      <p class="sidebar-header-userInfo" id="bigWinner">
     </section>`;
   headerText.insertAdjacentHTML('afterbegin', `${user.name}'s `);
-  // headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   accountInfo.insertAdjacentHTML('beforeend', accountInfoHtml);
   sidebar.insertAdjacentHTML('beforeend', leftSidebarHtmlBlock);
   userGoals.insertAdjacentHTML('beforeend', userGoalsHtml);
