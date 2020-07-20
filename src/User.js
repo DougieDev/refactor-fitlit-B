@@ -9,9 +9,11 @@ class User {
     this.friends = userDetails.friends;
 
   }
+  //CALLED FOR IN FITLIT SPEC CLASS LOOKS GOOD
   getFirstName() {
     return this.name.split(' ', 1).join();
   }
+  //ALSO IN FITLIT SPEC
   getFriendsNames(userStorage) {
     return this.friends.map((friendId) => (userStorage.getDataFromID(friendId).name));
   }
