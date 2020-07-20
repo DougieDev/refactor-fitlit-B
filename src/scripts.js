@@ -4,10 +4,6 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
-
-
-
-
 // import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
@@ -41,7 +37,7 @@ async function startApp() {
   let today = makeToday(userRepo, userNowId, hydrationData);
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  // addInfoToUserSidebar(userNow, userRepo);
+  addInfoToUserSidebar(userNow, userRepo);
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);

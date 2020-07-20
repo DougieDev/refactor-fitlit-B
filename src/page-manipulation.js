@@ -7,15 +7,14 @@ function makeFriendHTML(user, userStorage) {
 function addInfoToUserSidebar(user, userStorage) {
   const sidebar = document.getElementById('user-sidebar');
   const headerText = document.getElementById('headerText');
-  const leftSidebarHtmlBlock =
-    `<h2 class="sidebar-header-name" id="sidebarName">${user.name}</h2>
-    <div class="sidebar-header-line"></div>
-    <img src="./images/arnie.jpg" class="sidebar-header-userImage"></img>
-    <div class="sidebar-header-line"></div>
+  const accountInfo = document.getElementById('account-info');
+  const userGoals = document.getElementById('user-goals');
+  const accountInfoHtml = `
     <p class="sidebar-header-userInfo" id="userAddress">${user.address}</p>
     <div class="sidebar-header-line"></div>
-    <p class="sidebar-header-userInfo" id="userEmail">${user.email}</p>
-    <div class="sidebar-header-line"></div>
+    <p class="sidebar-header-userInfo" id="userEmail">${user.email}</p>`
+
+  const userGoalsHtml = `
     <p class="sidebar-header-userInfo" id="userStridelength">
       Your stride length is ${user.strideLength} meters.
     </p>
@@ -25,7 +24,9 @@ function addInfoToUserSidebar(user, userStorage) {
     </p>
     <p class="sidebar-header-userInfo" id="avStepGoalCard">
       The average daily step goal is ${userStorage.calculateAverageStepGoal()}
-    <p>
+    <p>`
+
+  const leftSidebarHtmlBlock = `
     <div class="sidebar-header-line"></div>
     <section class="sidebar-body-friendContainer">
       <p class="sidebar-header-userInfo">Friends</p>
@@ -42,9 +43,11 @@ function addInfoToUserSidebar(user, userStorage) {
         <!-- friend list goes here -->
       </ul>
     </section>`;
-
-  sidebar.innerHTML = leftSidebarHtmlBlock;
-  headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
+  headerText.insertAdjacentHTML('afterbegin', `${user.name}'s `);
+  // headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
+  accountInfo.insertAdjacentHTML('beforeend', accountInfoHtml);
+  sidebar.insertAdjacentHTML('beforeend', leftSidebarHtmlBlock);
+  userGoals.insertAdjacentHTML('beforeend', userGoalsHtml);
 };
 
 function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
