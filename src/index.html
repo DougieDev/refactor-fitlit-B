@@ -32,13 +32,6 @@
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
         </section>
-        <h2>Historical Fitness</h2>
-        <section class="card-container" id="history-cards">
-          <section class="card" id="hydration-average"></section>
-          <section class="card" id="activity-average"></section>
-          <section class="card" id="sleep-average"></section>
-          <section class="card"></section>
-        </section>
         <h2>User / Account</h2>
         <section class="card-container" id="user-cards">
           <section class="card" id="user-goals">
@@ -47,10 +40,41 @@
           <section class="card" id="account-info">
             account info:<button id="update-info">Update Info</button> 
           </section>
-          <section class="card" id="user-trends">
-            A line graph? Or buttons to view individual averages?
+          <section class="week-card" id="user-trends">
+            <select name="week" id="week-select">
+             <option value='date'>
+               boy howdy how are we gonna populate weeks to choose from
+             </option> 
+             </select>
+             <section class="weekly-calendar-container">
+               <nav id="weekly-data-options">
+                 <button id="weekly-hydration">Hydration</button>
+                 <button id="weekly-activity">Activity</button>
+                 <button id="weekly-sleep">Sleep</button>
+               </nav>
+               <table>
+                 <tr>
+                   <th>Monday</th>
+                   <th>Tuesday</th>
+                   <th>Wednesday</th>
+                   <th>Thursday</th>
+                   <th>Friday</th>
+                   <th>Saturday</th>
+                   <th>Sunday</th>
+                  </tr>
+                  <tr>
+                    <th class="historic-data" id="monday-data"></th>
+                    <th class="historic-data" id="tuesday-data"></th>
+                    <th class="historic-data" id="wednesday-data"></th>
+                    <th class="historic-data" id="thursday-data"></th>
+                    <th class="historic-data" id="friday-data"></th>
+                    <th class="historic-data" id="saturday-data"></th>
+                    <th class="historic-data" id="sunday-data"></th>
+                  </tr>
+                </table>
+              </section>
+            </select>
           </section>
-          <section class="card"></section>
         </section>
       </section>
       <!-- <section class="main-sidebar-body"> -->

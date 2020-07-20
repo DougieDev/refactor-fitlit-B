@@ -42,7 +42,6 @@ function addInfoToUserSidebar(user, userStorage) {
       <ul class="card-vertical-list" id="streakListMinutes">
         <!-- friend list goes here -->
       </ul>
-      <p class="sidebar-header-userInfo" id="bigWinner">
     </section>`;
   headerText.insertAdjacentHTML('afterbegin', `${user.name}'s `);
   accountInfo.insertAdjacentHTML('beforeend', accountInfoHtml);
@@ -54,9 +53,8 @@ function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
   return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');
 }
 
-function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
+function addTodaysHydration(id, hydrationInfo, dateString, userStorage, laterDateString) {
   const hydrationToday = document.querySelector('#hydration-today');
-  const hydrationAverage = document.querySelector('#hydration-average');
   const hydrationTodayHtml = ` 
       <div class="card-today-hydration">
         <p id="hydrationToday">
@@ -80,36 +78,8 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
           <p>oz per day.</p>
         </p>
       </div>`
-  const hydrationAverageHtml = `
-    <section class="infoContainer-cardContainer-card-vertical">
-      <div class="card-history-hydration">
-        <p class="thisWeek">Water intake this week:</p>
-        <div class="sidebar-header-line"></div>
-        <ul class="card-vertical-list" id="hydrationThisWeek">
-          ${makeHydrationHTML(
-            id,
-            hydrationInfo,
-            userStorage,
-            hydrationInfo.calculateFirstWeekOunces(userStorage, id)
-          )}
-        </ul>
-      </div>
-      <div class="card-history-hydration">
-        <p class="historicalWeek">Water intake earlier weeks:</p>
-        <div class="sidebar-header-line"></div>
-        <ul class="card-vertical-list" id="hydrationEarlierWeek">
-          ${makeHydrationHTML(
-            id,
-            hydrationInfo,
-            userStorage,
-            hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage))
-          }
-        </ul>
-      </div>
-    </section>
-    `
   hydrationToday.insertAdjacentHTML('afterbegin', hydrationTodayHtml);
-  hydrationAverage.innerHTML = hydrationAverageHtml;
+
 
 }
 
@@ -125,9 +95,8 @@ function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
   }).join('');
 }
 
-function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
+function addTodaysSleep(id, sleepInfo, dateString, userStorage, laterDateString) {
   const sleepToday = document.querySelector('#sleep-today');
-  const sleepAverage = document.querySelector('#sleep-average');
   const sleepTodayHtml = `
     <div class="card-today-sleep">
       <p id="sleepToday">
@@ -152,47 +121,8 @@ function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
       </p>
     </div>
     `
-  const sleepAverageHtml = `
-  <div class="card-today-sleep">
-      <p id="avUserSleepQuality">
-        <p>The average user's sleep quality is</p>
-        <p>
-          <span class="number">
-            ${Math.round(sleepInfo.calculateAllUserSleepQuality() * 100) / 100}
-          </span>
-        </p>
-        <p>out of 5.</p>
-      </p>
-    </div>
-    <section class="infoContainer-cardContainer-card-vertical">
-      <div class="card-history-sleep">
-        <p class="thisWeek">Hours of sleep this week</p>
-        <div class="sidebar-header-line"></div>
-        <ul class="card-vertical-list" id="sleepThisWeek">
-          ${makeSleepHTML(
-            id, 
-            sleepInfo, 
-            userStorage, 
-            sleepInfo.calculateWeekSleep(dateString, id, userStorage)
-          )}
-        </ul>
-      </div>
-      <div class="card-history-sleep">
-        <p class="historicalWeek">Sleep in Earlier Weeks</p>
-        <div class="sidebar-header-line"></div>
-        <ul class="card-vertical-list" id="sleepEarlierWeek">
-          ${makeSleepHTML(
-            id, 
-            sleepInfo, 
-            userStorage, 
-            sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)
-          )}
-        </ul>
-      </div>
-    </section>
-    `
+ 
   sleepToday.insertAdjacentHTML('afterbegin', sleepTodayHtml);
-  sleepAverage.innerHTML = sleepAverageHtml;
 }
 
 function makeStepsHTML(id, activityInfo, userStorage, method) {
@@ -213,11 +143,9 @@ function makeMinutesHTML(id, activityInfo, userStorage, method) {
   }).join('');
 }
 // this pattern is being repeated over and over again.
-function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
+function addTodaysActivity(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
   const activityToday = document.querySelector('#activity-today');
-  const activityAverage = document.querySelector('#activity-average');
   const activityTodayHtml = `
-    <section class="infoContainer-cardContainer-card-horizontal">
       <section class="horizontalCard-activity-container">
         <div class="card-today-activity">
           <p id="userStepsToday">
@@ -229,16 +157,7 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
             </p>
           </p>
         </div>
-        <div class="card-today-activity">
-          <p id="avgStepsToday">
-            <p>Average User Step Count Today:</p>
-            <p>
-              <span class="number">
-                ${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}
-              </span>
-            </p>
-          </p>
-        </div>
+
       </section>
       <section class="horizontalCard-activity-container">
         <div class="card-today-activity">
@@ -248,16 +167,6 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
             <span class="number">
               ${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}
             </span>
-            </p>
-          </p>
-        </div>
-        <div class="card-today-activity">
-          <p id="avgStairsToday">
-            <p>Average User Stair Count Today:</p>
-            <p>
-              <span class="number">
-                ${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}
-              </span>
             </p>
           </p>
         </div>
@@ -273,74 +182,8 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
             </p>
           </p>
         </div>
-        <div class="card-today-activity">
-          <p id="avgMinutesToday">
-            <p>Average User's Minutes Active Today:</p>
-            <p>
-              <span class="number">
-                ${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}
-              </span>
-            </p>
-          </p>
-        </div>
-      </section>
-    </section>`;
-  const activityAverageHtml = `
-      <section class="infoContainer-cardContainer-card-horizontal">
-        <section class="horizontalCard-activity-container">
-          <div class="card-history-activity">
-            <p class="thisWeek">Your steps this week</p>
-            <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="userStepsThisWeek">
-            ${makeStepsHTML(
-              id,
-              activityInfo,
-              userStorage,
-              activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")
-            )}
-            </ul>
-          </div>
-          <div class="card-history-activity">
-            <p class="thisWeek">Your stair count this week</p>
-            <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="userStairsThisWeek">
-              ${makeStairsHTML(
-              id,
-              activityInfo,
-              userStorage,
-              activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")
-            )}
-            </ul>
-          </div>
-        </section>
-        <section class="horizontalCard-activity-container">
-          <div class="card-history-activity">
-            <p class="thisWeek">Your minutes of activity this week</p>
-            <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="userMinutesThisWeek">
-              ${makeMinutesHTML(id,
-              activityInfo,
-              userStorage,
-              activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")
-            )}
-            </ul>
-          </div>
-          <div class="card-history-activity">
-            <p class="thisWeek">Winner's steps this week</p>
-            <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="bestUserSteps">
-              ${makeStepsHTML(
-              user,
-              activityInfo,
-              userStorage,
-              activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))}
-            </ul>
-          </div>
-        </section>
-      </section>
-    `
+      </section>`
   activityToday.insertAdjacentHTML('afterbegin', activityTodayHtml);
-  activityAverage.innerHTML = activityAverageHtml;
 }
 
 function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
@@ -414,4 +257,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {addInfoToUserSidebar, addHydrationInfo, addSleepInfo, addActivityInfo, addFriendSidebar}
+export {addInfoToUserSidebar, addTodaysHydration, addTodaysSleep, addTodaysActivity, addFriendSidebar}
