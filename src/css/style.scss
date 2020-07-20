@@ -15,6 +15,7 @@ body {
   margin: 0;
   background-color: $background-grey;
   height: auto;
+  // padding: 0;
 }
 
 h1 {
@@ -22,6 +23,10 @@ h1 {
   color: $white;
   height: 80px;
   padding-top: 10px;
+}
+
+h2 {
+  color: $white;
 }
 
 .main {
@@ -45,6 +50,8 @@ h1 {
   align-items: center;
   text-align: center;
   overflow: scroll;
+  width: 25%;
+  height: 100%;
 }
 
 .sidebar-header-name {
@@ -87,12 +94,31 @@ h1 {
   text-align: left;
 }
 
-.body-main-infoContainter {
+.card-container {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: $white;
+  border-radius: 5% 5%;
+  height: 40%;
+  width: 40%;
+  margin: 0 2.5% 2.5% 2.5%;
+}
+
+.body-main-infoContainter {
+  padding: 5%;
+  width: 100%;
+  height: 100%;
   border: 1px solid $black;
-  margin: 0 0 1em;
+  margin: 0;
   display: flex;
   flex-direction: column;
+  // flex-wrap: wrap;
+  // justify-content: space-between;
   overflow: scroll;
 }
 

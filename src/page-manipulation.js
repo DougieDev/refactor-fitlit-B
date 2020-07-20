@@ -10,7 +10,7 @@ function addInfoToUserSidebar(user, userStorage) {
   const leftSidebarHtmlBlock =
     `<h2 class="sidebar-header-name" id="sidebarName">${user.name}</h2>
     <div class="sidebar-header-line"></div>
-    <img src="./images/The Rock.jpg" class="sidebar-header-userImage"></img>
+    <img src="./images/arnie.jpg" class="sidebar-header-userImage"></img>
     <div class="sidebar-header-line"></div>
     <p class="sidebar-header-userInfo" id="userAddress">${user.address}</p>
     <div class="sidebar-header-line"></div>
@@ -52,9 +52,9 @@ function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
 }
 
 function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
-  const hydrationColumn = document.querySelector('.main-column-hydration');
-  const hydrationHtml = ` 
-    <section class="infoContainer-cardContainer-card-horizontal">
+  const hydrationToday = document.querySelector('#hydration-today');
+  const hydrationAverage = document.querySelector('#hydration-average');
+  const hydrationTodayHtml = ` 
       <div class="card-today-hydration">
         <p id="hydrationToday">
           <p>You drank</p>
@@ -76,17 +76,17 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
           </p>
           <p>oz per day.</p>
         </p>
-      </div>
-    </section>
+      </div>`
+  const hydrationAverageHtml = `
     <section class="infoContainer-cardContainer-card-vertical">
       <div class="card-history-hydration">
         <p class="thisWeek">Water intake this week:</p>
         <div class="sidebar-header-line"></div>
         <ul class="card-vertical-list" id="hydrationThisWeek">
           ${makeHydrationHTML(
-            id, 
-            hydrationInfo, 
-            userStorage, 
+            id,
+            hydrationInfo,
+            userStorage,
             hydrationInfo.calculateFirstWeekOunces(userStorage, id)
           )}
         </ul>
@@ -96,16 +96,18 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
         <div class="sidebar-header-line"></div>
         <ul class="card-vertical-list" id="hydrationEarlierWeek">
           ${makeHydrationHTML(
-            id, 
-            hydrationInfo, 
-            userStorage, 
+            id,
+            hydrationInfo,
+            userStorage,
             hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage))
           }
         </ul>
       </div>
     </section>
-  `
-  hydrationColumn.innerHTML = hydrationHtml;
+    `
+  hydrationToday.insertAdjacentHTML('afterbegin', hydrationTodayHtml);
+  hydrationAverage.innerHTML = hydrationAverageHtml;
+
 }
 
 function makeSleepHTML(id, sleepInfo, userStorage, method) {
@@ -121,9 +123,9 @@ function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
 }
 
 function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
-  const sleepColumn = document.querySelector('.main-column-sleep');
-  const sleepColumnHtml = `
-  <section class="infoContainer-cardContainer-card-horizontal">
+  const sleepToday = document.querySelector('#sleep-today');
+  const sleepAverage = document.querySelector('#sleep-average');
+  const sleepTodayHtml = `
     <div class="card-today-sleep">
       <p id="sleepToday">
         <p>You slept</p> 
@@ -146,9 +148,11 @@ function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
         <p>out of 5.</p>
       </p>
     </div>
-    <div class="card-today-sleep">
+    `
+  const sleepAverageHtml = `
+  <div class="card-today-sleep">
       <p id="avUserSleepQuality">
-        <p>The average user's sleep quality is</p> 
+        <p>The average user's sleep quality is</p>
         <p>
           <span class="number">
             ${Math.round(sleepInfo.calculateAllUserSleepQuality() * 100) / 100}
@@ -157,34 +161,35 @@ function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
         <p>out of 5.</p>
       </p>
     </div>
-  </section>
-  <section class="infoContainer-cardContainer-card-vertical">
-    <div class="card-history-sleep">
-      <p class="thisWeek">Hours of sleep this week</p>
-      <div class="sidebar-header-line"></div>
-      <ul class="card-vertical-list" id="sleepThisWeek">
-        ${makeSleepHTML(
-          id, 
-          sleepInfo, 
-          userStorage, 
-          sleepInfo.calculateWeekSleep(dateString, id, userStorage)
-        )}
-      </ul>
-    </div>
-    <div class="card-history-sleep">
-      <p class="historicalWeek">Sleep in Earlier Weeks</p>
-      <div class="sidebar-header-line"></div>
-      <ul class="card-vertical-list" id="sleepEarlierWeek">
-        ${makeSleepHTML(
-          id, 
-          sleepInfo, 
-          userStorage, 
-          sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)
-        )}
-      </ul>
-    </div>
-  </section>`
-  sleepColumn.innerHTML = sleepColumnHtml;
+    <section class="infoContainer-cardContainer-card-vertical">
+      <div class="card-history-sleep">
+        <p class="thisWeek">Hours of sleep this week</p>
+        <div class="sidebar-header-line"></div>
+        <ul class="card-vertical-list" id="sleepThisWeek">
+          ${makeSleepHTML(
+            id, 
+            sleepInfo, 
+            userStorage, 
+            sleepInfo.calculateWeekSleep(dateString, id, userStorage)
+          )}
+        </ul>
+      </div>
+      <div class="card-history-sleep">
+        <p class="historicalWeek">Sleep in Earlier Weeks</p>
+        <div class="sidebar-header-line"></div>
+        <ul class="card-vertical-list" id="sleepEarlierWeek">
+          ${makeSleepHTML(
+            id, 
+            sleepInfo, 
+            userStorage, 
+            sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)
+          )}
+        </ul>
+      </div>
+    </section>
+    `
+  sleepToday.insertAdjacentHTML('afterbegin', sleepTodayHtml);
+  sleepAverage.innerHTML = sleepAverageHtml;
 }
 
 function makeStepsHTML(id, activityInfo, userStorage, method) {
@@ -206,8 +211,9 @@ function makeMinutesHTML(id, activityInfo, userStorage, method) {
 }
 // this pattern is being repeated over and over again.
 function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
-  const activityColumn = document.querySelector('.main-column-activity');
-  const activityColumnHtml = `
+  const activityToday = document.querySelector('#activity-today');
+  const activityAverage = document.querySelector('#activity-average');
+  const activityTodayHtml = `
     <section class="infoContainer-cardContainer-card-horizontal">
       <section class="horizontalCard-activity-container">
         <div class="card-today-activity">
@@ -275,60 +281,63 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
           </p>
         </div>
       </section>
-    </section>
-    <section class="infoContainer-cardContainer-card-horizontal">
-      <section class="horizontalCard-activity-container">
-        <div class="card-history-activity">
-          <p class="thisWeek">Your steps this week</p>
-          <div class="sidebar-header-line"></div>
-          <ul class="card-vertical-list" id="userStepsThisWeek">
-           ${makeStepsHTML(
-             id, 
-             activityInfo, 
-             userStorage, 
-             activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")
+    </section>`;
+  const activityAverageHtml = `
+      <section class="infoContainer-cardContainer-card-horizontal">
+        <section class="horizontalCard-activity-container">
+          <div class="card-history-activity">
+            <p class="thisWeek">Your steps this week</p>
+            <div class="sidebar-header-line"></div>
+            <ul class="card-vertical-list" id="userStepsThisWeek">
+            ${makeStepsHTML(
+              id,
+              activityInfo,
+              userStorage,
+              activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")
             )}
-          </ul>
-        </div>
-        <div class="card-history-activity">
-          <p class="thisWeek">Your stair count this week</p>
-          <div class="sidebar-header-line"></div>
-          <ul class="card-vertical-list" id="userStairsThisWeek">
-            ${makeStairsHTML(
-              id, 
-              activityInfo, 
-              userStorage, 
+            </ul>
+          </div>
+          <div class="card-history-activity">
+            <p class="thisWeek">Your stair count this week</p>
+            <div class="sidebar-header-line"></div>
+            <ul class="card-vertical-list" id="userStairsThisWeek">
+              ${makeStairsHTML(
+              id,
+              activityInfo,
+              userStorage,
               activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")
             )}
-          </ul>
-        </div>
-      </section>
-      <section class="horizontalCard-activity-container">
-        <div class="card-history-activity">
-          <p class="thisWeek">Your minutes of activity this week</p>
-          <div class="sidebar-header-line"></div>
-          <ul class="card-vertical-list" id="userMinutesThisWeek">
-            ${makeMinutesHTML(id, 
-              activityInfo, 
-              userStorage, 
+            </ul>
+          </div>
+        </section>
+        <section class="horizontalCard-activity-container">
+          <div class="card-history-activity">
+            <p class="thisWeek">Your minutes of activity this week</p>
+            <div class="sidebar-header-line"></div>
+            <ul class="card-vertical-list" id="userMinutesThisWeek">
+              ${makeMinutesHTML(id,
+              activityInfo,
+              userStorage,
               activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")
             )}
-          </ul>
-        </div>
-        <div class="card-history-activity">
-          <p class="thisWeek">Winner's steps this week</p>
-          <div class="sidebar-header-line"></div>
-          <ul class="card-vertical-list" id="bestUserSteps">
-            ${makeStepsHTML(
-              user, 
-              activityInfo, 
-              userStorage, 
+            </ul>
+          </div>
+          <div class="card-history-activity">
+            <p class="thisWeek">Winner's steps this week</p>
+            <div class="sidebar-header-line"></div>
+            <ul class="card-vertical-list" id="bestUserSteps">
+              ${makeStepsHTML(
+              user,
+              activityInfo,
+              userStorage,
               activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps"))}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        </section>
       </section>
-    </section>`;
-  activityColumn.innerHTML = activityColumnHtml;
+    `
+  activityToday.insertAdjacentHTML('afterbegin', activityTodayHtml);
+  activityAverage.innerHTML = activityAverageHtml;
 }
 
 function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {

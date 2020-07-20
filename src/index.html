@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Activity Tracker</title>
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
-</head>
-
-<body>
-  <h1 id="headerText">Activity Tracker</h1>
-  <section class="main">
-    <section class="main-sidebar-body">
-      <section class="sidebar-container" id="user-sidebar"></section>
-    </section>
-    <section class="body-main-infoContainter">
-      <section class="main-column-hydration"></section>
-      <section class="main-column-activity"></section>
-      <section class="main-column-sleep">
+  <head>
+    <meta charset="UTF-8">
+    <title>Activity Tracker</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="main">
+      <section class="sidebar-container" id="user-sidebar">
+        <h1 id="headerText">Activity Tracker</h1>
       </section>
-    </section>
-    <section class="main-sidebar-body">
-      <section class="sidebar-container" id="friends-sidebar">
-        
+      <section class="body-main-infoContainter">
+        <h2>Daily Fitness</h2>
+        <section class="card-container" id="daily-cards">
+          <section class="card" id="hydration-today">
+            <button id="new-hydration">add new info</button>
+          </section>
+          <section class="card" id="activity-today">
+            <button id="new-activity">add new info</button>
+          </section>
+          <section class="card" id="sleep-today">
+            <button id="new-sleep">add new info</button>
+          </section>
+          <section class="card">
+            calendar anybody?
+          </section>
+          <!-- <section class="main-column-hydration"></section>
+          <section class="main-column-activity"></section>
+          <section class="main-column-sleep"></section> -->
+        </section>
+        <h2>Historical Fitness</h2>
+        <section class="card-container" id="">
+          <section class="card" id="hydration-average"></section>
+          <section class="card" id="activity-average"></section>
+          <section class="card" id="sleep-average"></section>
+          <section class="card"></section>
+        </section>
       </section>
+      <!-- <section class="main-sidebar-body"> -->
+        <!-- <section class="sidebar-container" id="friends-sidebar"></section> -->
+      <!-- </section> -->
     </section>
-  </section>
-</body>
-
+  </body>
 </html>
+
+
+

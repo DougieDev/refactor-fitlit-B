@@ -27,7 +27,7 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-function startApp() {
+async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
 
   let userList = [];
@@ -41,12 +41,12 @@ function startApp() {
   let today = makeToday(userRepo, userNowId, hydrationData);
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  addInfoToUserSidebar(userNow, userRepo);
+  // addInfoToUserSidebar(userNow, userRepo);
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
   addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+  // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
 async function catchData(id) {
