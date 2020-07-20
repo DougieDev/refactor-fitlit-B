@@ -10,7 +10,7 @@ function addInfoToUserSidebar(user, userStorage) {
   const leftSidebarHtmlBlock =
     `<h2 class="sidebar-header-name" id="sidebarName">${user.name}</h2>
     <div class="sidebar-header-line"></div>
-    <img src="./images/The Rock.jpg" class="sidebar-header-userImage"></img>
+    <img src="./images/arnie.jpg" class="sidebar-header-userImage"></img>
     <div class="sidebar-header-line"></div>
     <p class="sidebar-header-userInfo" id="userAddress">${user.address}</p>
     <div class="sidebar-header-line"></div>

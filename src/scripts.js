@@ -2,9 +2,13 @@
 import './css/style.scss';
 
 import './images/person walking on path.jpg';
-import './images/The Rock.jpg';
+import './images/arnie.jpg';
 
-import userData from './data/users';
+
+
+
+
+// import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
 import activityData from './data/activity';
@@ -23,11 +27,11 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-function startApp() {
+async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
 
   let userList = [];
-  makeUsers(userList);
+  await makeUsers(userList);
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
   let sleepRepo = new Sleep(sleepData);
@@ -45,7 +49,15 @@ function startApp() {
   addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
-function makeUsers(array) {
+async function catchData(id) {
+  const response = await fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/${id}`)
+  const data = await response.json();
+  const arrayData = await data[id];
+  return await arrayData
+}
+
+async function makeUsers(array) {
+  const userData = await catchData('userData');
   userData.forEach(function(dataItem) {
     let user = new User(dataItem);
     array.push(user);
