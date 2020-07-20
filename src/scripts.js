@@ -27,7 +27,7 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-function startApp() {
+async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
 
   let userList = [];
