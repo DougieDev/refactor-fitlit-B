@@ -1,4 +1,5 @@
 
+
 function populateDailyData(card, repo, userId, date) {
   const location = document.getElementById(card);
   const innerElements = location.children[0].children;
@@ -29,6 +30,7 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
     return `<li class="historical-list-listItem">${streakData}!</li>`
   }).join('');
 }
+
 
 function addInfoToUserSidebar(user, userStorage) {
   const sidebar = document.getElementById('user-sidebar');
@@ -134,4 +136,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {populateDailyData, addInfoToUserSidebar, addTodaysHydration, addTodaysSleep, addTodaysActivity, addFriendSidebar}
+export {populateDailyData, addInfoToUserSidebar, addFriendSidebar}

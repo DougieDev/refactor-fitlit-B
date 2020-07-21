@@ -22,9 +22,6 @@ import UserRepo from './User-repo';
 import {
   populateDailyData,
   addInfoToUserSidebar, 
-  addTodaysHydration, 
-  addTodaysSleep, 
-  addTodaysActivity, 
   addFriendSidebar
 } from './page-manipulation';
 
@@ -54,9 +51,6 @@ async function startApp() {
   populateDailyData('activity-today', activityRepo, userNow.id, today);
   populateDailyData('sleep-today', sleepRepo, userNow.id, today);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  // addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
-
 }
 
 async function catchData(id) {
