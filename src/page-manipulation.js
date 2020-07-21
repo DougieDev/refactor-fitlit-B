@@ -26,6 +26,28 @@ function populateDailyData(card, repo, userId, date) {
   }
 }
 
+function insertWeeklyDataLayouts(event) {
+  const weekdays = document.querySelectorAll('.historic-data');
+  const hydrationWeekdayHtml = `<span class="number">0</span> oz drank`;
+  const activityWeekdayHtml =  `Step Count: <span class="number">0</span>
+    Stair Count: <span class="number">0</span>
+    Minutes Active: <span class="number">0</span>`
+  const sleepWeekdayHtml = `Hours Asleep: <span class="number">0</span>
+    Sleep Quality: <span class="number">0</span>out of 5`
+  const insertLayout = (html) => {
+    for (var i = 0; i < weekdays.length; i++) {
+      weekdays[i].innerHTML = html;
+    }
+  };
+  if (event.target.id.includes('hydration')) {
+    insertLayout(hydrationWeekdayHtml);
+  } else if (event.target.id.includes('activity')) {
+    insertLayout(activityWeekdayHtml);
+  } else if (event.target.id.includes('sleep')) {
+    insertLayout(sleepWeekdayHtml);
+  }
+}
+
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {
       return `<li class='historical-list-listItem'>${friendName}</li>`;
@@ -149,4 +171,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {populateDailyData, addInfoToUserSidebar, addFriendSidebar, insertForm}
+export {populateDailyData, insertWeeklyDataLayouts, addInfoToUserSidebar, addFriendSidebar, insertForm}

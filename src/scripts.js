@@ -23,6 +23,7 @@ import {
   populateDailyData,
   addInfoToUserSidebar,
   insertForm, 
+  insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
 
@@ -60,6 +61,8 @@ function buttonHandler(event) {
     insertForm(event);
   } else if (event.target.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
+  } else if (event.target.id.includes('weekly')) {
+    insertWeeklyDataLayouts(event);
   }
 }
 
