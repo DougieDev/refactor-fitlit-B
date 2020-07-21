@@ -14,18 +14,15 @@ class Activity {
   }
   /*Removing does not seem to effect the display seem to be a trend on this class */
   calculateActiveAverageForWeek(id, date, userRepo) {
-    return parseFloat((userRepo.getWeekFromDate(date, id, this.activityData).reduce((acc, elem) => {
-      return acc += elem.minutesActive;
+    return parseFloat((userRepo.getWeekFromDate(date, id, this.activityData).reduce((sum, elem) => {
+      return sum += elem.minutesActive;
     }, 0) / 7).toFixed(1));
   }
   /* Again does not seem to effect web display maybe activity class was not used
   correctly or never made it in the project properly or is being analyzed else where*/
   accomplishStepGoal(id, date, userRepo) {
     let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
-    if (userStepsByDate.numSteps === userRepo.dailyStepGoal) {
-      return true;
-    }
-    return false
+    (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
   }
   /* again no changes to the display, research how we are using our functionality*/
   getDaysGoalExceeded(id, userRepo) {
