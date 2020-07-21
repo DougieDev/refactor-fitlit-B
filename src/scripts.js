@@ -9,6 +9,7 @@ import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
 import activityData from './data/activity';
 
+import Fitlit from './Fitlit';
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';

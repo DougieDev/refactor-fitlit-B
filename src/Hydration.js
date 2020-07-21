@@ -1,4 +1,4 @@
-class Hydration {
+class Hydration extends Fitlit {
   constructor(hydrationData) {
     this.hydrationData = hydrationData;
   }
