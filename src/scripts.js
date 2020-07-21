@@ -52,9 +52,10 @@ async function startApp() {
   addInfoToUserSidebar(userNow, userRepo);
   // addTodaysHydration(userNowId, hydrationRepo, today, userRepo, randomHistory);
   populateDailyData('hydration-today', hydrationRepo, userNow.id, today);
-  addTodaysSleep(userNowId, sleepRepo, today, userRepo, randomHistory);
+  populateDailyData('activity-today', activityRepo, userNow.id, today);
+  // addTodaysSleep(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+  // addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
   // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 
 }
