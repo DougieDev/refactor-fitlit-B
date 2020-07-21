@@ -25,13 +25,6 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-const body = document.querySelector('body');
-body.addEventListener('click', test)
-
-function test(event) {
-  console.log(event);
-}
-
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
   
