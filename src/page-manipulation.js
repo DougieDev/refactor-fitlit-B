@@ -1,4 +1,14 @@
-
+function insertForm(event) {
+  const innerElements = event.target.parentElement.children[0].children;
+  for (var i = 0; i < innerElements.length; i++) {
+    if(innerElements[i].classList.contains('number')) {
+      let id = innerElements[i].id;
+      innerElements[i].innerHTML = `<input id=${id} />`
+    }
+  }
+  event.target.id = `submit`
+  event.target.innerText = `submit`
+}
 
 function populateDailyData(card, repo, userId, date) {
   const location = document.getElementById(card);
@@ -136,4 +146,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {populateDailyData, addInfoToUserSidebar, addFriendSidebar}
+export {populateDailyData, addInfoToUserSidebar, addFriendSidebar, insertForm}

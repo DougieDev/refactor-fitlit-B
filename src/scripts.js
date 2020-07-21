@@ -21,9 +21,24 @@ import UserRepo from './User-repo';
 
 import {
   populateDailyData,
-  addInfoToUserSidebar, 
+  addInfoToUserSidebar,
+  insertForm, 
   addFriendSidebar
 } from './page-manipulation';
+
+const buttons = document.querySelectorAll('button');
+for(const button of buttons) {
+  button.addEventListener('click', buttonHandler);
+}
+
+function buttonHandler(event) {
+  let originalCardContent;
+  if (event.target.id.includes('new') || event.target.id.includes('update')) {
+    originalCardContent = event.target.parentElement.innerHTML;
+    insertForm(event);
+  }
+  console.log(event.target.parentElement.children[0].children);
+}
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
