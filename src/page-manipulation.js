@@ -96,6 +96,7 @@ function addTodaysActivity(id, activityInfo, dateString, userStorage, laterDateS
   activityToday.insertAdjacentHTML('afterbegin', activityTodayHtml);
 }
 
+
 function addTodaysHydration(id, hydrationInfo, dateString, userStorage, laterDateString) {
   const hydrationToday = document.querySelector('#hydration-today');
   const hydrationTodayHtml = ` 
@@ -104,7 +105,7 @@ function addTodaysHydration(id, hydrationInfo, dateString, userStorage, laterDat
           <p>You drank</p>
           <p>
             <span class="number">
-              ${hydrationInfo.calculateDailyOunces(id, dateString)}
+              ${hydrationInfo.getData(id, dateString, `numOunces`)}
             </span>
           </p>
           <p>oz water today.</p>

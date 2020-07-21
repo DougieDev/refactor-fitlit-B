@@ -10,11 +10,16 @@ import sleepData from './data/sleep';
 import activityData from './data/activity';
 
 import Fitlit from './Fitlit';
+
+// const fit = new Fitlit();
+
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
+
+
 
 import {
   addInfoToUserSidebar, 
@@ -26,11 +31,12 @@ import {
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
-
+  
   let userList = [];
   await makeUsers(userList);
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
+  console.log(hydrationRepo)
   let sleepRepo = new Sleep(sleepData);
   let activityRepo = new Activity(activityData);
   var userNowId = pickUser();
