@@ -1,13 +1,15 @@
 function insertForm(event) {
-  const innerElements = event.target.parentElement.children[0].children;
+  const dateInput = `date: <input id="date" />`;
+  event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
+  const innerElements = event.target.parentElement.children[1].children;
   for (var i = 0; i < innerElements.length; i++) {
     if(innerElements[i].classList.contains('number')) {
       let id = innerElements[i].id;
       innerElements[i].innerHTML = `<input id=${id} />`
     }
   }
-  event.target.id = `submit`
-  event.target.innerText = `submit`
+  event.target.id = `submit`;
+  event.target.innerText = `submit`;
 }
 
 function populateDailyData(card, repo, userId, date) {
