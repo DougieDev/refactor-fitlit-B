@@ -1,6 +1,7 @@
 class Fitlit {
   constructor(data){
-    this.data = data;
+    this.userID = data.userID;
+    this.date = data.date;
   }
   
   getData(id, date, key) {

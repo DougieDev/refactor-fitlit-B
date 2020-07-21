@@ -3,6 +3,7 @@ import Fitlit from './Fitlit';
 class Hydration extends Fitlit{
   constructor(data) {
     super(data);
+    this.numOunces = data.numOunces;
   }
 
   /*IF REMOVED, REMOVES ALL DATA EXCEPT USER PERSONAL DATA EX. NAME/ ADDRESS/ ETC...*/
