@@ -3,7 +3,8 @@ function insertForm(event) {
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
   const innerElements = event.target.parentElement.children[1].children;
   for (var i = 0; i < innerElements.length; i++) {
-    if(innerElements[i].classList.contains('number')) {
+    if(innerElements[i].classList.contains('number') 
+    && !innerElements[i].id.includes('average')) {
       let id = innerElements[i].id;
       innerElements[i].innerHTML = `<input id=${id} />`
     }
