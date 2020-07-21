@@ -1,29 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Activity Tracker</title>
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
-</head>
-
-<body>
-  <h1 id="headerText">Activity Tracker</h1>
-  <section class="main">
-    <section class="main-sidebar-body">
-      <section class="sidebar-container" id="user-sidebar"></section>
-    </section>
-    <section class="body-main-infoContainter">
-      <section class="main-column-hydration"></section>
-      <section class="main-column-activity"></section>
-      <section class="main-column-sleep">
+  <head>
+    <meta charset="UTF-8">
+    <title>Activity Tracker</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="main">
+      <section class="sidebar-container" id="user-sidebar">
+        <h1 id="headerText">Activity Tracker</h1>
+        <img src="./images/arnie.jpg" class="sidebar-header-userImage"></img>
+        <a href="">Profile</a>
       </section>
-    </section>
-    <section class="main-sidebar-body">
-      <section class="sidebar-container" id="friends-sidebar">
-        
+      <section class="body-main-infoContainter">
+        <h2 id="app-message">A message for the user</h2>
+        <h2>Daily Fitness</h2>
+        <section class="card-container" id="daily-cards">
+          <section class="card" id="hydration-today">
+            <button id="new-hydration">add new info</button>
+          </section>
+          <section class="card" id="activity-today">
+            <button id="new-activity">add new info</button>
+          </section>
+          <section class="card" id="sleep-today">
+            <button id="new-sleep">add new info</button>
+          </section>
+          <section class="card">
+            calendar anybody?
+          </section>
+          <!-- <section class="main-column-hydration"></section>
+          <section class="main-column-activity"></section>
+          <section class="main-column-sleep"></section> -->
+        </section>
+        <h2>User / Account</h2>
+        <section class="card-container" id="user-cards">
+          <section class="card" id="user-goals">
+            user goals:<button id="update-goals">Update Info</button>
+          </section>
+          <section class="card" id="account-info">
+            account info:<button id="update-info">Update Info</button> 
+          </section>
+          <section class="week-card" id="user-trends">
+            <select name="week" id="week-select">
+             <option value='date'>
+               boy howdy how are we gonna populate weeks to choose from
+             </option> 
+             </select>
+             <section class="weekly-calendar-container">
+               <nav id="weekly-data-options">
+                 <button id="weekly-hydration">Hydration</button>
+                 <button id="weekly-activity">Activity</button>
+                 <button id="weekly-sleep">Sleep</button>
+               </nav>
+               <table>
+                 <tr>
+                   <th>Monday</th>
+                   <th>Tuesday</th>
+                   <th>Wednesday</th>
+                   <th>Thursday</th>
+                   <th>Friday</th>
+                   <th>Saturday</th>
+                   <th>Sunday</th>
+                  </tr>
+                  <tr>
+                    <th class="historic-data" id="monday-data"></th>
+                    <th class="historic-data" id="tuesday-data"></th>
+                    <th class="historic-data" id="wednesday-data"></th>
+                    <th class="historic-data" id="thursday-data"></th>
+                    <th class="historic-data" id="friday-data"></th>
+                    <th class="historic-data" id="saturday-data"></th>
+                    <th class="historic-data" id="sunday-data"></th>
+                  </tr>
+                </table>
+              </section>
+            </select>
+          </section>
+        </section>
       </section>
+      <!-- <section class="main-sidebar-body"> -->
+        <!-- <section class="sidebar-container" id="friends-sidebar"></section> -->
+      <!-- </section> -->
     </section>
-  </section>
-</body>
-
+  </body>
 </html>
+
+
+
