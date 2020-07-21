@@ -4,10 +4,6 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
-
-
-
-
 // import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
@@ -21,9 +17,9 @@ import UserRepo from './User-repo';
 
 import {
   addInfoToUserSidebar, 
-  addHydrationInfo, 
-  addSleepInfo, 
-  addActivityInfo, 
+  addTodaysHydration, 
+  addTodaysSleep, 
+  addTodaysActivity, 
   addFriendSidebar
 } from './page-manipulation';
 
@@ -42,11 +38,11 @@ async function startApp() {
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToUserSidebar(userNow, userRepo);
-  addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
-  addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
+  addTodaysHydration(userNowId, hydrationRepo, today, userRepo, randomHistory);
+  addTodaysSleep(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+  addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+  // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
 async function catchData(id) {
