@@ -19,15 +19,21 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
-
-
 import {
+  populateDailyData,
   addInfoToUserSidebar, 
   addTodaysHydration, 
   addTodaysSleep, 
   addTodaysActivity, 
   addFriendSidebar
 } from './page-manipulation';
+
+const body = document.querySelector('body');
+body.addEventListener('click', test)
+
+function test(event) {
+  console.log(event);
+}
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
@@ -36,7 +42,6 @@ async function startApp() {
   await makeUsers(userList);
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
-  console.log(hydrationRepo)
   let sleepRepo = new Sleep(sleepData);
   let activityRepo = new Activity(activityData);
   var userNowId = pickUser();
@@ -45,11 +50,13 @@ async function startApp() {
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToUserSidebar(userNow, userRepo);
-  addTodaysHydration(userNowId, hydrationRepo, today, userRepo, randomHistory);
+  // addTodaysHydration(userNowId, hydrationRepo, today, userRepo, randomHistory);
+  populateDailyData('hydration-today', hydrationRepo, userNow.id, today);
   addTodaysSleep(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
   addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
   // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+
 }
 
 async function catchData(id) {

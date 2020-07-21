@@ -35,6 +35,21 @@
 //     ).join("");
 // }
 
+function populateDailyData(card, repo, userId, date) {
+  const location = document.getElementById(card);
+  const innerElements = location.children[0].children;
+  for(var i = 0; i < innerElements.length; i++) {
+    if (innerElements[i].classList.contains('number') && innerElements[i].id.includes('average')) {
+      let key = innerElements[i].id.split('-')[0]
+      innerElements[i].innerText = repo.calculateAverage(userId, key);
+    } else if (innerElements[i].classList.contains('number')) {
+      innerElements[i].innerText = repo.getData(userId, date, innerElements[i].id);
+    }
+  }
+}
+
+
+
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {
       return `<li class='historical-list-listItem'>${friendName}</li>`;
@@ -259,4 +274,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {addInfoToUserSidebar, addTodaysHydration, addTodaysSleep, addTodaysActivity, addFriendSidebar}
+export {populateDailyData, addInfoToUserSidebar, addTodaysHydration, addTodaysSleep, addTodaysActivity, addFriendSidebar}

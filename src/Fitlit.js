@@ -9,6 +9,16 @@ class Fitlit {
     }) 
     return dataSet[key];
   }
+
+  calculateAverage(id, key) {
+    const usersData = this.data.filter(data => id === data.userID);
+
+    const average = usersData.reduce((average, data) => {
+      return average = average + data[key] / usersData.length;
+    }, 0)
+
+    return Math.round(average);
+  }
 }
 
 export default Fitlit;

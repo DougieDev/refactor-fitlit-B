@@ -1,3 +1,5 @@
+import Fitlit from "./Fitlit";
+
 class UserRepo {
   constructor(users) {
     this.users = users;
