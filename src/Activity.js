@@ -22,11 +22,17 @@ class Activity {
   correctly or never made it in the project properly or is being analyzed else where*/
   accomplishStepGoal(id, date, userRepo) {
     let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
-    (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
+    return (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
   }
+
   /* again no changes to the display, research how we are using our functionality*/
   getDaysGoalExceeded(id, userRepo) {
-    return this.activityData.filter(data => id === data.userID && data.numSteps > userRepo.dailyStepGoal).map(data => data.date);
+    return this.activityData.reduce((dates, data) => {
+      if (id === data.userID && data.numSteps > userRepo.dailyStepGoal) {
+        dates.push(data.date);
+      }
+      return dates;
+    },[]);
   }
   /* never made it into the display of page*/
   getStairRecord(id) {
