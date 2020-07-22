@@ -73,26 +73,26 @@ function addInfoToUserSidebar(user, userStorage) {
   const accountInfo = document.getElementById('account-info');
   const userGoals = document.getElementById('user-goals');
   const accountInfoHtml = `
-    <p class="sidebar-header-userInfo" id="userAddress">${user.address}</p>
+    <p class="sidebar-friendslist-header" id="userAddress">${user.address}</p>
     <div class="sidebar-header-line"></div>
-    <p class="sidebar-header-userInfo" id="userEmail">${user.email}</p>`
+    <p class="sidebar-friendslist-header" id="userEmail">${user.email}</p>`
 
   const userGoalsHtml = `
-    <p class="sidebar-header-userInfo" id="userStridelength">
+    <p class="sidebar-friendslist-header" id="userStridelength">
       Your stride length is ${user.strideLength} meters.
     </p>
     <div class="sidebar-header-line"></div>
-    <p class="sidebar-header-userInfo" id="stepGoalCard">
+    <p class="sidebar-friendslist-header" id="stepGoalCard">
       Your daily step goal is ${user.dailyStepGoal}
     </p>
-    <p class="sidebar-header-userInfo" id="avStepGoalCard">
+    <p class="sidebar-friendslist-header" id="avStepGoalCard">
       The average daily step goal is ${userStorage.calculateAverageStepGoal()}
     <p>`
 
   const leftSidebarHtmlBlock = `
     <div class="sidebar-header-line"></div>
     <section class="sidebar-body-friendContainer">
-      <p class="sidebar-header-userInfo">Friends</p>
+      <p class="sidebar-friendslist-header">Friends</p>
       <section class="sidebar-friendContainer-listItems">
         <ul class="card-vertical-list" id="friendList">
           ${makeFriendHTML(user, userStorage)}
@@ -119,30 +119,30 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
     <div class="sidebar-header-line"></div>
     <img src="./images/person walking on path.jpg" class="sidebar-header-userImage"></img>
     <div class="sidebar-header-line"></div>
-    <p class="sidebar-header-userInfo" id="bigWinner">
+    <p class="sidebar-friendslist-header" id="bigWinner">
       THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps
     </p>
     <div class="sidebar-header-line"></div>
-    <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
-    <p class="sidebar-header-userInfo" id="avStepGoalCard">
+    <p class="sidebar-friendslist-header" id="stepGoalCard"></p>
+    <p class="sidebar-friendslist-header" id="avStepGoalCard">
     <p>
     <section class="sidebar-body-friendContainer">
       <section class="sidebar-friendContainer-listItems">
         <p class="thisWeek">Rank this week</p>
         <ul class="card-vertical-list" id="friendChallengeListToday">
           ${makeFriendChallengeHTML(
-            id, 
-            activityInfo, 
-            userStorage, 
+            id,
+            activityInfo,
+            userStorage,
             activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
         </ul>
         <div class="sidebar-header-line"></div>
         <p class="historicalWeek">- Historical Rank</p>
         <ul class="card-vertical-list" id="friendChallengeListHistory">
           ${makeFriendChallengeHTML(
-            id, 
-            activityInfo, 
-            userStorage, 
+            id,
+            activityInfo,
+            userStorage,
             activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
         </ul>
         <div class="sidebar-header-line"></div>
@@ -150,19 +150,19 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
       <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
       <ul class="card-vertical-list" id="streakList">
         ${makeStepStreakHTML(
-          id, 
-          activityInfo, 
-          userStorage, 
+          id,
+          activityInfo,
+          userStorage,
           activityInfo.getStreak(userStorage, id, 'numSteps'))}
       </ul>
     </section>`;
   sidebar.innerHTML = rightSidebarHtmlBlock;
   const streakListMinutes = document.getElementById('streakListMinutes')
-  streakListMinutes.insertAdjacentHTML("afterBegin", 
+  streakListMinutes.insertAdjacentHTML("afterBegin",
     makeStepStreakHTML(
-      id, 
-      activityInfo, 
-      userStorage, 
+      id,
+      activityInfo,
+      userStorage,
       activityInfo.getStreak(userStorage, id, 'minutesActive')
     )
   );

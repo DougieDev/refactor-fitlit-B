@@ -4,6 +4,7 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
+import Pikaday from '../node_modules/pikaday/pikaday';
 // import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
@@ -31,8 +32,6 @@ const buttons = document.querySelectorAll('button');
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
-
-
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
@@ -102,6 +101,9 @@ function makeRandomDate(userStorage, id, dataSet) {
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
   return sortedArray[Math.floor(Math.random() * sortedArray.length + 1)].date
 }
+
+let picker = new Pikaday({ field: document.getElementById('datepicker') });
+picker.show();
 
 
 
