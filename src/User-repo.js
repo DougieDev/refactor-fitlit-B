@@ -1,8 +1,12 @@
-import Fitlit from "./Fitlit";
+import User from "./User";
 
 class UserRepo {
   constructor(users) {
-    this.users = users;
+    this.users = this.makeUsers(users);
+  }
+
+  makeUsers(users) {
+    return users.map(user => new User(user))
   }
 
   /* BREAKS ALL DATA IF REMOVED */

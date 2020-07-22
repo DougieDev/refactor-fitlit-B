@@ -44,24 +44,29 @@ function findParentUrl(src) {
   }
 }
 
-let hydrationRepo;
 
-let rawUserData = catchData('userData');
-let rawSleepData = catchData('sleepData');
-let rawActivityData = catchData('activityData');
-let rawHydrationData = catchData('hydrationData').then(data => new HydrationRepo(data));
+let userRepo = catchData('userData').then(data => new UserRepo(data));
+let sleepRepo = catchData('sleepData');
+let activityRepo = catchData('activityData');
+let hydrationRepo = catchData('hydrationData').then(data => new HydrationRepo(data));
 
-Promise.all([rawHydrationData, rawActivityData])
-  .then(data => console.log(data))
-  
+Promise.allSettled([userRepo, hydrationRepo, activityRepo, sleepRepo])
+  .then(data => repositData(data))
+
+function repositData(repos) {
+  userRepo = repos[0].value
+  sleepRepo = repos[1].value
+  activityRepo = repos[2].value
+  hydrationRepo = repos[3].value
+  console.log(userRepo)
+}
 
 
-
-
-// function startApp() {
+function startApp() {
+  console.log(userRepo)
 //   var historicalWeek = document.querySelectorAll('.historicalWeek');
   
-//   let userList = [];
+  // let userList = [];
 //   // makeUsers(userList);
 //   let userRepo = new UserRepo(userList);
 //   let hydrationRepo = new Hydration(hydrationData);
@@ -77,7 +82,7 @@ Promise.all([rawHydrationData, rawActivityData])
 //   populateDailyData('activity-today', activityRepo, userNow.id, today);
 //   populateDailyData('sleep-today', sleepRepo, userNow.id, today);
 //   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-// }
+}
 
 
 
