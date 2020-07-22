@@ -1,9 +1,14 @@
 import User from "./User";
 
 class UserRepo {
-  constructor(users) {
-    this.repo = this.makeUsers(users);
+  storeData(data) {
+    this.users = data.map(user => new User(user));
   }
+
+  confirmUser() {
+    console.log(`hi I'm bob`)
+  }
+
 
   makeUsers(users) {
     return users.map(user => new User(user))
