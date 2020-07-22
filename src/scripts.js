@@ -24,6 +24,8 @@ const hydrationRepo = new Repo();
 const activityRepo = new Repo(); 
 const sleepRepo = new Repo();
 
+const repo = new Repo()
+
 
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
@@ -54,23 +56,23 @@ function catchData(src) {
   return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${src}`)
     .then(response => response.json())
     .then(data => data[src])
-    .then(result => classInfo.class.storeData(result, src))
+    .then(result => repo.storeData(result, src))
     .then(repo => dataEventHandler(src));
 }
 
 function dataEventHandler(src) {
   if (src === 'userData') {
     // startUserPopulation()
-    console.log(userRepo);
+    console.log(repo.users);
   } else if (src === 'hydrationData') {
     // startHydrationPopulation()
-    console.log(hydrationRepo);
+    console.log(repo.hydration);
   } else if (src === 'sleepData') {
     // startSleepPopulation() 
-    console.log(sleepRepo);
+    console.log(repo.sleep);
   } else if (src === 'activityData') {
     // startActivityPopulation()
-    console.log(activityRepo); 
+    console.log(repo.activity); 
   }
 }
 
