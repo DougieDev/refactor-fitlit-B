@@ -70,7 +70,7 @@ console.log(data);
 //   var historicalWeek = document.querySelectorAll('.historicalWeek');
   var userNowId = pickUser();
   let userNow = getUserById(userNowId);
-  let today = makeToday(userNow);
+  // let today = makeToday(userNow);
 //   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
 //   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
 //   addInfoToUserSidebar(userNow, userRepo);
@@ -97,7 +97,7 @@ function getUserById(id) {
 //     .then(data => data[1].value.makeSortedUserArray(userNow.id, data[0].date))
 //     .then(result => console.log(result))
 //     .then(sortedArray => sortedArray[0].date);
-}
+
 
 // function makeRandomDate(userStorage, id, dataSet) {
 //   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
