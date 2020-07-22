@@ -15,9 +15,12 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-import UserRepo from './User-repo';
 
-import HydrationRepo from './HydrationRepo'
+import UserRepo from './User-repo';
+import HydrationRepo from './Hydration-repo'
+import ActivityRepo from './Activity-repo'
+import SleepRepo from './Sleep-repo'
+
 
 import {
   populateDailyData,
@@ -26,10 +29,11 @@ import {
 } from './page-manipulation';
 
 function catchData(src) {
+
   let parent = findParentUrl(src);
   return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${parent}/${src}`)
     .then(response => response.json())
-    .then(data => data[src])
+    .then(data => data[src]);
 }
 
 function findParentUrl(src) {
@@ -44,37 +48,29 @@ function findParentUrl(src) {
   }
 }
 
+const data = {
+  users: catchData('userData'),
+  hydration: (catchData('hydrationData')),
+  activity: catchData('activityData'),
+  sleep: catchData('sleepData')
+};
 
-let userRepo = catchData('userData').then(data => new UserRepo(data));
-let sleepRepo = catchData('sleepData');
-let activityRepo = catchData('activityData');
-let hydrationRepo = catchData('hydrationData').then(data => new HydrationRepo(data));
-
-Promise.allSettled([userRepo, hydrationRepo, activityRepo, sleepRepo])
-  .then(data => repositData(data))
-
-function repositData(repos) {
-  userRepo = repos[0].value
-  sleepRepo = repos[1].value
-  activityRepo = repos[2].value
-  hydrationRepo = repos[3].value
-  console.log(userRepo)
-}
-
+Promise.allSettled([data.users, data.sleep, data.activity, data.hydration])
+  .then(rawData => {
+    data.users = new UserRepo(rawData[0].value)
+    data.sleep = new SleepRepo(rawData[1].value)
+    data.activity = new ActivityRepo(rawData[2].value)
+    data.hydration = new HydrationRepo(rawData[3].value)
+  })
+  // .then(result => console.log(result))
+  .then(startApp());
 
 function startApp() {
-  console.log(userRepo)
+console.log(data);
 //   var historicalWeek = document.querySelectorAll('.historicalWeek');
-  
-  // let userList = [];
-//   // makeUsers(userList);
-//   let userRepo = new UserRepo(userList);
-//   let hydrationRepo = new Hydration(hydrationData);
-//   let sleepRepo = new Sleep(sleepData);
-//   let activityRepo = new Activity(activityData);
-//   var userNowId = pickUser();
-//   let userNow = getUserById(userNowId, userRepo);
-//   let today = makeToday(userRepo, userNowId, hydrationData);
+  var userNowId = pickUser();
+  let userNow = getUserById(userNowId);
+  let today = makeToday(userNow);
 //   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
 //   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
 //   addInfoToUserSidebar(userNow, userRepo);
@@ -84,32 +80,24 @@ function startApp() {
 //   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
 }
 
+function pickUser() {
+  return Math.floor(Math.random() * 50);
+}
 
-
-// function makeUsers(array) {
-//   const userData = catchData('userData');
-//   userData.forEach(function(dataItem) {
-//     let user = new User(dataItem);
-//     array.push(user);
-//   })
-// }
-
-// function pickUser() {
-//   return Math.floor(Math.random() * 50);
-// }
-
-// function getUserById(id, listRepo) {
-//   return listRepo.getDataFromID(id);
-// };
+function getUserById(id) {
+  return data.users.then(data => data.find(user => user.id === id));
+};
 
 // function makeWinnerID(activityInfo, user, dateString, userStorage){
 //   return activityInfo.getWinnerId(user, dateString, userStorage)
 // }
 
-// function makeToday(userStorage, id, dataSet) {
-//   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
-//   return sortedArray[0].date;
-// }
+// function makeToday(userNow) {
+//   return Promise.allSettled([data.hydration, data.users, userNow])
+//     .then(data => data[1].value.makeSortedUserArray(userNow.id, data[0].date))
+//     .then(result => console.log(result))
+//     .then(sortedArray => sortedArray[0].date);
+}
 
 // function makeRandomDate(userStorage, id, dataSet) {
 //   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);

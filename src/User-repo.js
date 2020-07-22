@@ -2,7 +2,7 @@ import User from "./User";
 
 class UserRepo {
   constructor(users) {
-    this.users = this.makeUsers(users);
+    this.repo = this.makeUsers(users);
   }
 
   makeUsers(users) {
