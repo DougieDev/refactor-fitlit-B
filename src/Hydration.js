@@ -1,6 +1,6 @@
-import Fitlit from './Fitlit';
+import WellnessMetric from './WellnessMetric';
 
-class Hydration extends Fitlit{
+class Hydration extends WellnessMetric{
   constructor(data) {
     super(data);
     this.numOunces = data.numOunces;

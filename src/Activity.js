@@ -1,8 +1,11 @@
-import Fitlit from "./Fitlit";
+import WellnessMetric from "./WellnessMetric";
 
-class Activity extends Fitlit {
+class Activity extends WellnessMetric {
   constructor(data) {
     super(data);
+    this.numSteps = data.numSteps;
+    this.minutesActive = data.minutesActive;
+    this.flightsOfStairs = data.flightsOfStairs;
   }
   //Test function doesnt change page at all, make sure it is working need to display to the page.
   getMilesFromStepsByDate(id, date, userRepo) {

@@ -1,4 +1,4 @@
-class Fitlit {
+class WellnessMetric {
   constructor(data){
     this.userID = data.userID;
     this.date = data.date;
@@ -22,4 +22,4 @@ class Fitlit {
   }
 }
 
-export default Fitlit;
+export default WellnessMetric;
