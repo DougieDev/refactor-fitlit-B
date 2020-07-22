@@ -4,13 +4,18 @@ import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
 import Repo from './Repo';
-import HydrationRepo from './Hydration-repo'
-import ActivityRepo from './Activity-repo'
-import SleepRepo from './Sleep-repo'
+
+// import User from './User';
+// import Activity from './Activity';
+// import Hydration from './Hydration';
+// import Sleep from './Sleep';
+// import UserRepo from './User-repo';
 
 import {
   populateDailyData,
-  addInfoToUserSidebar, 
+  addInfoToUserSidebar,
+  insertForm, 
+  insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
 
@@ -19,8 +24,24 @@ const hydrationRepo = new Repo();
 const activityRepo = new Repo(); 
 const sleepRepo = new Repo();
 
+
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
+}
+const buttons = document.querySelectorAll('button');
+for(const button of buttons) {
+  button.addEventListener('click', buttonHandler);
+}
+
+function buttonHandler(event) {
+  if (event.target.id.includes('new')) {
+    // originalCardContent = event.target.parentElement.innerHTML;
+    insertForm(event);
+  } else if (event.target.id === 'submit') {
+    console.log(`run populate data, POST function, and do something with new date information.`)
+  } else if (event.target.id.includes('weekly')) {
+    insertWeeklyDataLayouts(event);
+  }
 }
 
 function catchAllData() {
@@ -34,25 +55,44 @@ function catchData(src) {
     .then(response => response.json())
     .then(data => data[src])
     .then(result => classInfo.class.storeData(result, src))
-    .then(repo => console.log(classInfo.class));
+    .then(repo => dataEventHandler(src));
+}
+
+function dataEventHandler(src) {
+  if (src === 'userData') {
+    // startUserPopulation()
+    console.log(userRepo);
+  } else if (src === 'hydrationData') {
+    // startHydrationPopulation()
+    console.log(hydrationRepo);
+  } else if (src === 'sleepData') {
+    // startSleepPopulation() 
+    console.log(sleepRepo);
+  } else if (src === 'activityData') {
+    // startActivityPopulation()
+    console.log(activityRepo); 
+  }
 }
 
 function findClassInfo(src) {
   const classInfo = {}
   if (src.includes('user')) {
-    classInfo.url = 'users'
+    classInfo.url = 'users';
     classInfo.class = userRepo;
   } else if (src.includes('sleep')) {
-    classInfo.url = 'sleep'
+    classInfo.url = 'sleep';
     classInfo.class = sleepRepo;
   } else if (src.includes('activity')) {
-    classInfo.url = 'activity'
+    classInfo.url = 'activity';
     classInfo.class = activityRepo;
   } else if (src.includes('hydration')) {
-    classInfo.url = 'hydration'
+    classInfo.url = 'hydration';
     classInfo.class = hydrationRepo;
   }
   return classInfo;
 }
 
 startApp();
+
+
+
