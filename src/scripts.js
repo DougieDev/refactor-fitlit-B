@@ -9,6 +9,10 @@ import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
 import activityData from './data/activity';
 
+import Fitlit from './Fitlit';
+
+// const fit = new Fitlit();
+
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
@@ -16,10 +20,8 @@ import Sleep from './Sleep';
 import UserRepo from './User-repo';
 
 import {
+  populateDailyData,
   addInfoToUserSidebar, 
-  addTodaysHydration, 
-  addTodaysSleep, 
-  addTodaysActivity, 
   addFriendSidebar
 } from './page-manipulation';
 
@@ -30,7 +32,7 @@ import Pikaday from '../node_modules/pikaday/pikaday';
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
-
+  
   let userList = [];
   await makeUsers(userList);
   let userRepo = new UserRepo(userList);
@@ -43,11 +45,10 @@ async function startApp() {
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToUserSidebar(userNow, userRepo);
-  addTodaysHydration(userNowId, hydrationRepo, today, userRepo, randomHistory);
-  addTodaysSleep(userNowId, sleepRepo, today, userRepo, randomHistory);
+  populateDailyData('hydration-today', hydrationRepo, userNow.id, today);
+  populateDailyData('activity-today', activityRepo, userNow.id, today);
+  populateDailyData('sleep-today', sleepRepo, userNow.id, today);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  addTodaysActivity(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  // addFriendSidebar(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
 async function catchData(id) {

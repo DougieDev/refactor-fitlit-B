@@ -17,12 +17,35 @@
         <h2>Daily Fitness</h2>
         <section class="card-container" id="daily-cards">
           <section class="card" id="hydration-today">
+            <p class="hydration-card">
+              You drank
+              <span class="number" id="numOunces">0</span>
+              oz today. <br />
+              Your average water intake is
+              <span class="number" id="numOunces-average"></span>
+            </p>
             <button id="new-hydration">add new info</button>
           </section>
           <section class="card" id="activity-today">
+            <p class="activity-card">
+              Your step count today:
+              <span class="number" id="numSteps">0</span>
+              Your stair count today:
+              <span class="number" id="flightsOfStairs">0</span>
+              Your minutes active today:
+              <span class="number" id="minutesActive">0</span>
+            </p>
             <button id="new-activity">add new info</button>
           </section>
           <section class="card" id="sleep-today">
+            <p class="sleep-card">
+              You slept
+              <span class="number" id="hoursSlept">0</span>
+              hours today.<br />
+              Your sleep quality was
+              <span class="number" id="sleepQuality">0</span>
+              out of 5.
+            </p>
             <button id="new-sleep">add new info</button>
           </section>
           <section class="card">
@@ -41,15 +64,15 @@
             user goals:<button id="update-goals">Update Info</button>
           </section>
           <section class="card" id="account-info">
-            account info:<button id="update-info">Update Info</button> 
+            account info:<button id="update-info">Update Info</button>
           </section>
           <section class="week-card" id="user-trends">
             <select name="week" id="week-select">
              <option value='date'>
                boy howdy how are we gonna populate weeks to choose from
-             </option> 
+             </option>
              </select>
-             <section class="weekly-calendar-container">
+             <section class="calendar-container">
                <nav id="weekly-data-options">
                  <button id="weekly-hydration">Hydration</button>
                  <button id="weekly-activity">Activity</button>
@@ -86,8 +109,4 @@
     </section>
   </body>
   </html>
-  
-
-
-
 

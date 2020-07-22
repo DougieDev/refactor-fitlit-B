@@ -1,15 +1,17 @@
-class Activity {
-  constructor(activityData) {
-    this.activityData = activityData
+import Fitlit from "./Fitlit";
+
+class Activity extends Fitlit {
+  constructor(data) {
+    super(data);
   }
   //Test function doesnt change page at all, make sure it is working need to display to the page.
   getMilesFromStepsByDate(id, date, userRepo) {
-    let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
+    let userStepsByDate = this.data.find(data => id === data.userID && date === data.date);
     return parseFloat(((userStepsByDate.numSteps * userRepo.strideLength) / 5280).toFixed(1));
   }
   /*Function doesn't seem to effect the display of the page check where it is called */
   getActiveMinutesByDate(id, date) {
-    let userActivityByDate = this.activityData.find(data => id === data.userID && date === data.date);
+    let userActivityByDate = this.data.find(data => id === data.userID && date === data.date);
     return userActivityByDate.minutesActive;
   }
   /*Removing does not seem to effect the display seem to be a trend on this class
@@ -19,6 +21,7 @@ class Activity {
       .reduce((sum, elem) => {
         return sum += elem.minutesActive;
       }, 0) / 7).toFixed(1));
+
   }
   /* Again does not seem to effect web display maybe activity class was not used
   correctly or never made it in the project properly or is being analyzed else where
@@ -62,10 +65,11 @@ class Activity {
   }
 
 
+
   /*THIS FUNCTION ALSO IF REMOVED BREAKS THE PAGE DISPLAY 
   same as above this function can get writen to be utilized in all data classes*/
   userDataForToday(id, date, userRepo, relevantData) {
-    let userData = userRepo.getDataFromUserID(id, this.activityData);
+    let userData = userRepo.getDataFromUserID(id, this.data);
     return userData.find(data => data.date === date)[relevantData];
   }
   /*THIS FUNCTION REMOVES ALL DATA FROM DISPLAY USER INFO AND FRIEND INFO
@@ -82,7 +86,6 @@ class Activity {
     let userDatalist = user.friends.map(friend => {
       return userRepo.getDataFromUserID(friend, data)
     });
-
     return userDatalist.reduce(function(arraySoFar, listItem) {
       return arraySoFar.concat(listItem);
     }, []);
@@ -118,7 +121,7 @@ class Activity {
   /* REMOVES 3 DAY STEP, INCREASING ACTIVITY FOR USER. REMOVES WEEKLY WINNER
   not really part of the friends functionality */
   getStreak(userRepo, id, relevantData) {
-    let data = this.activityData;
+    let data = this.data;
     let sortedUserArray = (userRepo.makeSortedUserArray(id, data)).reverse();
     let streaks = sortedUserArray.filter(function(element, index) {
       if (index >= 2) {
