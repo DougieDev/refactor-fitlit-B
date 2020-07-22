@@ -4,6 +4,7 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
+import Pikaday from '../node_modules/pikaday/pikaday';
 // import userData from './data/users';
 import hydrationData from './data/hydration';
 import sleepData from './data/sleep';
@@ -21,24 +22,26 @@ import UserRepo from './User-repo';
 
 import {
   populateDailyData,
-  addInfoToUserSidebar, 
+  addInfoToUserSidebar,
+  insertForm, 
+  insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
 
-
-
-import Pikaday from '../node_modules/pikaday/pikaday';
-
+const buttons = document.querySelectorAll('button');
+for(const button of buttons) {
+  button.addEventListener('click', buttonHandler);
+}
 
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
-  
   let userList = [];
   await makeUsers(userList);
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
   let sleepRepo = new Sleep(sleepData);
   let activityRepo = new Activity(activityData);
+  
   var userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, hydrationData);
@@ -49,6 +52,17 @@ async function startApp() {
   populateDailyData('activity-today', activityRepo, userNow.id, today);
   populateDailyData('sleep-today', sleepRepo, userNow.id, today);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
+}
+
+function buttonHandler(event) {
+  if (event.target.id.includes('new')) {
+    // originalCardContent = event.target.parentElement.innerHTML;
+    insertForm(event);
+  } else if (event.target.id === 'submit') {
+    console.log(`run populate data, POST function, and do something with new date information.`)
+  } else if (event.target.id.includes('weekly')) {
+    insertWeeklyDataLayouts(event);
+  }
 }
 
 async function catchData(id) {

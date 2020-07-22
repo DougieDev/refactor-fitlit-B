@@ -1,10 +1,17 @@
-// function makeStepsHTML(id, activityInfo, userStorage, method) {
-//   return method.map((activityData) => {
-//       return `<li class="historical-list-listItem">On ${activityData} steps</li>`;
-//     }).join("");
-// }
-
-
+function insertForm(event) {
+  const dateInput = `date: <input id="date" />`;
+  event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
+  const innerElements = event.target.parentElement.children[1].children;
+  for (var i = 0; i < innerElements.length; i++) {
+    if(innerElements[i].classList.contains('number') 
+    && !innerElements[i].id.includes('average')) {
+      let id = innerElements[i].id;
+      innerElements[i].innerHTML = `<input id=${id} />`
+    }
+  }
+  event.target.id = `submit`;
+  event.target.innerText = `submit`;
+}
 
 function populateDailyData(card, repo, userId, date) {
   const location = document.getElementById(card);
@@ -16,6 +23,28 @@ function populateDailyData(card, repo, userId, date) {
     } else if (innerElements[i].classList.contains('number')) {
       innerElements[i].innerText = repo.getData(userId, date, innerElements[i].id);
     }
+  }
+}
+
+function insertWeeklyDataLayouts(event) {
+  const weekdays = document.querySelectorAll('.historic-data');
+  const hydrationWeekdayHtml = `<span class="number">0</span> oz drank`;
+  const activityWeekdayHtml =  `Step Count: <span class="number">0</span>
+    Stair Count: <span class="number">0</span>
+    Minutes Active: <span class="number">0</span>`
+  const sleepWeekdayHtml = `Hours Asleep: <span class="number">0</span>
+    Sleep Quality: <span class="number">0</span>out of 5`
+  const insertLayout = (html) => {
+    for (var i = 0; i < weekdays.length; i++) {
+      weekdays[i].innerHTML = html;
+    }
+  };
+  if (event.target.id.includes('hydration')) {
+    insertLayout(hydrationWeekdayHtml);
+  } else if (event.target.id.includes('activity')) {
+    insertLayout(activityWeekdayHtml);
+  } else if (event.target.id.includes('sleep')) {
+    insertLayout(sleepWeekdayHtml);
   }
 }
 
@@ -139,4 +168,7 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
   );
 }
 
-export {populateDailyData, addInfoToUserSidebar, addFriendSidebar}
+
+
+
+export {populateDailyData, insertWeeklyDataLayouts, addInfoToUserSidebar, addFriendSidebar, insertForm}
