@@ -1,3 +1,4 @@
+
 // function makeStepsHTML(id, activityInfo, userStorage, method) {
 //   return method.map((activityData) => {
 //       return `<li class="historical-list-listItem">On ${activityData} steps</li>`;
@@ -259,3 +260,4 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 export {addInfoToUserSidebar, addTodaysHydration, addTodaysSleep, addTodaysActivity, addFriendSidebar}
+

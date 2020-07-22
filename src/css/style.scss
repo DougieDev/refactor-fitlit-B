@@ -1,3 +1,5 @@
+@use './node_modules/pikaday/css/pikaday.scss';
+
 $background-grey: #4d4e4f;
 $sidebar-grey: #9A9DAB;
 $white: #ffffff;
@@ -314,3 +316,4 @@ table {
   font-weight: bold;
   font-family: sans-serif;
 }
+

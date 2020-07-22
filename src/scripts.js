@@ -23,6 +23,11 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
+
+
+import Pikaday from '../node_modules/pikaday/pikaday';
+
+
 async function startApp() {
   var historicalWeek = document.querySelectorAll('.historicalWeek');
 
@@ -81,6 +86,9 @@ function makeRandomDate(userStorage, id, dataSet) {
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
   return sortedArray[Math.floor(Math.random() * sortedArray.length + 1)].date
 }
+
+let picker = new Pikaday({ field: document.getElementById('datepicker') });
+picker.show();
 
 
 
