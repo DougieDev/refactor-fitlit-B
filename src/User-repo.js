@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+import Repo from "./Repo";
+
+class UserRepo extends Repo {
+
+  // storeData(data) {
+  //   this.users = data.map(user => new User(user));
+  // }
+
+  confirmUser() {
+    console.log(`hi I'm bob`)
+  }
+
+
+  makeUsers(users) {
+    return users.map(user => new User(user))
+=======
 //This class takes in all userData from the api and stores all of it for all users.
 // so if using async we need to make a new UserRepo each time the data is updated
 
@@ -7,6 +24,7 @@ import Fitlit from "./Fitlit";
 class UserRepo {
   constructor(users) {
     this.users = users;
+>>>>>>> master
   }
 
   /* BREAKS ALL DATA IF REMOVED */

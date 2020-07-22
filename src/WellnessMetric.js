@@ -1,6 +1,7 @@
-class Fitlit {
+class WellnessMetric {
   constructor(data){
-    this.data = data;
+    this.userID = data.userID;
+    this.date = data.date;
   }
   
   getData(id, date, key) {
@@ -21,4 +22,4 @@ class Fitlit {
   }
 }
 
-export default Fitlit;
+export default WellnessMetric;

@@ -1,9 +1,10 @@
-// import data from './data/sleep';
-import Fitlit from "./Fitlit";
+import WellnessMetric from "./WellnessMetric";
 
-class Sleep extends Fitlit {
+class Sleep extends WellnessMetric {
   constructor(data) {
     super(data);
+    this.hoursSlept = data.hoursSlept;
+    this.sleepQuality = data.sleepQuality;
   }
   /* removing did not seem to have any effect on page display*/
   calculateAverageSleep(id) {

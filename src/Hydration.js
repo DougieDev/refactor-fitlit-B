@@ -1,8 +1,9 @@
-import Fitlit from './Fitlit';
+import WellnessMetric from './WellnessMetric';
 
-class Hydration extends Fitlit{
+class Hydration extends WellnessMetric{
   constructor(data) {
     super(data);
+    this.numOunces = data.numOunces;
   }
 
   /*IF REMOVED, REMOVES ALL DATA EXCEPT USER PERSONAL DATA EX. NAME/ ADDRESS/ ETC...*/
