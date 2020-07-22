@@ -3,7 +3,7 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
-import UserRepo from './User-repo';
+import Repo from './Repo';
 import HydrationRepo from './Hydration-repo'
 import ActivityRepo from './Activity-repo'
 import SleepRepo from './Sleep-repo'
@@ -14,10 +14,10 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-const userRepo = new UserRepo();
-const hydrationRepo = new HydrationRepo();
-const activityRepo = new ActivityRepo(); 
-const sleepRepo = new SleepRepo();
+const userRepo = new Repo();
+const hydrationRepo = new Repo();
+const activityRepo = new Repo(); 
+const sleepRepo = new Repo();
 
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
@@ -33,7 +33,7 @@ function catchData(src) {
   return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${src}`)
     .then(response => response.json())
     .then(data => data[src])
-    .then(result => classInfo.class.storeData(result))
+    .then(result => classInfo.class.storeData(result, src))
     .then(repo => console.log(classInfo.class));
 }
 

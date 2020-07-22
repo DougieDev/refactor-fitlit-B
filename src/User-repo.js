@@ -1,9 +1,10 @@
-import User from "./User";
+import Repo from "./Repo";
 
-class UserRepo {
-  storeData(data) {
-    this.users = data.map(user => new User(user));
-  }
+class UserRepo extends Repo {
+
+  // storeData(data) {
+  //   this.users = data.map(user => new User(user));
+  // }
 
   confirmUser() {
     console.log(`hi I'm bob`)
