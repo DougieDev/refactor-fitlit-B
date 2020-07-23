@@ -41,6 +41,11 @@ class Repo {
     });
   } 
 
+  getAllUserAverageForDay(date, userRepo, dataPropertyName) {
+    let selectedDayData = this.chooseDayDataForAllUsers(this.activityData, date);
+    return parseFloat((selectedDayData.reduce((sum, average) => sum += average[dataPropertyName], 0) / selectedDayData.length).toFixed(1));
+  }
+
   chooseWeekDataForAllUsers(dataSet, date) {
     return dataSet.filter(dataItem => {
       return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
@@ -51,6 +56,8 @@ class Repo {
     let dateIndex = this.makeSortedUserArray(id, dataSet).indexOf(this.makeSortedUserArray(id, dataSet).find((sortedItem) => (sortedItem.date === date)));
     return this.makeSortedUserArray(id, dataSet).slice(dateIndex, dateIndex + 7);
   }
+
+  
 
   makeSortedUserArray(id, dataSet/*= ex. activityData */) {
     let selectedID = this.getDataFromUserID(id, dataSet)

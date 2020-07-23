@@ -3,6 +3,7 @@ import Repo from './Repo'
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
+    this.users = usersData;
   }
 
   /* BREAKS ALL DATA IF REMOVED */

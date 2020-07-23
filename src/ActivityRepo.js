@@ -3,18 +3,19 @@ import Repo from "./Repo";
 class ActivityRepo extends Repo {
   constructor(activityData) {
     super(activityData);
+    this.activityData = activityData;
   }
   
   getMilesFromStepsByDate(id, date) {
-    let user = this.getDataFromID(id);
+    let user = this.findById(id, date);
     let userMiles = this.getUserDatabyDate(id, date);
     return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
   
-  getActiveMinutesByDate(id, date) {
-    let userActivityByDate = this.getUserDatabyDate(id, date);
-    return userActivityByDate.minutesActive;
-  }
+  // getActiveMinutesByDate(id, date) {
+  //   let userActivityByDate = this.getUserDatabyDate(id, date);
+  //   return userActivityByDate.minutesActive;
+  // }
  
   calculateActiveAverageForWeek(id, date) {
     return parseFloat((this.getWeekFromDate(date, id, this.activityData)
@@ -23,9 +24,9 @@ class ActivityRepo extends Repo {
       }, 0) / 7).toFixed(1));
   }
  
-  accomplishStepGoal(id, date, userRepo) {
+  accomplishStepGoal(id, date, user) {
     let userStepsByDate = this.getUserDatabyDate(id, date);
-    return (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
+    return (userStepsByDate.numSteps === user.dailyStepGoal) ? true : false;
   }
 
   getDaysGoalExceeded(id, user) {
@@ -44,20 +45,10 @@ class ActivityRepo extends Repo {
         return (user.flightsOfStairs > record) ? user.flightsOfStairs : record
       }, 0);
   }
-
-  getAllUserAverageForDay(date, userRepo, dataPropertyName) {
-    let selectedDayData = this.chooseDayDataForAllUsers(this.activityData, date);
-    return parseFloat((selectedDayData.reduce((sum, average) => sum += average[dataPropertyName], 0) / selectedDayData.length).toFixed(1));
-  }
-
-  userDataForToday(id, date, userRepo, dataPropertyName) {
-    let userData = this.getDataFromUserID(id, this.data);
-    return userData.find(data => data.date === date)[dataPropertyName];
-  }
  
-  userDataForWeek(id, date, userRepo, dataPropertyName) {
-    return this.getWeekFromDate(date, id, this.activityData).map(data => `${data.date}: ${data[dataPropertyName]}`);
-  }
+  // userDataForWeek(id, date, userRepo, dataPropertyName) {
+  //   return this.getWeekFromDate(date, id, this.activityData).map(data => `${data.date}: ${data[dataPropertyName]}`);
+  // }
 
   getStreak(userRepo, id, relevantData) {
     let data = this.data;
@@ -74,31 +65,33 @@ class ActivityRepo extends Repo {
   }
 
   // Friends
+
+  //Move Greyson Moving
   
-  showChallengeListAndWinner(user, date, userRepo) {
-    let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
-    return rankedList.map(listItem => {
-      console.log(listItem)
-      let userID = Object.keys(listItem)[0];
-      console.log(userID)
-      let userName = this.getDataFromID(parseInt(userID)).name;
-      return `${userName}: ${listItem[userID]}`
-    })
-  }
+  // showChallengeListAndWinner(user, date, userRepo) {
+  //   let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
+  //   return rankedList.map(listItem => {
+  //     console.log(listItem)
+  //     let userID = Object.keys(listItem)[0];
+  //     console.log(userID)
+  //     let userName = this.getDataFromID(parseInt(userID)).name;
+  //     return `${userName}: ${listItem[userID]}`
+  //   })
+  // }
   
-  showcaseWinner(user, date, userRepo) {
-    let namedList = this.showChallengeListAndWinner(user, date, userRepo);
-    let winner = this.showChallengeListAndWinner(user, date, userRepo).shift();
-    return winner;
-  }
+  // showcaseWinner(user, date, userRepo) {
+  //   let namedList = this.showChallengeListAndWinner(user, date, userRepo);
+  //   let winner = this.showChallengeListAndWinner(user, date, userRepo).shift();
+  //   return winner;
+  // }
  
   
   
-  getWinnerId(user, date, userRepo) {
-    let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
-    let keysList = rankedList.map(listItem => Object.keys(listItem));
-    return parseInt(keysList[0].join(''))
-  }
+  // getWinnerId(user, date, userRepo) {
+  //   let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
+  //   let keysList = rankedList.map(listItem => Object.keys(listItem));
+  //   return parseInt(keysList[0].join(''))
+  // }
 }
 
 

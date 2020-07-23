@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import ActivityRepo from '../src/ActivityRepo';
-import UserRepo from '../src/User-repo';
+import UserRepo from '../src/UserRepo';
 import User from '../src/User';
 
 describe('Activity', function() {
@@ -196,8 +196,10 @@ describe('Activity', function() {
       friends: [1, 2]
     });
     users = [user1, user2, user3, user4];
-    userRepo = new UserRepo(users);
-    activity = new ActivityRepo(activityData);
+    userRepo = new UserRepo();
+    userRepo.storeData(users);
+    activity = new ActivityRepo();
+    activity.storeData(activityData);
   });
   it('should take in data', function() {
     expect(activity.activityData[0].userID).to.eql(1);
@@ -206,7 +208,7 @@ describe('Activity', function() {
     expect(activity.activityData[8].minutesActive).to.eql(41);
     expect(activity.activityData[10].flightsOfStairs).to.eql(24);
   });
-  it('should return the miles a given user has walked on a given date', function() {
+  it.only('should return the miles a given user has walked on a given date', function() {
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo.users[0])).to.eql(2.9);
   });
   it('should return the number of minutes a given user was active for on a given day', function() {
