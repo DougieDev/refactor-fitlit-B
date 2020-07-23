@@ -1,10 +1,8 @@
 import Repo from "./Repo";
 
 class SleepRepo extends Repo {
-  constructor(data) {
-    super(data);
-    this.hoursSlept = data.hoursSlept;
-    this.sleepQuality = data.sleepQuality;
+  constructor(sleepData) {
+    super(sleepData);
   }
   /* removing did not seem to have any effect on page display*/
   calculateAverageSleep(id) {

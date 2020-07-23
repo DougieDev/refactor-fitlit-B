@@ -1,8 +1,8 @@
 import Repo from './Repo'
 
 class UserRepo extends Repo  {
-  constructor(users) {
-    this.users = users;
+  constructor(usersData) {
+    super(usersData)
   }
 
   /* BREAKS ALL DATA IF REMOVED */

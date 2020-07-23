@@ -1,9 +1,6 @@
 class Repo {
   constructor() {
-    this.currentId = this.pickRandomUser()
   }
-
-  pickRandomUser()
 
   storeData(data, src) {
     if (src === 'userData' && this.dataIsCorrect(data, src)) {
@@ -20,21 +17,21 @@ class Repo {
   }
 
   dataIsCorrect(data, src) {
-    // const requirements = {
-    //   'userData': ["id", "name", "address", "email", "strideLength", "dailyStepGoal", "friends"],
-    //   'hydrationData': ['userID', 'date', 'numOunces'],
-    //   'activityData': ['userID', 'date', 'numSteps', 'minutesActive', 'flightsOfStairs'],
-    //   'sleepData': ['userId', 'date', 'hoursSlept', 'sleepQuality']
-    // };
+    const requirements = {
+      'userData': ["id", "name", "address", "email", "strideLength", "dailyStepGoal", "friends"],
+      'hydrationData': ['userID', 'date', 'numOunces'],
+      'activityData': ['userID', 'date', 'numSteps', 'minutesActive', 'flightsOfStairs'],
+      'sleepData': ['userID', 'date', 'hoursSlept', 'sleepQuality']
+    };
     
-    // let keys = Object.keys(data[0]); 
-    // keys = keys.map(key => key.toString());
+    let keys = Object.keys(data[0]); 
+    keys = keys.map(key => key.toString());
 
-    // if(requirements[src].every(requirement => keys.includes(requirement))) {
-    //   return true
-    // } else {
-    //   return false
-    // }
+    if(requirements[src].every(requirement => keys.includes(requirement))) {
+      return true
+    } else {
+      return false
+    }
     return true
   }
 

@@ -1,9 +1,8 @@
 import Repo from './Repo';
 
 class HydrationRepo extends Repo {
-  constructor(data) {
-    super(data);
-    this.numOunces = data.numOunces;
+  constructor(hydrationData) {
+    super(hydrationData);
   }
 
   /*IF REMOVED, REMOVES ALL DATA EXCEPT USER PERSONAL DATA EX. NAME/ ADDRESS/ ETC...*/

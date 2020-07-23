@@ -1,11 +1,8 @@
 import Repo from "./Repo";
 
 class ActivityRepo extends Repo {
-  constructor(data) {
-    super(data);
-    this.numSteps = data.numSteps;
-    this.minutesActive = data.minutesActive;
-    this.flightsOfStairs = data.flightsOfStairs;
+  constructor(activityData) {
+    super(activityData);
   }
   //Test function doesnt change page at all, make sure it is working need to display to the page.
   getMilesFromStepsByDate(id, date, userRepo) {
