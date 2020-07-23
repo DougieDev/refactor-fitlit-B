@@ -11,7 +11,6 @@ class ActivityRepo extends Repo {
   // }
 
 
-
   getMilesFromStepsByDate(id, date) {
     let user = this.getDataFromID(id);
     let userMiles = this.getUserDatabyDate(id, date);
@@ -67,7 +66,7 @@ class ActivityRepo extends Repo {
   the data classes*/
 
   getAllUserAverageForDay(date, userRepo, dataPropertyName) {
-    let selectedDayData = userRepo.chooseDayDataForAllUsers(this.activityData, date);
+    let selectedDayData = this.chooseDayDataForAllUsers(this.activityData, date);
     return parseFloat((selectedDayData.reduce((sum, average) => sum += average[dataPropertyName], 0) / selectedDayData.length).toFixed(1));
   }
 
@@ -75,14 +74,14 @@ class ActivityRepo extends Repo {
 
   /*THIS FUNCTION ALSO IF REMOVED BREAKS THE PAGE DISPLAY 
   same as above this function can get writen to be utilized in all data classes*/
-  userDataForToday(id, date, userRepo, relevantData) {
-    let userData = userRepo.getDataFromUserID(id, this.data);
-    return userData.find(data => data.date === date)[relevantData];
+  userDataForToday(id, date, userRepo, dataPropertyName) {
+    let userData = this.getDataFromUserID(id, this.data);
+    return userData.find(data => data.date === date)[dataPropertyName];
   }
   /*THIS FUNCTION REMOVES ALL DATA FROM DISPLAY USER INFO AND FRIEND INFO
   same as above another function that is probably being used in hydration and sleep as well*/
-  userDataForWeek(id, date, userRepo, releventData) {
-    return userRepo.getWeekFromDate(date, id, this.activityData).map(data => `${data.date}: ${data[releventData]}`);
+  userDataForWeek(id, date, userRepo, dataPropertyName) {
+    return userRepo.getWeekFromDate(date, id, this.activityData).map(data => `${data.date}: ${data[dataPropertyName]}`);
   }
 
   // Friends
