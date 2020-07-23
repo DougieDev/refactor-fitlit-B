@@ -5,13 +5,21 @@ class ActivityRepo extends Repo {
     super(activityData);
   }
   //Test function doesnt change page at all, make sure it is working need to display to the page.
-  getMilesFromStepsByDate(id, date, userRepo) {
-    let userStepsByDate = this.data.find(data => id === data.userID && date === data.date);
-    return parseFloat(((userStepsByDate.numSteps * userRepo.strideLength) / 5280).toFixed(1));
+
+  // getUserDatabyDate(id, date) {
+  //   userDatabyDate = this.data.find(data => id === data.userID && date === data.date);
+  // }
+
+
+
+  getMilesFromStepsByDate(id, date) {
+    let user = this.getDataFromID(id);
+    let userMiles = this.getUserDatabyDate(id, date);
+    return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
   /*Function doesn't seem to effect the display of the page check where it is called */
   getActiveMinutesByDate(id, date) {
-    let userActivityByDate = this.data.find(data => id === data.userID && date === data.date);
+    let userActivityByDate = this.getUserDatabyDate(id, date);
     return userActivityByDate.minutesActive;
   }
   /*Removing does not seem to effect the display seem to be a trend on this class

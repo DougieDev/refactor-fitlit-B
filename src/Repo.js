@@ -39,6 +39,10 @@ class Repo {
     return dataSet.filter(data => id === data.userID);
   }
 
+  getUserDatabyDate(id, date) {
+    userDatabyDate = this.data.find(data => id === data.userID && date === data.date);
+  }
+
 }
 
 
