@@ -20,14 +20,14 @@ class HydrationRepo extends Repo {
   // }
 
   /*IF REMOVED, REMOVES ALL DATA EXCEPT USER PERSONAL DATA AND DAILY/ AVERAGE WATER*/
-  calculateFirstWeekOunces(userRepo, id) {
-    return userRepo.getFirstWeek(id, this.data).map((data) => `${data.date}: ${data.numOunces}`);
+  calculateFirstWeekOunces(id) {
+    return this.getFirstWeek(id, this.data).map((data) => `${data.date}: ${data.numOunces}`);
   }
 
   /*IF REMOVED, REMOVES ALL DATA EXCEPT USER PERSONAL INFO, DAILY WATER/AVERAGE &
   WATER INTAKE THIS WEEK*/
-  calculateRandomWeekOunces(date, id, userRepo) {
-    return userRepo.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.numOunces}`);
+  calculateRandomWeekOunces(date, id) {
+    return this.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.numOunces}`);
   }
 }
 
