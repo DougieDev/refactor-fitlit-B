@@ -4,57 +4,9 @@ class SleepRepo extends Repo {
   constructor(sleepData) {
     super(sleepData);
   }
-  /* removing did not seem to have any effect on page display*/
-  calculateAverageSleep(id) {
-    let perDaySleep = this.data.filter((data) => id === data.userID);
-    return perDaySleep.reduce((sumSoFar, data) => {
-      return sumSoFar += data.hoursSlept;
-    }, 0) / perDaySleep.length;
-  }
 
-  /* removing also does not have any effect on the display*/
-  calculateAverageSleepQuality(id) {
-    let perDaySleepQuality = this.data.filter((data) => id === data.userID);
-    return perDaySleepQuality.reduce((sumSoFar, data) => {
-      return sumSoFar += data.sleepQuality;
-    }, 0) / perDaySleepQuality.length;
-  }
-
-  /*IF REMOVED, REMOVES ALL ACTIVITY DATA, STREAKS, SLEEP DATA, FRIENDS STATS,
-  DOES NOT EFFECT PERSONAL INFO OR WATER CARDS */
-  calculateDailySleep(id, date) {
-    let findSleepByDate = this.data.find((data) => id === data.userID && date === data.date);
-    return findSleepByDate.hoursSlept;
-  }
-
-  /* SAME AS FUNCTION ABOVE, EXCEPT DAILY SLEEP HOURS STILL DISPLAYS*/
-  calculateDailySleepQuality(id, date) {
-    let findSleepQualityByDate = this.data.find((data) => id === data.userID && date === data.date);
-    return findSleepQualityByDate.sleepQuality;
-  }
-
-  /* IF REMOVED, REMOVES ALL ACTIVITY DATA, FRIENDS STATS, STREAKS, WEEKLY SLEEP STATS,
-  DOES DISPLAY SLEEP DAILY(HOURS TODAY, QUALITY, AND AVERAGE)*/
-  calculateWeekSleep(date, id, userRepo) {
-    return userRepo.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.hoursSlept}`);
-  }
-
-  /* does not effect display may not be used or broken*/
-  calculateWeekSleepQuality(date, id, userRepo) {
-    return userRepo.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.sleepQuality}`);
-  }
-
-  /*IF REMOVED, REMOVES ALL ACTIVITY DATA, FRIENDS STATS, STREAKS, WEEKLY SLEEP STATS, AND SLEEP AVERAGE
-  DOES DISPLAY SLEEP DAILY(HOURS TODAY, QUALITY)*/
-  calculateAllUserSleepQuality() {
-    var totalSleepQuality = this.data.reduce(function(sumSoFar, dataItem) {
-      sumSoFar += dataItem.sleepQuality;
-      return sumSoFar;
-    }, 0)
-    return totalSleepQuality / data.length
-  }
-
-  /* does not seem to effect display function needs to be checked if working,
+  
+/* does not seem to effect display function needs to be checked if working,
   may of not been added to project due to time*/
   determineBestSleepers(date, userRepo) {
     let timeline = userRepo.chooseWeekDataForAllUsers(this.data, date);

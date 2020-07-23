@@ -3,8 +3,6 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
-
-
 import User from './User';
 import ActivityRepo from './ActivityRepo';
 import HydrationRepo from './HydrationRepo';
@@ -20,9 +18,9 @@ import {
 } from './page-manipulation';
 
 const userRepo = new UserRepo();
-const hydrationRepo = new HydrationRepo();
+const hydrationRepo = new Repo();
 const activityRepo = new ActivityRepo(); 
-const sleepRepo = new SleepRepo();
+const sleepRepo = new Repo();
 
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');

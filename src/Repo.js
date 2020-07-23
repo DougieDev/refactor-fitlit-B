@@ -9,11 +9,7 @@ class Repo {
 
   findById(id, date) {
     return this.data.find((dataPoint) => {
-      if (date) {
         return dataPoint.userID === id && dataPoint.date === date;
-      } else {
-        return dataPoint.id === id;
-      }
     });
   }
 
@@ -22,47 +18,69 @@ class Repo {
       if (dataPoint.userID === id) return dataPoint;
     });
   }
-
-  getUserDatabyDate(id, date) {
-    userDatabyDate = this.data.find(data => id === data.userID && date === data.date);
+ 
+  //Like findById, if Id is defined it should calculate average for a user.
+  //Otherwise it'll calculate the average of an entire dataset.
+  //Probably could be condensed
+  //Should be tested
+  calculateAverage(key, id) {  
+    return this.data.reduce((average, dataPoint) => {
+      let averageMath = average + dataPoint[key] / this.data.length;
+      if (id && dataPoint.userID === id) {
+        average = averageMath
+        return average;
+      } else {
+        average = averageMath
+        return average;
+      }
+    }, 0);
   }
 
-  getToday(id, dataSet) {
-    return this.makeSortedUserArray(id, dataSet)[0].date;
+  getToday(id) {
+    return this.sortUserDataByDate(id)[0].date;
   }
 
-  getFirstWeek(id, dataSet) {
-    return this.makeSortedUserArray(id, dataSet).slice(0, 7);
+  getFirstWeek(id) {
+    return this.sortUserDataByDate(id).slice(0, 7);
   }
 
-  chooseDayDataForAllUsers(dataSet, date) {
-    return dataSet.filter(dataItem => {
+  getAllDataByDay(date) { // better name: getAllDataByDay
+    return this.data.filter(dataItem => {
       return dataItem.date === date
     });
   } 
 
-  chooseWeekDataForAllUsers(dataSet, date) {
-    return dataSet.filter(dataItem => {
+  getAllDataByWeek(date) {  // better name: getAllDataByWeek
+    return this.data.filter(dataItem => {
+      // next line needs to get broken up
       return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
 
-  getWeekFromDate(date, id, dataSet/*date = '2019/04/19' id = 13 dataSet = activityData*/) {
-    let dateIndex = this.makeSortedUserArray(id, dataSet).indexOf(this.makeSortedUserArray(id, dataSet).find((sortedItem) => (sortedItem.date === date)));
-    return this.makeSortedUserArray(id, dataSet).slice(dateIndex, dateIndex + 7);
+  getAllDataById(id) {
+    return this.data.filter(dataPoint => dataPoint.userID === id)
+  }  // [{acitivities}]
+
+  getUserDataByWeek(date, id) {  // returns a slice of a sorted array, with entire dataPoints. [{act} {act} ...]
+    let userDataByDate = this.sortUserDataByDate(id, this.data);
+    let dateIndex = userDataByDate.indexOf(userDataByDate.find(firstItem => firstItem.date === date));
+    return userDataByDate.slice(dateIndex, dateIndex + 7);
   }
 
-  makeSortedUserArray(id, dataSet/*= ex. activityData */) {
-    let selectedID = this.getDataFromUserID(id, dataSet)
+  getUserAverageForWeek(id, date, key) {
+    let weekData = this.data.getUserDataByWeek(date, id)
+    let floatAverage = weekData.reduce((average, dataPoint) => {
+      average = average + dataPoint[key] / weekData.length
+      return floatAverage.toFixed(1);
+    }, 0)
+
+    return 
+  }
+
+  sortUserDataByDate(id) { // better name: sortUserDataByDate
+    let selectedID = this.getAllDataById(id)
     let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
     return sortedByDate;
-  }
-
-  calculateAverage(key) {
-    return this.data.reduce((average, dataPoint) => {
-      average = average + dataPoint[key] / this.data.length;
-      return average;
-    }, 0);
   }
 
   // unecessary for users. required for UserRepo.getToday(). Does UserRepo need to be the only one that can determine the current day? Is this the only use case for sorting arrays?
@@ -70,20 +88,6 @@ class Repo {
     let usersData = this.findAllUserData(id);
     return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-
-
-
-  // calculateAverage(id, key) {
-  //   const usersData = this.data.filter((data) => id === data.userID);
-
-  //   const average = usersData.reduce((average, data) => {
-  //     return (average = average + data[key] / usersData.length);
-  //   }, 0);
-
-  //   return Math.round(average);
-  // }
 }
-
-
 
 export default Repo
