@@ -1,4 +1,4 @@
-
+// Is this working properly??
 @use './node_modules/pikaday/css/pikaday.scss';
 
 @import 'variables';
@@ -34,7 +34,7 @@ h2 {
 }
 
 table, th, td {
-  border: 1px solid black;
+  border: $solid-border;
 }
 
 .historic-data {
@@ -49,7 +49,7 @@ table {
   padding: 2%;
   width: 100%;
   height: 100%;
-  border: 1px solid $black;
+  border: $solid-border;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@ table {
   font-kerning: normal;
 }
 
-.historicalWeek {
+.historical-week {
   text-align: center;
   font-size: 1em;
   font-weight: bolder;
@@ -71,10 +71,6 @@ table {
   color: $black;
 }
 
-.thisWeek {
-  text-align: center;
-  font-size: 1em;
-  font-weight: bolder;
-  margin: .5em;
-  color: $black;
+.this-week {
+  @extend .historical-week;
 }
