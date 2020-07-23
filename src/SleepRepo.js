@@ -54,7 +54,8 @@ class SleepRepo extends Repo {
     return totalSleepQuality / data.length
   }
 
-  /* does not seem to effect display function needs to be checked if working,
+  
+/* does not seem to effect display function needs to be checked if working,
   may of not been added to project due to time*/
   determineBestSleepers(date, userRepo) {
     let timeline = this.chooseWeekDataForAllUsers(this.data, date);

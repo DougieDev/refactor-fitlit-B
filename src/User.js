@@ -7,7 +7,12 @@ class User {
     this.strideLength = userDetails.strideLength;
     this.dailyStepGoal = userDetails.dailyStepGoal;
     this.friends = userDetails.friends;
+  }
 
+  findUserById() {
+    return this.data.find((dataPoint) => {
+      return dataPoint.userID === id && dataPoint.date === date;
+    });
   }
   
   getFirstName() {
@@ -18,21 +23,19 @@ class User {
     return this.friends.map((friendId) => (userStorage.getDataFromID(friendId).name));
   }
 
-  getFriendsAverageStepsForWeek(user, date, userRepo) {
-    let friendsActivity = this.getFriendsActivity(user, userRepo);
-    let timeline = this.chooseWeekDataForAllUsers(friendsActivity, date);
-    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
+  getFriendsActivity() {
+    return this.friends.reduce((friendsActivities, friend) => {
+      friendsActivities = friendsActivities.concat(activityRepo.getAllDataById(friend))
+      return friendsActivities
+    }, [])
   }
 
-  getFriendsActivity(user, userRepo) {
-    let data = this.activityData;
-    let userDatalist = user.friends.map(friend => {
-      return userRepo.getDataFromUserID(friend, data)
-    });
-    return userDatalist.reduce(function (arraySoFar, listItem) {
-      return arraySoFar.concat(listItem);
-    }, []);
+  getFriendsAverageStepsForWeek(date, userRepo) {
+    let friendsActivity = this.getFriendsActivity();
+    let timeline = this.getAllDataByWeek(friendsActivity, date);
+    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
   }
 }
 
 export default User;
+
