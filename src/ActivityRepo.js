@@ -28,7 +28,6 @@ class ActivityRepo extends Repo {
     return (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
   }
 
- 
   getDaysGoalExceeded(id, user) {
     return this.activityData.reduce((dates, data) => {
       if (id === data.userID && data.numSteps > user.dailyStepGoal) {
@@ -60,24 +59,22 @@ class ActivityRepo extends Repo {
     return this.getWeekFromDate(date, id, this.activityData).map(data => `${data.date}: ${data[dataPropertyName]}`);
   }
 
-  // Friends
-  
-  getFriendsActivity(user, userRepo) {
-    let data = this.activityData;
-    let userDatalist = user.friends.map(friend => {
-      return userRepo.getDataFromUserID(friend, data)
+  getStreak(userRepo, id, relevantData) {
+    let data = this.data;
+    let sortedUserArray = (userRepo.makeSortedUserArray(id, data)).reverse();
+    let streaks = sortedUserArray.filter(function(element, index) {
+      if (index >= 2) {
+        return (sortedUserArray[index - 2][relevantData] < sortedUserArray[index - 1][relevantData]
+           && sortedUserArray[index - 1][relevantData] < sortedUserArray[index][relevantData])
+      }
     });
-    return userDatalist.reduce(function(arraySoFar, listItem) {
-      return arraySoFar.concat(listItem);
-    }, []);
+    return streaks.map(function(streak) {
+      return streak.date;
+    })
   }
 
-  getFriendsAverageStepsForWeek(user, date, userRepo) {
-    let friendsActivity = this.getFriendsActivity(user, userRepo);
-    let timeline = this.chooseWeekDataForAllUsers(friendsActivity, date);
-    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
-  }
- 
+  // Friends
+  
   showChallengeListAndWinner(user, date, userRepo) {
     let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
     return rankedList.map(listItem => {
@@ -95,18 +92,7 @@ class ActivityRepo extends Repo {
     return winner;
   }
  
-  getStreak(userRepo, id, relevantData) {
-    let data = this.data;
-    let sortedUserArray = (userRepo.makeSortedUserArray(id, data)).reverse();
-    let streaks = sortedUserArray.filter(function(element, index) {
-      if (index >= 2) {
-        return (sortedUserArray[index - 2][relevantData] < sortedUserArray[index - 1][relevantData] && sortedUserArray[index - 1][relevantData] < sortedUserArray[index][relevantData])
-      }
-    });
-    return streaks.map(function(streak) {
-      return streak.date;
-    })
-  }
+  
   
   getWinnerId(user, date, userRepo) {
     let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);

@@ -71,15 +71,8 @@ class UserRepo extends Repo  {
   //   });
   // } 
 
-  /*REMOVES ALL ACTIVITY DATA, STREAKS INFO, FRIENDS SECTION,
-  WATER, AND SLEEP INFO REMAIN.*/
-  //What is relevantData and listFromMethod? 
-  //relevantData = string ex "sleepQuality","hoursSlept"
-  //listFromMethod = a function return value ex'userRepo.chooseWeekDataForAllUsers(sleepData, "2019/06/21")'
-  //Where is this function being used? Looks like is can be used in more places 
-  //No 'this' in functions can these functions be moved to another class?
-  //I only see this function called below and in Sleep.js
-  isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod) {
+
+  isolateUsernameAndRelevantData(dataSet, date, propertyName, listFromMethod) {
     return listFromMethod.reduce((objectSoFar, dataItem) => {
       if (!objectSoFar[dataItem.userID]) {
         objectSoFar[dataItem.userID] = [dataItem[relevantData]]
@@ -90,12 +83,7 @@ class UserRepo extends Repo  {
     }, {});
   }
 
-  /*SAME AS ABOVE*/
-  //This function is not currently called in any other files.
-  //Why is it breaking display?
-  //sleepQuality through out function
-  //can we utilize this function for more
-  //looks like it might be recording sleepquality but no 100% certain
+ 
   rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     return Object.keys(sortedObjectKeys).sort((b, a) => {
@@ -109,10 +97,6 @@ class UserRepo extends Repo  {
     });
   }
 
-  /*IF REMOVED, REMOVES ALL DATA IN PROJECT*/
-  //Used in activity class in getFriendsAverageStepsPerWeek()
-  //Used in sleep class determineSleepWinnerForWeek()
-  //and determineSleepHoursWinnerForDay()
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     let rankedUsersAndAverages = this.rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod)

@@ -65,7 +65,7 @@ class Repo {
     }, 0);
   }
 
-  // unecessary for users. required for UserRepo.getToday(). Does UserRepo need to be the only one that can determine the current day? Is this the only use case for sorting arrays?
+  
   sortDataByDate(id) {
     let usersData = this.findAllUserData(id);
     return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
