@@ -29,21 +29,20 @@ class ActivityRepo extends Repo {
       .reduce((sum, elem) => {
         return sum += elem.minutesActive;
       }, 0) / 7).toFixed(1));
-
   }
   /* Again does not seem to effect web display maybe activity class was not used
   correctly or never made it in the project properly or is being analyzed else where
   function returns true if user accomplishes step goal*/
   accomplishStepGoal(id, date, userRepo) {
-    let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
+    let userStepsByDate = this.getUserDatabyDate(id, date);
     return (userStepsByDate.numSteps === userRepo.dailyStepGoal) ? true : false;
   }
 
   /* again no changes to the display, research how we are using our functionality
   function returns an array of dates goal was exceeded*/
-  getDaysGoalExceeded(id, userRepo) {
+  getDaysGoalExceeded(id, user) {
     return this.activityData.reduce((dates, data) => {
-      if (id === data.userID && data.numSteps > userRepo.dailyStepGoal) {
+      if (id === data.userID && data.numSteps > user.dailyStepGoal) {
         dates.push(data.date);
       }
       return dates;

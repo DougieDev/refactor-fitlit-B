@@ -43,6 +43,18 @@ class Repo {
     userDatabyDate = this.data.find(data => id === data.userID && date === data.date);
   }
 
+  chooseDayDataForAllUsers(dataSet, date) {
+    return dataSet.filter(dataItem => {
+      return dataItem.date === date
+    });
+  } 
+
+  makeSortedUserArray(id, dataSet/*= ex. activityData */) {
+    let selectedID = this.getDataFromUserID(id, dataSet)
+    let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return sortedByDate;
+  }
+
 }
 
 

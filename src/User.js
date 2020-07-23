@@ -1,6 +1,3 @@
-//User Repo needs to be instantiated first it holds all data for all users
-
-
 class User {
   constructor(userDetails) {
     this.userID = userDetails.id;
