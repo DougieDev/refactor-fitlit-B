@@ -36,12 +36,12 @@ class SleepRepo extends Repo {
   /* IF REMOVED, REMOVES ALL ACTIVITY DATA, FRIENDS STATS, STREAKS, WEEKLY SLEEP STATS,
   DOES DISPLAY SLEEP DAILY(HOURS TODAY, QUALITY, AND AVERAGE)*/
   calculateWeekSleep(date, id, userRepo) {
-    return userRepo.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.hoursSlept}`);
+    return this.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.hoursSlept}`);
   }
 
   /* does not effect display may not be used or broken*/
   calculateWeekSleepQuality(date, id, userRepo) {
-    return userRepo.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.sleepQuality}`);
+    return this.getWeekFromDate(date, id, this.data).map((data) => `${data.date}: ${data.sleepQuality}`);
   }
 
   /*IF REMOVED, REMOVES ALL ACTIVITY DATA, FRIENDS STATS, STREAKS, WEEKLY SLEEP STATS, AND SLEEP AVERAGE
@@ -57,7 +57,7 @@ class SleepRepo extends Repo {
   /* does not seem to effect display function needs to be checked if working,
   may of not been added to project due to time*/
   determineBestSleepers(date, userRepo) {
-    let timeline = userRepo.chooseWeekDataForAllUsers(this.data, date);
+    let timeline = this.chooseWeekDataForAllUsers(this.data, date);
     let userSleepObject = userRepo.isolateUsernameAndRelevantData(this.data, date, 'sleepQuality', timeline);
 
     return Object.keys(userSleepObject).filter(function(key) {
@@ -66,13 +66,13 @@ class SleepRepo extends Repo {
         return sumSoFar;
       }, 0) / userSleepObject[key].length) > 3
     }).map(function(sleeper) {
-      return userRepo.getDataFromID(parseInt(sleeper)).name;
+      return this.getDataFromID(parseInt(sleeper)).name;
     })
   }
 
   /*same as above does not seem to have made it into the display or application*/
   determineSleepWinnerForWeek(date, userRepo) {
-    let timeline = userRepo.chooseWeekDataForAllUsers(this.data, date);
+    let timeline = this.chooseWeekDataForAllUsers(this.data, date);
     let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(this.data, date, 'sleepQuality', timeline);
 
     return this.getWinnerNamesFromList(sleepRankWithData, userRepo);
@@ -80,7 +80,7 @@ class SleepRepo extends Repo {
 
   /* removing has no effect on display, same action as above*/
   determineSleepHoursWinnerForDay(date, userRepo) {
-    let timeline = userRepo.chooseDayDataForAllUsers(this.data, date);
+    let timeline = this.chooseDayDataForAllUsers(this.data, date);
     let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(this.data, date, 'hoursSlept', timeline);
 
     return this.getWinnerNamesFromList(sleepRankWithData, userRepo);
@@ -98,7 +98,7 @@ class SleepRepo extends Repo {
     });
 
     return bestSleeperIds.map(function(sleepNumber) {
-      return userRepo.getDataFromID(parseInt(sleepNumber)).name;
+      return this.getDataFromID(parseInt(sleepNumber)).name;
     });
   }
 }
