@@ -19,16 +19,6 @@ class UserRepo extends Repo  {
   //   return dataSet.filter(userData => id === userData.userID);
   // }
 
-  /*REMOVING GETS RID OF ALL GENERATED DATA */
-  // function returns average as number ex. 6700
-  // function looks right math seems correct
-  // refactored removed sumSoFar = not needed 
-  calculateAverageStepGoal() {
-    var totalStepGoal = this.users.reduce((sumSoFar, data) => {
-      return sumSoFar + data.dailyStepGoal;
-    }, 0);
-    return totalStepGoal / this.users.length;
-  }
 
   /*SAME EFFECT AS ABOVE
   this function returns all user data SORTED from most recent date to furthest date of specific dataSet
@@ -67,19 +57,19 @@ class UserRepo extends Repo  {
   DOES NOT EFFECT WATER OR SLEEP SECTIONS 
   similar to function above but returns all users data for a week by a single date 
   for dataSet passed in */
-  chooseWeekDataForAllUsers(dataSet, date) {
-    return dataSet.filter(dataItem => {
-      return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
-    })
-  }
+  // chooseWeekDataForAllUsers(dataSet, date) {
+  //   return dataSet.filter(dataItem => {
+  //     return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
+  //   })
+  // }
   /*SAME AS ABOVE WITH THE EXCEPTION TO STAIR COUNT STILL APPEARS
   same idea as above but for only the date selected 
   return all users data for specific dataSet activityData, sleepData, hydrationData*/
-  chooseDayDataForAllUsers(dataSet, date) {
-    return dataSet.filter(dataItem => {
-      return dataItem.date === date
-    });
-  } 
+  // chooseDayDataForAllUsers(dataSet, date) {
+  //   return dataSet.filter(dataItem => {
+  //     return dataItem.date === date
+  //   });
+  // } 
 
   /*REMOVES ALL ACTIVITY DATA, STREAKS INFO, FRIENDS SECTION,
   WATER, AND SLEEP INFO REMAIN.*/

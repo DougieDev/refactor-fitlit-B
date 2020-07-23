@@ -1,42 +1,26 @@
 class Repo {
   constructor() {
+    this.data;
   }
 
-  storeData(data, src) {
-    if (src === 'userData' && this.dataIsCorrect(data, src)) {
-      this.users = data; 
-    } else if (src === "hydrationData" && this.dataIsCorrect(data, src)) {
-      this.hydration = data;
-    } else if (src === "sleepData" && this.dataIsCorrect(data, src)) {
-      this.sleep = data;
-    } else if (src === "activityData" && this.dataIsCorrect(data, src)) {
-      this.activity = data;
-    } else {
-      return "You have provided either incomplete or incorrect data";
-    }
+  storeData(data) {
+    if (Array.isArray(data)) this.data = data;
   }
 
-  dataIsCorrect(data, src) {
-    const requirements = {
-      'userData': ["id", "name", "address", "email", "strideLength", "dailyStepGoal", "friends"],
-      'hydrationData': ['userID', 'date', 'numOunces'],
-      'activityData': ['userID', 'date', 'numSteps', 'minutesActive', 'flightsOfStairs'],
-      'sleepData': ['userID', 'date', 'hoursSlept', 'sleepQuality']
-    };
-    
-    let keys = Object.keys(data[0]); 
-    keys = keys.map(key => key.toString());
-
-    if(requirements[src].every(requirement => keys.includes(requirement))) {
-      return true
-    } else {
-      return false
-    }
-    return true
+  findById(id, date) {
+    return this.data.find((dataPoint) => {
+      if (date) {
+        return dataPoint.userID === id && dataPoint.date === date;
+      } else {
+        return dataPoint.id === id;
+      }
+    });
   }
 
-  getDataFromId(id, dataSet) {
-    return dataSet.filter(data => id === data.userID);
+  findAllUserData(id) {
+    return this.data.filter((dataPoint) => {
+      if (dataPoint.userID === id) return dataPoint;
+    });
   }
 
   getUserDatabyDate(id, date) {
@@ -74,6 +58,30 @@ class Repo {
     return sortedByDate;
   }
 
+  calculateAverage(key) {
+    return this.data.reduce((average, dataPoint) => {
+      average = average + dataPoint[key] / this.data.length;
+      return average;
+    }, 0);
+  }
+
+  // unecessary for users. required for UserRepo.getToday(). Does UserRepo need to be the only one that can determine the current day? Is this the only use case for sorting arrays?
+  sortDataByDate(id) {
+    let usersData = this.findAllUserData(id);
+    return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+
+
+  // calculateAverage(id, key) {
+  //   const usersData = this.data.filter((data) => id === data.userID);
+
+  //   const average = usersData.reduce((average, data) => {
+  //     return (average = average + data[key] / usersData.length);
+  //   }, 0);
+
+  //   return Math.round(average);
+  // }
 }
 
 

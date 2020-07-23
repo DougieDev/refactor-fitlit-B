@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Activity from '../src/Activity';
+import ActivityRepo from '../src/ActivityRepo';
 import UserRepo from '../src/User-repo';
 import User from '../src/User';
 
@@ -197,7 +197,7 @@ describe('Activity', function() {
     });
     users = [user1, user2, user3, user4];
     userRepo = new UserRepo(users);
-    activity = new Activity(activityData);
+    activity = new ActivityRepo(activityData);
   });
   it('should take in data', function() {
     expect(activity.activityData[0].userID).to.eql(1);
