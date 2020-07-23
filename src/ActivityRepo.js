@@ -1,6 +1,6 @@
-import WellnessMetric from "./WellnessMetric";
+import Repo from "./Repo";
 
-class Activity extends WellnessMetric {
+class ActivityRepo extends Repo {
   constructor(data) {
     super(data);
     this.numSteps = data.numSteps;
@@ -146,4 +146,4 @@ class Activity extends WellnessMetric {
 
 
 
-export default Activity;
+export default ActivityRepo;

@@ -1,6 +1,6 @@
-import WellnessMetric from './WellnessMetric';
+import Repo from './Repo';
 
-class Hydration extends WellnessMetric{
+class HydrationRepo extends Repo {
   constructor(data) {
     super(data);
     this.numOunces = data.numOunces;
@@ -33,4 +33,4 @@ class Hydration extends WellnessMetric{
 }
 
 
-export default Hydration;
+export default HydrationRepo;

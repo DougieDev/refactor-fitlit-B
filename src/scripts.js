@@ -3,13 +3,13 @@ import './css/style.scss';
 import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
-import Repo from './Repo';
 
-// import User from './User';
-// import Activity from './Activity';
-// import Hydration from './Hydration';
-// import Sleep from './Sleep';
-// import UserRepo from './User-repo';
+
+import User from './User';
+import ActivityRepo from './ActivityRepo';
+import HydrationRepo from './HydrationRepo';
+import SleepRepo from './SleepRepo';
+import UserRepo from './UserRepo';
 
 import {
   populateDailyData,
@@ -19,13 +19,10 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 
-const userRepo = new Repo();
-const hydrationRepo = new Repo();
-const activityRepo = new Repo(); 
-const sleepRepo = new Repo();
-
-const repo = new Repo()
-
+const userRepo = new UserRepo();
+const hydrationRepo = new HydrationRepo();
+const activityRepo = new ActivityRepo(); 
+const sleepRepo = new SleepRepo();
 
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
@@ -56,23 +53,23 @@ function catchData(src) {
   return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${src}`)
     .then(response => response.json())
     .then(data => data[src])
-    .then(result => repo.storeData(result, src))
+    .then(result => classInfo.class.storeData(result, src))
     .then(repo => dataEventHandler(src));
 }
 
 function dataEventHandler(src) {
   if (src === 'userData') {
     // startUserPopulation()
-    console.log(repo.users);
+    console.log(userRepo);
   } else if (src === 'hydrationData') {
     // startHydrationPopulation()
-    console.log(repo.hydration);
+    console.log(hydrationRepo);
   } else if (src === 'sleepData') {
     // startSleepPopulation() 
-    console.log(repo.sleep);
+    console.log(sleepRepo);
   } else if (src === 'activityData') {
     // startActivityPopulation()
-    console.log(repo.activity); 
+    console.log(activityRepo); 
   }
 }
 

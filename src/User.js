@@ -3,7 +3,7 @@
 
 class User {
   constructor(userDetails) {
-    this.id = userDetails.id;
+    this.userID = userDetails.id;
     this.name = userDetails.name;
     this.address = userDetails.address;
     this.email = userDetails.email;

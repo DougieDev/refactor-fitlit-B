@@ -1,9 +1,6 @@
-//This class takes in all userData from the api and stores all of it for all users.
-// so if using async we need to make a new UserRepo each time the data is updated
+import Repo from './Repo'
 
-
-
-class UserRepo {
+class UserRepo extends Repo  {
   constructor(users) {
     this.users = users;
   }

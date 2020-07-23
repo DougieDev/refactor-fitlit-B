@@ -1,6 +1,6 @@
-import WellnessMetric from "./WellnessMetric";
+import Repo from "./Repo";
 
-class Sleep extends WellnessMetric {
+class SleepRepo extends Repo {
   constructor(data) {
     super(data);
     this.hoursSlept = data.hoursSlept;
@@ -106,4 +106,4 @@ class Sleep extends WellnessMetric {
 }
 
 
-export default Sleep;
+export default SleepRepo;
