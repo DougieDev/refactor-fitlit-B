@@ -1,10 +1,6 @@
 import { expect } from 'chai';
 
 import Repo from '../src/Repo';
-import Hydration from "../src/Hydration";
-import Sleep from "../src/Sleep";
-import Activity from "../src/Activity";
-import User from "../src/User";
 
 describe('Repo', () => {
   let user1;
@@ -18,6 +14,7 @@ describe('Repo', () => {
   let rawActivity;
   let sleep1;
   let sleep2;
+  let sleep3;
   let rawSleep;
   let repo;
 
@@ -78,16 +75,23 @@ describe('Repo', () => {
     }
     
     sleep2 = {
-      userID: 3000,
+      userID: 1,
       date: '400/01/01',
       hoursSlept: 6,
+      sleepQuality: 5
+    }
+    
+    sleep3 = {
+      userID: 3000,
+      date: '2040/01/02',
+      hoursSlept: 24,
       sleepQuality: 5
     }
 
     rawUsers = [user1, user2];
     rawHydration = [hydration1, hydration2];
     rawActivity = [activity1, activity2]
-    rawSleep = [sleep1, sleep2]
+    rawSleep = [sleep1, sleep2, sleep3]
 
     repo = new Repo();
   });
@@ -96,23 +100,40 @@ describe('Repo', () => {
     expect(repo).to.be.an.instanceOf(Repo)
   });  
 
-  it.only('should save hydration, activity, sleep and user datasets ' + 
-  'to corresponding keys', () => {
-    repo.storeData(rawUsers, 'userData')
-    repo.storeData(rawHydration, 'hydrationData')
-    repo.storeData(rawActivity, 'activityData')
-    repo.storeData(rawSleep, 'sleepData')
-    expect(repo.users[0].name).to.equal('Joshua Danger Sevy')
-    expect(repo.hydration[0].numOunces).to.equal(60)
-    expect(repo.sleep[0].hoursSlept).to.equal(0)
-    expect(repo.activity[0].minutesActive).to.equal(8000)
-  });
+  it('should be able to save data', () => {
+    repo.storeData(rawUsers)
+    expect(repo.data).to.deep.equal(rawUsers)
+  })
 
-  it.only('should refuse to save incorrect data types into wrongly called keys', () => {
-    let response = repo.storeData(rawHydration, 'userData');
-    repo.storeData(rawSleep, 'activityData');
-    expect(repo.users).to.equal(undefined);
-    expect(repo.activity).to.equal(undefined);
-    expect(response).to.equal('You have provided either incomplete or incorrect data')
+  it('should only save data that is an array', () => {
+    repo.storeData(0)
+    expect(repo.data).to.equal(undefined)
+  })
+
+  it('should be able to find a data point by id', () => {
+    repo.storeData(rawSleep)
+    let sleep = repo.findById(3000, '2040/01/01')
+    expect(sleep).to.deep.equal(sleep1)
+  })
+  // SAD PATH: what happens when userId is not a number?
+  
+  it('should be able to find a user by id', () => {
+    repo.storeData(rawUsers)
+    let user = repo.findById(3000)
+    expect(user).to.deep.equal(user1)
+  })
+  // SAD PATH: what happens when userId is not a number?
+
+  it('should be able to filter data for a given user', () => {
+    repo.storeData(rawSleep)
+    let sleep = repo.findAllUserData(3000)
+    expect(sleep).to.deep.equal([sleep1, sleep3])
+  })
+  // SAD PATH: what happens when userId is not a number?
+  it('should be able to the average of a given key for all stored data', () => {
+    repo.storeData(rawSleep)
+    let averageSleep = repo.calculateAverage('hoursSlept') 
+    expect(averageSleep).to.equal(10)
   });
+  // SAD PATH: what happens when value is not a number?
 });

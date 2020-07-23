@@ -5,35 +5,13 @@ class UserRepo extends Repo  {
     super(usersData)
   }
 
-  /* BREAKS ALL DATA IF REMOVED */
-  // works perfectly return user object as expected
-  getDataFromID(id) {
-    return this.users.find((user) => id === user.id);
-  }
 
-  /*SAME AS ABOVE  BREAKS IF REMOVED
-  
-  it is working as expected didnt see any refactor needed*/
-  
-  getDataFromUserID(id, dataSet) {
-    return dataSet.filter((userData) => id === userData.userID);
-  }
-
-  /*REMOVING GETS RID OF ALL GENERATED DATA */
-  // function returns average as number ex. 6700
-  // function looks right math seems correct
-  // refactored removed sumSoFar = not needed 
-  calculateAverageStepGoal() {
-    var totalStepGoal = this.users.reduce((sumSoFar, data) => {
-      return sumSoFar + data.dailyStepGoal;
-    }, 0);
-    return totalStepGoal / this.users.length;
-  }
 
   /*SAME EFFECT AS ABOVE
   this function returns all user data SORTED from most recent date to furthest date of specific dataSet
   such as activity, sleep, hydration
   it is working correctly it a*/
+
   makeSortedUserArray(id, dataSet/*= ex. activityData */) {
     let selectedID = this.getDataFromUserID(id, dataSet)
     let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -43,6 +21,7 @@ class UserRepo extends Repo  {
   /*Doesnt seem to effect display if removed 
   this function only returns the data no activity data for day ex. 2019/09/22
   not sure if it is being used at all or if so why*/
+
   getToday(id, dataSet) {
     return this.makeSortedUserArray(id, dataSet)[0].date;
   }
