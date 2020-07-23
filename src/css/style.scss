@@ -10,7 +10,8 @@ $pink: #EC96A4;
 $yellow: #DFE166;
 
 @import 'variables';
-
+@import 'sidebar-design';
+@import 'card-design';
 
 * {
   margin: 0;
@@ -21,7 +22,6 @@ body {
   margin: 0;
   background-color: $background-grey;
   height: auto;
-  // padding: 0;
 }
 
 h1 {
@@ -39,105 +39,6 @@ h2 {
   display: flex;
   flex-direction: row;
   height: 1500px;
-}
-
-// .main-sidebar-body {
-//   display: flex;
-//   flex-direction: row;
-//   width: 25%;
-//   height: 100%;
-// }
-
-.sidebar-container {
-  background-color: $sidebar-grey;
-  border: 1px solid $black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  overflow: scroll;
-  width: 25%;
-  height: 100%;
-}
-
-  // .sidebar-header-name {
-  //   text-align: center;
-  // }
-// }
-
-/*!! This is being used in 9 different places in page-manip.
-Why is it the header for 'Friends'?
-Come back to this !!*/
-.sidebar-friendslist-header {
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 1.2em;
-  margin: .5em;
-  width: inherit;
-}
-
-/*  This is just the lines above and below the 'Friends'
-list on the left sidebar */
-.sidebar-header-line {
-  color: $white;
-  border: 1px solid $black;
-  margin: 1em 1em 0 1em;
-  width: 80%;
-}
-
-.sidebar-header-userImage {
-  border: 1px solid $black;
-  border-radius: 50%;
-  // border-color: $black;
-  // border-style: solid;
-  // border-width: 1px;
-  height: 200px;
-  width: 200px;
-  margin: 4px 2px 2px;
-  justify-content: center;
-}
-
-.sidebar-body-friendContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-friendContainer-listItems {
-  text-align: left;
-}
-
-.card-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.card {
-  background-color: $white;
-  border-radius: 5% 5%;
-  height: 40%;
-  width: 40%;
-  margin: 0 2.5% 2.5%;
-}
-
-.week-card {
-  display: flex;
-  flex-direction: column;
-  background-color: $white;
-  border-radius: 5%;
-  height: 40%;
-  width: 85%;
-  margin: 0 2.5% 2.5%;
-
-  .calendar-container {
-    // display: flex;
-
-    #weekly-data-options {
-      // display: flex;
-      // flex-direction: column;
-    }
-  }
 }
 
 table, th, td {
@@ -161,120 +62,8 @@ table {
   margin: 0;
   display: flex;
   flex-direction: column;
-  // flex-wrap: wrap;
-  // justify-content: space-between;
   overflow: scroll;
 }
-
-// .main-column-hydration {
-//   display: flex;
-//   flex-direction: row;
-//   height: 25%
-// }
-//
-// .main-column-activity {
-//   display: flex;
-//   flex-direction: row;
-//   height: 50%
-// }
-//
-// .main-column-sleep {
-//   display: flex;
-//   flex-direction: row;
-//   height: 35%
-// }
-
-// .infoContainer-cardContainer-card-horizontal {
-//   width: 100%;
-//   background-color: $white;
-//   border: 1px solid $black;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   margin: 1%;
-//   justify-content: space-between;
-// }
-
-// .horizontalCard-activity-container {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-around;
-//   width: 100%;
-//   overflow: scroll;
-// }
-
-// .infoContainer-cardContainer-card-vertical {
-//   width: 100%;
-//   background-color: $white;
-//   border: 1px solid $black;
-//   display: flex;
-//   flex-direction: row;
-//   margin: 1%;
-//   overflow: scroll;
-// }
-
-.hydration-card {
-  text-align: center;
-  background-color: $teal;
-  height: auto;
-  font-size: 1.5em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;
-}
-
-.sleep-card {
-  @extend .hydration-card;
-  background-color: $pink;
-}
-
-.activity-card {
-  @extend .hydration-card;
-  background-color: $yellow;
-  margin: .7em;
-  font-size: 1.2em;
-}
-
-// .card-history-hydration {
-//   text-align: center;
-//   background-color: $teal;
-//   font-size: 1em;
-//   margin: .5em;
-//   font-family: sans-serif;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   width: 50%;
-// }
-//
-// .card-history-sleep {
-//   text-align: center;
-//   background-color: $pink;
-//   font-size: 1em;
-//   margin: .5em;
-//   font-family: sans-serif;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   width: 50%;
-// }
-//
-// .card-history-activity {
-//   text-align: center;
-//   background-color: $yellow;
-//   font-size: 1em;
-//   margin: .5em;
-//   font-family: sans-serif;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   width: 50%;
-//   height: 93%;
-//   overflow: scroll;
-// }
 
 .number {
   font-size: 2em;
@@ -306,12 +95,3 @@ table {
   padding-left: 0;
   font-size: 1em;
 }
-/* This controls the friends list on the left-sidebar.
-As of right now, I can't see any other use for it.
-Likely needs its name changed.*/
-.historical-list-listItem {
-  padding: .3em;
-  font-weight: bold;
-  font-family: sans-serif;
-}
-
