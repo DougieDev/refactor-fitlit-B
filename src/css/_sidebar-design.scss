@@ -10,14 +10,6 @@
   height: 100%;
 }
 
-  // .sidebar-header-name {
-  //   text-align: center;
-  // }
-// }
-
-/*!! This is being used in 9 different places in page-manip.
-Why is it the header for 'Friends'?
-Come back to this !!*/
 .sidebar-friendslist-header {
   font-family: sans-serif;
   font-weight: bold;
@@ -38,9 +30,6 @@ list on the left sidebar */
 .sidebar-header-userImage {
   border: 1px solid $black;
   border-radius: 50%;
-  // border-color: $black;
-  // border-style: solid;
-  // border-width: 1px;
   height: 200px;
   width: 200px;
   margin: 4px 2px 2px;
