@@ -20,6 +20,22 @@ class User {
   getFriendsNames(userStorage) {
     return this.friends.map((friendId) => (userStorage.getDataFromID(friendId).name));
   }
+
+  getFriendsAverageStepsForWeek(user, date, userRepo) {
+    let friendsActivity = this.getFriendsActivity(user, userRepo);
+    let timeline = this.chooseWeekDataForAllUsers(friendsActivity, date);
+    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
+  }
+
+  getFriendsActivity(user, userRepo) {
+    let data = this.activityData;
+    let userDatalist = user.friends.map(friend => {
+      return userRepo.getDataFromUserID(friend, data)
+    });
+    return userDatalist.reduce(function (arraySoFar, listItem) {
+      return arraySoFar.concat(listItem);
+    }, []);
+  }
 }
 
 export default User;
