@@ -1,0 +1,68 @@
+.card-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: $white;
+  border-radius: 5% 5%;
+  height: 40%;
+  width: 40%;
+  margin: 0 2.5% 2.5%;
+}
+
+.week-card {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  border-radius: 5%;
+  height: 40%;
+  width: 85%;
+  margin: 0 2.5% 2.5%;
+
+  .calendar-container {
+    // display: flex;
+
+    #weekly-data-options {
+      // display: flex;
+      // flex-direction: column;
+    }
+  }
+}
+
+.hydration-card {
+  text-align: center;
+  background-color: $teal;
+  height: auto;
+  font-size: 1.5em;
+  margin: .5em;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.sleep-card {
+  @extend .hydration-card;
+  background-color: $pink;
+}
+
+.activity-card {
+  @extend .hydration-card;
+  background-color: $yellow;
+  margin: .7em;
+  font-size: 1.2em;
+}
+
+/* This controls the friends list on the left-sidebar.
+As of right now, I can't see any other use for it.
+Likely needs its name changed.*/
+
+.historical-list-listItem {
+  padding: .3em;
+  font-weight: bold;
+  font-family: sans-serif;
+}

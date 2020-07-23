@@ -1,0 +1,54 @@
+.sidebar-container {
+  background-color: $sidebar-grey;
+  border: 1px solid $black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: scroll;
+  width: 25%;
+  height: 100%;
+}
+
+.sidebar-friendslist-header {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: .5em;
+  width: inherit;
+}
+
+/*  This is just the lines above and below the 'Friends'
+list on the left sidebar */
+.sidebar-header-line {
+  color: $white;
+  border: 1px solid $black;
+  margin: 1em 1em 0 1em;
+  width: 80%;
+}
+
+.sidebar-header-userImage {
+  border: 1px solid $black;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  margin: 4px 2px 2px;
+  justify-content: center;
+}
+
+.sidebar-body-friendContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-friendContainer-listItems {
+  text-align: center;
+}
+/* What is this doing? Come back to this later */
+.card-vertical-list {
+  list-style-type: none;
+  font-weight: lighter;
+  font-style: italic;
+  padding-left: 0;
+  font-size: 1em;
+}
