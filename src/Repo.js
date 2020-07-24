@@ -8,35 +8,65 @@ class Repo {
   }
 
   findById(id, date) {
+    if (typeof id !== 'number') {
+      return 'This id is incorrect'
+    } else if (typeof date !== 'string' || !this.dateRule(date)) {
+      return 'This date is improperly formatted'
+    }
+
     return this.data.find(dataPoint => {
         return dataPoint.userID === id && dataPoint.date === date;
     });
   }
 
-  findAllUserData(id) {
-    return this.data.filter((dataPoint) => {
-      if (dataPoint.userID === id) return dataPoint;
-    });
+  dateRule(date) {
+    if (typeof date !== 'string') return false
+    date = date.split('/')
+    if (date[0].length === 4 && date[1].length === 2 && date[2].length === 2 
+      && date.every(number => parseInt(number))) {
+        return true
+      } else {
+        return false
+      }
+  }
+
+  keyRule(key) {
+    this.data.every(dataPoint => Object.keys(dataPoint).includes(key))
+  }
+
+  getAllDataById(id) {
+    if (typeof id !== 'number') return "This id is incorrect"
+    return this.data.filter(dataPoint => dataPoint.userID === id)
   }
  
-  //Like findById, if Id is defined it should calculate average for a user.
-  //Otherwise it'll calculate the average of an entire dataset.
-  //Probably could be condensed
-  //Should be tested
-  calculateAverage(key, id) {  
+  calculateAverage(key, id) { 
     return this.data.reduce((average, dataPoint) => {
-      let averageMath = average + dataPoint[key] / this.data.length;
-      if (id && dataPoint.userID === id) {
-        average = averageMath
+      if (typeof id === 'number' && dataPoint.userID === id) {
+        let userSet = this.data.filter(dataPoint => dataPoint.userID === id)
+        average += dataPoint[key] / userSet.length
+        return average;
+      } else if (!id) {
+        average += dataPoint[key] / this.data.length;
         return average;
       } else {
-        average = averageMath
         return average;
       }
     }, 0);
   }
 
+  sortUserDataByDate(id) {
+    if (typeof id !== 'number') return "This id is incorrect"
+    let selectedID = this.getAllDataById(id)
+    return selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  sortDataByDate(id) {
+    let usersData = this.getAllDataById(id);
+    return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
   getToday(id) {
+    if (typeof id !== 'number') return "This id is incorrect"
     return this.sortUserDataByDate(id)[0].date;
   }
 
@@ -44,22 +74,19 @@ class Repo {
     return this.sortUserDataByDate(id).slice(0, 7);
   }
 
-  getAllDataByDay(date) { // better name: getAllDataByDay
+  getAllDataByDay(date) {
+    if (!this.dateRule(date)) return 'This date is improperly formatted'
     return this.data.filter(dataItem => {
       return dataItem.date === date
     });
   } 
 
-  getAllDataByWeek(date) {  // better name: getAllDataByWeek
+  getAllDataByWeek(date) { 
     return this.data.filter(dataItem => {
       // next line needs to get broken up
       return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
-
-  getAllDataById(id) {
-    return this.data.filter(dataPoint => dataPoint.userID === id)
-  }  // [{acitivities}]
 
   getUserDataByWeek(date, id) {  // returns a slice of a sorted array, with entire dataPoints. [{act} {act} ...]
     let userDataByDate = this.sortUserDataByDate(id, this.data);
@@ -68,33 +95,31 @@ class Repo {
   }
 
   getUserAverageForWeek(id, date, key) {
-    let weekData = this.data.getUserDataByWeek(date, id)
-    let floatAverage = weekData.reduce((average, dataPoint) => {
+    if (!this.dateRule(date)) {
+      return 'This date is improperly formatted'
+    } else if (typeof id !== 'number') {
+      return 'This id is not properly formatted'
+    } else if (this.keyRule(key) === false) {
+      return 'The key does not correspond with the dataset'
+    }
+
+    let weekData = this.getUserDataByWeek(date, id)
+    return parseFloat(weekData.reduce((average, dataPoint) => {
       average = average + dataPoint[key] / weekData.length
-      return floatAverage.toFixed(1);
-    }, 0)
-
-    return 
-  }
-
-  sortUserDataByDate(id) { // better name: sortUserDataByDate
-    let selectedID = this.getAllDataById(id)
-    let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
-    return sortedByDate;
-  }
-
-  // unecessary for users. required for UserRepo.getToday(). Does UserRepo need to be the only one that can determine the current day? Is this the only use case for sorting arrays?
-  sortDataByDate(id) {
-    let usersData = this.findAllUserData(id);
-    return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return average
+    }, 0).toFixed(1));
   }
 
   getAllUserAverageForDay(date, key) {
-    let selectedDayData = this.getAllDataByDay(this.data, date);
+    if(!this.dateRule(date) || this.keyRule(key) === false) {
+      return 'One of the parameters are incorrect'
+    }
+    let selectedDayData = this.getAllDataByDay(date);
     return parseFloat(selectedDayData.reduce((average, data) => {
       average = average + data[key] / selectedDayData.length
       return average;
     }, 0).toFixed(1));
+  }
 }
 
 export default Repo
