@@ -8,7 +8,7 @@ class Repo {
   }
 
   findById(id, date) {
-    return this.data.find((dataPoint) => {
+    return this.data.find(dataPoint => {
         return dataPoint.userID === id && dataPoint.date === date;
     });
   }
@@ -88,6 +88,13 @@ class Repo {
     let usersData = this.findAllUserData(id);
     return usersData.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
+
+  getAllUserAverageForDay(date, key) {
+    let selectedDayData = this.getAllDataByDay(this.data, date);
+    return parseFloat(selectedDayData.reduce((average, data) => {
+      average = average + data[key] / selectedDayData.length
+      return average;
+    }, 0).toFixed(1));
 }
 
 export default Repo
