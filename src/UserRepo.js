@@ -1,6 +1,7 @@
 import Repo from './Repo'
 import User from './User';
 
+
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
@@ -9,7 +10,7 @@ class UserRepo extends Repo  {
   storeData(data) {
     if (Array.isArray(data)) {
       this.data = data;
-      this.findCurrentUser()
+      // this.findCurrentUser()
     }
   }
 

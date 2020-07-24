@@ -4,5 +4,6 @@ class HydrationRepo extends Repo {
   constructor(hydrationData) {
     super(hydrationData);
   }
+}
 
 export default HydrationRepo;
