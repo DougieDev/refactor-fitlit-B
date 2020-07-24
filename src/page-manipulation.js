@@ -17,11 +17,11 @@ function populateDailyData(card, repo, userId, date) {
   const location = document.getElementById(card);
   const innerElements = location.children;
   for(var i = 0; i < innerElements.length; i++) {
+    let key = innerElements[i].id.split('-')[0]
     if (innerElements[i].classList.contains('number') && innerElements[i].id.includes('average')) {
-      let key = innerElements[i].id.split('-')[0]
-      innerElements[i].innerText = repo.calculateAverage(userId, key);
+      innerElements[i].innerText = repo.calculateAverage(key, userId);
     } else if (innerElements[i].classList.contains('number')) {
-      innerElements[i].innerText = repo.getData(userId, date, innerElements[i].id);
+      innerElements[i].innerText = repo.findById(userId, date)[key];
     }
   }
 }

@@ -4,7 +4,9 @@ class Repo {
   }
 
   storeData(data) {
-    if (Array.isArray(data)) this.data = data;
+    if (Array.isArray(data)) {
+      this.data = data;
+    }
   }
 
   findById(id, date) {
@@ -40,7 +42,7 @@ class Repo {
   }
  
   calculateAverage(key, id) { 
-    return this.data.reduce((average, dataPoint) => {
+    let average = this.data.reduce((average, dataPoint) => {
       if (typeof id === 'number' && dataPoint.userID === id) {
         let userSet = this.data.filter(dataPoint => dataPoint.userID === id)
         average += dataPoint[key] / userSet.length
@@ -51,7 +53,8 @@ class Repo {
       } else {
         return average;
       }
-    }, 0);
+    }, 0).toFixed(1);
+    return average;
   }
 
   sortUserDataByDate(id) {
