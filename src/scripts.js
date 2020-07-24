@@ -5,9 +5,8 @@ import './images/arnie.jpg';
 
 import User from './User';
 import ActivityRepo from './ActivityRepo';
-import HydrationRepo from './HydrationRepo';
-import SleepRepo from './SleepRepo';
 import UserRepo from './UserRepo';
+import Repo from './Repo'
 
 import {
   populateDailyData,

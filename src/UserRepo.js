@@ -9,7 +9,7 @@ class UserRepo extends Repo  {
   storeData(data) {
     if (Array.isArray(data)) {
       this.data = data;
-      this.findCurrentUser()
+      // this.findCurrentUser()
     }
   }
 
@@ -26,7 +26,7 @@ class UserRepo extends Repo  {
   }
   
   getRandomNumber() {
-    Math.floor(Math.random() * 50)
+    return Math.floor(Math.random() * 50)
   }
 
   isolateUsernameAndRelevantData(relevantData, listFromMethod) {
