@@ -1,15 +1,17 @@
 class Repo {
-  constructor() {
+  constructor(users) {
     this.data;
   }
 
   storeData(data) {
-    if (Array.isArray(data)) this.data = data;
+    if (Array.isArray(data)) {
+      this.data = data;
+    } 
   }
 
   findById(id, date) {
     return this.data.find(dataPoint => {
-        return dataPoint.userID === id && dataPoint.date === date;
+      return dataPoint.userID === id && dataPoint.date === date;
     });
   }
 

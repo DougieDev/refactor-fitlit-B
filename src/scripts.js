@@ -16,13 +16,15 @@ import {
   insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
-
+import Repo from './Repo';
+const repo = new Repo();
 const userRepo = new UserRepo();
-const hydrationRepo = new Repo();
+const hydrationRepo = new HydrationRepo();
 const activityRepo = new ActivityRepo(); 
-const sleepRepo = new Repo();
+const sleepRepo = new SleepRepo();
 
 function startApp() {
+  catchUser()
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 const buttons = document.querySelectorAll('button');
@@ -54,6 +56,7 @@ function catchData(src) {
     .then(result => classInfo.class.storeData(result, src))
     .then(repo => dataEventHandler(src));
 }
+
 
 function dataEventHandler(src) {
   if (src === 'userData') {

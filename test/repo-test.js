@@ -102,7 +102,8 @@ describe('Repo', () => {
 
   it('should be able to save data', () => {
     repo.storeData(rawUsers)
-    expect(repo.data).to.deep.equal(rawUsers)
+    expect(repo.users).to.deep.equal(rawUsers)
+    console.log(repo)
   })
 
   it('should only save data that is an array', () => {

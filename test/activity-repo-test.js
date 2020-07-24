@@ -1,18 +1,21 @@
 import { expect } from 'chai';
 import ActivityRepo from '../src/ActivityRepo';
 import UserRepo from '../src/UserRepo';
-import User from '../src/User';
+import Repo from '../src/Repo';
 
 let userRepo;
 
 describe('Activity', function() {
   let activityData;
+  let activity;
   let user1;
   let user2;
   let user3;
   let user4;
   let users;
-  let activity;
+  let repo;
+  
+  
 
   beforeEach(function() {
     activityData = [{
@@ -196,21 +199,23 @@ describe('Activity', function() {
       dailyStepGoal: 13000,
       friends: [1, 2]
     };
+    
     users = [user1, user2, user3, user4];
-    userRepo = new UserRepo();
-    userRepo.storeData(users);
     activity = new ActivityRepo();
     activity.storeData(activityData);
+    userRepo = new UserRepo();
+    userRepo.storeData(users);
+    
   });
 
 
-  it('should take in data', function() {
+  it.only('should take in data', function() {
     expect(activity.data[0].userID).to.eql(1);
     expect(activity.data[4].date).to.eql("2019/06/15");
     expect(activity.data[3].numSteps).to.eql(3486);
     expect(activity.data[8].minutesActive).to.eql(41);
     expect(activity.data[10].flightsOfStairs).to.eql(24);
-    expect(userRepo.data[0].userID).to.eql(1);
+    expect(userRepo.data[0].id).to.eql(1);
   });
 
   it.only('should return the miles a given user has walked on a given date', function() {
@@ -226,11 +231,11 @@ describe('Activity', function() {
     expect(activity.calculateActiveAverageForWeek(1, "2019/06/21", userRepo)).to.eql(40.4);
   });
 
-  it('should return true/false if the given user met their step goal on a given day', function() {
+  it.only('should return true/false if the given user met their step goal on a given day', function() {
     expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
   });
 
-  it('should return all days that a given user exceeded their step goal', function() {
+  it.only('should return all days that a given user exceeded their step goal', function() {
     expect(activity.getDaysGoalExceeded(1, userRepo)).to.eql([
       "2019/06/17",
       "2019/06/19",
@@ -240,7 +245,8 @@ describe('Activity', function() {
       "2019/06/23"
     ]);
   });
-  it.only('should return the highest number of stairs climbed in a day for all time', function() {
+
+  it('should return the highest number of stairs climbed in a day for all time', function() {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
@@ -433,8 +439,6 @@ describe('Friend Activity', function() {
       }
     ];
 
-    activity = new Activity(activityData);
-
     user1 = {
       id: 1,
       name: "Alex Roth",
@@ -570,4 +574,3 @@ describe('Friend Activity', function() {
     expect(activity.getStreak(userRepo, 1, 'minutesActive')).to.eql(['2019/06/18'])
   });
 });
-export default userRepo

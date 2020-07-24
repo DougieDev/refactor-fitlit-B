@@ -1,9 +1,10 @@
 import Repo from "./Repo";
-import UserRepo from './UserRepo';
+
+
 
 class ActivityRepo extends Repo {
   constructor(activityData) {
-    super(activityData);
+    super(activityData)
   }
 
   getMilesFromStepsByDate(id, date, users) {
