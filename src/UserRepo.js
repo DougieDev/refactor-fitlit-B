@@ -1,6 +1,7 @@
 import Repo from './Repo'
 import User from './User';
 
+
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)

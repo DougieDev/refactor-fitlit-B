@@ -15,6 +15,7 @@ import {
   insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
+import Repo from './Repo';
 
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
@@ -61,6 +62,7 @@ function catchData(src) {
     .then(result => classInfo.class.storeData(result, src))
     .then(repo => dataEventHandler(src));
 }
+
 
 function dataEventHandler(src) {
   if (src === 'userData') {

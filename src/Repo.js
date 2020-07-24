@@ -1,5 +1,5 @@
 class Repo {
-  constructor() {
+  constructor(users) {
     this.data;
   }
 
@@ -7,7 +7,8 @@ class Repo {
     if (Array.isArray(data)) {
       this.data = data;
     }
-  }
+  } 
+  
 
   findById(id, date) {
     if (typeof id !== 'number') {
@@ -17,7 +18,7 @@ class Repo {
     }
 
     return this.data.find(dataPoint => {
-        return dataPoint.userID === id && dataPoint.date === date;
+      return dataPoint.userID === id && dataPoint.date === date;
     });
   }
 
@@ -26,10 +27,10 @@ class Repo {
     date = date.split('/')
     if (date[0].length === 4 && date[1].length === 2 && date[2].length === 2 
       && date.every(number => parseInt(number))) {
-        return true
-      } else {
-        return false
-      }
+      return true
+    } else {
+      return false
+    }
   }
 
   keyRule(key) {
@@ -87,6 +88,7 @@ class Repo {
   getAllDataByWeek(date) { 
     return this.data.filter(dataItem => {
       // next line needs to get broken up
+
       return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
