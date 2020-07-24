@@ -15,7 +15,6 @@ import {
   insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
-import Repo from './Repo';
 
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
