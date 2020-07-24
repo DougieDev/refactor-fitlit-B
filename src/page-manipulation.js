@@ -3,7 +3,7 @@ function insertForm(event) {
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
   const innerElements = event.target.parentElement.children[1].children;
   for (var i = 0; i < innerElements.length; i++) {
-    if(innerElements[i].classList.contains('number') 
+    if(innerElements[i].classList.contains('number')
     && !innerElements[i].id.includes('average')) {
       let id = innerElements[i].id;
       innerElements[i].innerHTML = `<input id=${id} />`
@@ -99,7 +99,7 @@ function addInfoToUserSidebar(user, userStorage) {
         </ul>
       </section>
       <div class="sidebar-header-line"></div>
-      <p class="thisWeek">
+      <p class="this-week">
         Keep up the good work! You were increasingly active on these dates:
       </p>
       <ul class="card-vertical-list" id="streakListMinutes">
@@ -128,7 +128,7 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
     <p>
     <section class="sidebar-body-friendContainer">
       <section class="sidebar-friendContainer-listItems">
-        <p class="thisWeek">Rank this week</p>
+        <p class="this-week">Rank this week</p>
         <ul class="card-vertical-list" id="friendChallengeListToday">
           ${makeFriendChallengeHTML(
             id,
@@ -137,7 +137,7 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
             activityInfo.showChallengeListAndWinner(user, dateString, userStorage))}
         </ul>
         <div class="sidebar-header-line"></div>
-        <p class="historicalWeek">- Historical Rank</p>
+        <p class="historical-week">- Historical Rank</p>
         <ul class="card-vertical-list" id="friendChallengeListHistory">
           ${makeFriendChallengeHTML(
             id,
@@ -147,7 +147,7 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
         </ul>
         <div class="sidebar-header-line"></div>
       </section>
-      <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
+      <p class="this-week">You had 3 DAY STEP STREAKS on these days:</p>
       <ul class="card-vertical-list" id="streakList">
         ${makeStepStreakHTML(
           id,

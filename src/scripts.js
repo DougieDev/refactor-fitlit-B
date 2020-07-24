@@ -17,14 +17,13 @@ import {
   addFriendSidebar
 } from './page-manipulation';
 import Repo from './Repo';
-const repo = new Repo();
+
 const userRepo = new UserRepo();
-const hydrationRepo = new HydrationRepo();
+const hydrationRepo = new Repo();
 const activityRepo = new ActivityRepo(); 
-const sleepRepo = new SleepRepo();
+const sleepRepo = new Repo();
 
 function startApp() {
-  catchUser()
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 const buttons = document.querySelectorAll('button');
