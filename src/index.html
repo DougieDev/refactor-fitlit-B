@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <meta charset="UTF-8">
     <title>Activity Tracker</title>
@@ -9,8 +9,8 @@
     <section class="main">
       <section class="sidebar-container" id="user-sidebar">
         <h1 id="headerText">Activity Tracker</h1>
-        <img src="./images/arnie.jpg" class="sidebar-header-userImage"></img>
-        <a href="">Profile</a>
+        <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing"></img>
+        <a href="" class="profile-link">Profile</a>
       </section>
       <section class="body-main-infoContainter">
         <h2 id="app-message">A message for the user</h2>
@@ -67,7 +67,10 @@
             account info:<button id="update-info">Update Info</button>
           </section>
           <section class="week-card" id="user-trends">
-            <select name="week" id="week-select">
+            <label>
+              Use to select the week
+              <select name="week" id="week-select">
+            </label>
              <option value='date'>
                boy howdy how are we gonna populate weeks to choose from
              </option>
@@ -109,4 +112,3 @@
     </section>
   </body>
   </html>
-
