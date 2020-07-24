@@ -3,6 +3,8 @@ import ActivityRepo from '../src/ActivityRepo';
 import UserRepo from '../src/UserRepo';
 import User from '../src/User';
 
+let userRepo;
+
 describe('Activity', function() {
   let activityData;
   let user1;
@@ -10,7 +12,6 @@ describe('Activity', function() {
   let user3;
   let user4;
   let users;
-  let userRepo;
   let activity;
 
   beforeEach(function() {
@@ -156,7 +157,7 @@ describe('Activity', function() {
       }
     ];
 
-    user1 = new User({
+    user1 = {
       id: 1,
       name: "Alex Roth",
       address: "1234 Turing Street, Denver CO 80301-1697",
@@ -164,9 +165,9 @@ describe('Activity', function() {
       strideLength: 4.3,
       dailyStepGoal: 5000,
       friends: [2, 3, 4]
-    });
+    };
 
-    user2 = new User({
+    user2 = {
       id: 2,
       name: "Allie McCarthy",
       address: "1235 Turing Street, Denver CO 80301-1697",
@@ -174,9 +175,9 @@ describe('Activity', function() {
       strideLength: 3.3,
       dailyStepGoal: 9000,
       friends: [1, 3, 4]
-    });
+    };
 
-    user3 = new User({
+    user3 = {
       id: 3,
       name: "Jerry Seinfield",
       address: "32 Baker Street, Denver CO 12345",
@@ -184,9 +185,9 @@ describe('Activity', function() {
       strideLength: 3.8,
       dailyStepGoal: 20000,
       friends: [1, 2, 4]
-    });
+    };
 
-    user4 = new User({
+    user4 = {
       id: 4,
       name: "Patrick the Starfish",
       address: "A rock in the ocean",
@@ -194,34 +195,43 @@ describe('Activity', function() {
       strideLength: .2,
       dailyStepGoal: 13000,
       friends: [1, 2]
-    });
+    };
     users = [user1, user2, user3, user4];
     userRepo = new UserRepo();
     userRepo.storeData(users);
     activity = new ActivityRepo();
     activity.storeData(activityData);
   });
+
+
   it('should take in data', function() {
-    expect(activity.activityData[0].userID).to.eql(1);
-    expect(activity.activityData[4].date).to.eql("2019/06/15");
-    expect(activity.activityData[3].numSteps).to.eql(3486);
-    expect(activity.activityData[8].minutesActive).to.eql(41);
-    expect(activity.activityData[10].flightsOfStairs).to.eql(24);
+    expect(activity.data[0].userID).to.eql(1);
+    expect(activity.data[4].date).to.eql("2019/06/15");
+    expect(activity.data[3].numSteps).to.eql(3486);
+    expect(activity.data[8].minutesActive).to.eql(41);
+    expect(activity.data[10].flightsOfStairs).to.eql(24);
+    expect(userRepo.data[0].userID).to.eql(1);
   });
+
   it.only('should return the miles a given user has walked on a given date', function() {
-    expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo.users[0])).to.eql(2.9);
+    
+    expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
+
   it('should return the number of minutes a given user was active for on a given day', function() {
     expect(activity.getActiveMinutesByDate(1, "2019/06/16")).to.eql(12);
   });
+
   it('should return average active minutes in a given week', function() {
     expect(activity.calculateActiveAverageForWeek(1, "2019/06/21", userRepo)).to.eql(40.4);
   });
+
   it('should return true/false if the given user met their step goal on a given day', function() {
-    expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo.users[3])).to.eql(false);
+    expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
   });
+
   it('should return all days that a given user exceeded their step goal', function() {
-    expect(activity.getDaysGoalExceeded(1, userRepo.users[0])).to.eql([
+    expect(activity.getDaysGoalExceeded(1, userRepo)).to.eql([
       "2019/06/17",
       "2019/06/19",
       "2019/06/20",
@@ -230,7 +240,7 @@ describe('Activity', function() {
       "2019/06/23"
     ]);
   });
-  it('should return the highest number of stairs climbed in a day for all time', function() {
+  it.only('should return the highest number of stairs climbed in a day for all time', function() {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
@@ -425,7 +435,7 @@ describe('Friend Activity', function() {
 
     activity = new Activity(activityData);
 
-    user1 = new User({
+    user1 = {
       id: 1,
       name: "Alex Roth",
       address: "1234 Turing Street, Denver CO 80301-1697",
@@ -433,9 +443,9 @@ describe('Friend Activity', function() {
       strideLength: 4.3,
       dailyStepGoal: 10000,
       friends: [2, 3, 4]
-    });
+    };
 
-    user2 = new User({
+    user2 = {
       id: 2,
       name: "Allie McCarthy",
       address: "1235 Turing Street, Denver CO 80301-1697",
@@ -443,9 +453,9 @@ describe('Friend Activity', function() {
       strideLength: 3.3,
       dailyStepGoal: 9000,
       friends: [1, 3, 4]
-    });
+    };
 
-    user3 = new User({
+    user3 = {
       id: 3,
       name: "The Rock",
       address: "1236 Awesome Street, Denver CO 80301-1697",
@@ -453,9 +463,9 @@ describe('Friend Activity', function() {
       strideLength: 10,
       dailyStepGoal: 60000,
       friends: [1, 2, 4]
-    });
+    };
 
-    user4 = new User({
+    user4 = {
       id: 4,
       name: "Rainbow Dash",
       address: "1237 Equestria Street, Denver CO 80301-1697",
@@ -463,7 +473,7 @@ describe('Friend Activity', function() {
       strideLength: 3.8,
       dailyStepGoal: 7000,
       friends: [1, 2]
-    });
+    };
     users = [user1, user2, user3, user4];
     userRepo = new UserRepo(users);
   });
@@ -560,3 +570,4 @@ describe('Friend Activity', function() {
     expect(activity.getStreak(userRepo, 1, 'minutesActive')).to.eql(['2019/06/18'])
   });
 });
+export default userRepo

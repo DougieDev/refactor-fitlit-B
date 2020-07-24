@@ -1,6 +1,7 @@
 import Repo from './Repo'
 import User from './User';
 
+
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
@@ -9,18 +10,22 @@ class UserRepo extends Repo  {
   storeData(data) {
     if (Array.isArray(data)) {
       this.data = data;
-      findCurrentUser()
+      // this.findCurrentUser()
     }
   }
 
-  findCurrentUser = () => {
-    let index = this.GetRandomNumber()
-    let user = this.data.find(user => user.userId === index)
+  findCurrentUser() {
+    let index = this.getRandomNumber()
+    let user = this.findUserById(index);
     this.currentUser = new User(user)
   }
+
+  findUserById(id) {
+    return this.data.find(user => user.id === id)
+  }
   
-  getRandomNumber = () => {
-    Math.floor(Math.random() * 50)
+  getRandomNumber() {
+    return Math.floor(Math.random() * 4)
   }
 
   isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod) {

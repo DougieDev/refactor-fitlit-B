@@ -1,18 +1,12 @@
 class User {
   constructor(userDetails) {
-    this.userID = userDetails.id;
+    this.id = userDetails.id;
     this.name = userDetails.name;
     this.address = userDetails.address;
     this.email = userDetails.email;
     this.strideLength = userDetails.strideLength;
     this.dailyStepGoal = userDetails.dailyStepGoal;
     this.friends = userDetails.friends;
-  }
-
-  findUserById() {
-    return this.data.find((dataPoint) => {
-      return dataPoint.userID === id && dataPoint.date === date;
-    });
   }
   
   getFirstName() {

@@ -1,12 +1,13 @@
 import Repo from "./Repo";
+import UserRepo from './UserRepo';
 
 class ActivityRepo extends Repo {
   constructor(activityData) {
     super(activityData);
   }
 
-  getMilesFromStepsByDate(id, date) {
-    let user = userRepo.findById(id);
+  getMilesFromStepsByDate(id, date, users) {
+    let user = users.findUserById(id);
     let userMiles = this.findById(id, date);
     return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
@@ -16,15 +17,15 @@ class ActivityRepo extends Repo {
   //   return userActivityByDate.minutesActive;
   // } // this.findById
 
-  accomplishStepGoal(date, id) {
-    let user = userRepo.findUserById(id);
+  accomplishStepGoal(id, date, users) {
+    let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     return (userActivityByDate.numSteps === user.dailyStepGoal) ? true : false;
   }
 
-  getDaysGoalExceeded(id) {
-    let user = userRepo.findUserById(id);
-    return this.activityData.reduce((dates, data) => {
+  getDaysGoalExceeded(id, users) {
+    let user = users.findUserById(id);
+    return this.data.reduce((dates, data) => {
       if (id === data.userID && data.numSteps > user.dailyStepGoal) {
         dates.push(data.date);
       }
@@ -33,7 +34,7 @@ class ActivityRepo extends Repo {
   }
   
   getStairRecord(id) {
-    return this.activityData
+    return this.data
       .filter(data => id === data.userID)
       .reduce((record, user) => {
         return (user.flightsOfStairs > record) ? user.flightsOfStairs : record
@@ -71,18 +72,18 @@ class ActivityRepo extends Repo {
 //     return winner;
 //   }
 
-//   getStreak(userRepo, id, relevantData) {
-//     let data = this.data;
-//     let sortedUserArray = (userRepo.makeSortedUserArray(id, data)).reverse();
-//     let streaks = sortedUserArray.filter(function(element, index) {
-//       if (index >= 2) {
-//         return (sortedUserArray[index - 2][relevantData] < sortedUserArray[index - 1][relevantData] && sortedUserArray[index - 1][relevantData] < sortedUserArray[index][relevantData])
-//       }
-//     });
-//     return streaks.map(function(streak) {
-//       return streak.date;
-//     })
-//   }
+  getStreak(userRepo, id, relevantData) {
+    let data = this.data;
+    let sortedUserArray = (userRepo.makeSortedUserArray(id, data)).reverse();
+    let streaks = sortedUserArray.filter(function(element, index) {
+      if (index >= 2) {
+        return (sortedUserArray[index - 2][relevantData] < sortedUserArray[index - 1][relevantData] && sortedUserArray[index - 1][relevantData] < sortedUserArray[index][relevantData])
+      }
+    });
+    return streaks.map(function(streak) {
+      return streak.date;
+    })
+  }
 
 //   getWinnerId(user, date, userRepo) {
 //     let rankedList = this.getFriendsAverageStepsForWeek(user, date, userRepo);
@@ -92,5 +93,6 @@ class ActivityRepo extends Repo {
 // }
 
 // MOV
+}
 
 export default ActivityRepo;

@@ -8,7 +8,7 @@ class Repo {
   }
 
   findById(id, date) {
-    return this.data.find((dataPoint) => {
+    return this.data.find(dataPoint => {
         return dataPoint.userID === id && dataPoint.date === date;
     });
   }
@@ -19,10 +19,6 @@ class Repo {
     });
   }
  
-  //Like findById, if Id is defined it should calculate average for a user.
-  //Otherwise it'll calculate the average of an entire dataset.
-  //Probably could be condensed
-  //Should be tested
   calculateAverage(key, id) {  
     return this.data.reduce((average, dataPoint) => {
       let averageMath = average + dataPoint[key] / this.data.length;
@@ -35,6 +31,7 @@ class Repo {
       }
     }, 0);
   }
+
 
   getToday(id) {
     return this.sortUserDataByDate(id)[0].date;
@@ -50,19 +47,18 @@ class Repo {
     });
   } 
 
-<<<<<<< HEAD
+
   getAllUserAverageForDay(date, userRepo, dataPropertyName) {
     let selectedDayData = this.chooseDayDataForAllUsers(this.activityData, date);
-    return parseFloat((selectedDayData.reduce((sum, average) => sum += average[dataPropertyName], 0) / selectedDayData.length).toFixed(1));
+    return parseFloat((selectedDayData
+      .reduce((sum, average) => sum += average[dataPropertyName], 0) / selectedDayData.length).toFixed(1));
   }
 
-  chooseWeekDataForAllUsers(dataSet, date) {
-    return dataSet.filter(dataItem => {
-=======
+  
   getAllDataByWeek(date) {  // better name: getAllDataByWeek
     return this.data.filter(dataItem => {
       // next line needs to get broken up
->>>>>>> origin/Repo-movers
+
       return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
@@ -77,14 +73,6 @@ class Repo {
     return userDataByDate.slice(dateIndex, dateIndex + 7);
   }
 
-<<<<<<< HEAD
-  
-
-  makeSortedUserArray(id, dataSet/*= ex. activityData */) {
-    let selectedID = this.getDataFromUserID(id, dataSet)
-    let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
-    return sortedByDate;
-=======
   getUserAverageForWeek(id, date, key) {
     let weekData = this.data.getUserDataByWeek(date, id)
     let floatAverage = weekData.reduce((average, dataPoint) => {
@@ -93,7 +81,6 @@ class Repo {
     }, 0)
 
     return 
->>>>>>> origin/Repo-movers
   }
 
   sortUserDataByDate(id) { // better name: sortUserDataByDate
