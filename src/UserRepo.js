@@ -27,7 +27,7 @@ class UserRepo extends Repo  {
   }
   
   getRandomNumber() {
-    Math.floor(Math.random() * 50)
+    return Math.floor(Math.random() * 50)
   }
 
   isolateUsernameAndRelevantData(relevantData, listFromMethod) {

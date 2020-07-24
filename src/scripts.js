@@ -5,9 +5,8 @@ import './images/arnie.jpg';
 
 import User from './User';
 import ActivityRepo from './ActivityRepo';
-import HydrationRepo from './HydrationRepo';
-import SleepRepo from './SleepRepo';
 import UserRepo from './UserRepo';
+import Repo from './Repo'
 
 import {
   populateDailyData,
@@ -16,16 +15,23 @@ import {
   insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
-import Repo from './Repo';
 
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
 const activityRepo = new ActivityRepo(); 
 const sleepRepo = new Repo();
 
+const currentUserId = getRandomNumber()
+let today;
+
+function getRandomNumber() {
+  return Math.floor(Math.random() * 50)
+}
+
 function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
+
 const buttons = document.querySelectorAll('button');
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
@@ -59,16 +65,19 @@ function catchData(src) {
 
 function dataEventHandler(src) {
   if (src === 'userData') {
-    // startUserPopulation()
+    today = hydrationRepo.getToday(currentUserId)
     console.log(userRepo);
   } else if (src === 'hydrationData') {
-    // startHydrationPopulation()
+    today = hydrationRepo.getToday(currentUserId)
+    populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
     console.log(hydrationRepo);
   } else if (src === 'sleepData') {
-    // startSleepPopulation() 
+    today = sleepRepo.getToday(currentUserId)
+    populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     console.log(sleepRepo);
   } else if (src === 'activityData') {
-    // startActivityPopulation()
+    today = activityRepo.getToday(currentUserId)
+    populateDailyData('activity-today', activityRepo, currentUserId, today)
     console.log(activityRepo); 
   }
 }
@@ -90,6 +99,7 @@ function findClassInfo(src) {
   }
   return classInfo;
 }
+
 
 startApp();
 

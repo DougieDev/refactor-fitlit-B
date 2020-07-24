@@ -25,6 +25,19 @@ h1 {
 
 h2 {
   color: $white;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  color: white;
+  width: 100%;
+}
+
+#app-message {
+  display: flex;
+  justify-content: center;
 }
 
 .main {
@@ -74,3 +87,8 @@ table {
 .this-week {
   @extend .historical-week;
 }
+
+.hidden {
+  display: none;
+}
+

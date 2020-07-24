@@ -10,42 +10,37 @@
       <section class="sidebar-container" id="user-sidebar" tabindex="0">
         <h1 id="headerText" tabindex="0">Activity Tracker</h1>
         <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
-        <a href="" class="profile-link">Profile</a>
+        <a href="" class="user-stats">User Profile</a>
+        <h2>Friends</h2>
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">A message for the user</h2>
-        <h2 tabindex="0">Daily Fitness</h2>
         <section class="card-container" id="daily-cards" tabindex="0">
-          <section class="card" id="hydration-today" tabindex="0">
-            <p class="hydration-card" tabindex="0">
+          <h3 tabindex="0">Daily Fitness</h3>
+          <section class="card hydration-card" id="hydration-today" tabindex="0">
               You drank
               <span class="number" id="numOunces">0</span>
               oz today. <br />
               Your average water intake is
-              <span class="number" id="numOunces-average"></span>
-            </p>
+              <span class="number" id="numOunces-average">0</span>
             <button id="new-hydration">add new info</button>
           </section>
-          <section class="card" id="activity-today" tabindex="0">
-            <p class="activity-card" tabindex="0">
-              Your step count today:
-              <span class="number" id="numSteps">0</span>
-              Your stair count today:
-              <span class="number" id="flightsOfStairs">0</span>
-              Your minutes active today:
+          <section class="card activity-card" id="activity-today" tabindex="0">
+              Your step count today: <br />
+              <span class="number" id="numSteps">0</span><br />
+              Your stair count today: <br />
+              <span class="number" id="flightsOfStairs">0</span> <br />
+              Your minutes active today: <br />
               <span class="number" id="minutesActive">0</span>
-            </p>
             <button id="new-activity">add new info</button>
           </section>
-          <section class="card" id="sleep-today" tabindex="0">
-            <p class="sleep-card" tabindex="0">
+          <section class="card sleep-card" id="sleep-today" tabindex="0">
               You slept
               <span class="number" id="hoursSlept">0</span>
               hours today.<br />
               Your sleep quality was
               <span class="number" id="sleepQuality">0</span>
               out of 5.
-            </p>
             <button id="new-sleep">add new info</button>
           </section>
           <section class="card" tabindex="0">
@@ -58,8 +53,8 @@
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
         </section>
-        <h2>User / Account</h2>
-        <section class="card-container" id="user-cards" tabindex="0">
+        <section class="card-container hidden" id="user-cards" tabindex="0">
+          <h2>User / Account</h2>
           <section class="card" id="user-goals" tabindex="0">
             user goals:<button id="update-goals">Update Info</button>
           </section>

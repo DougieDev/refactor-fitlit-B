@@ -1,7 +1,7 @@
 function insertForm(event) {
   const dateInput = `date: <input id="date" />`;
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
-  const innerElements = event.target.parentElement.children[1].children;
+  const innerElements = event.target.parentElement.children;
   for (var i = 0; i < innerElements.length; i++) {
     if(innerElements[i].classList.contains('number')
     && !innerElements[i].id.includes('average')) {
@@ -15,13 +15,13 @@ function insertForm(event) {
 
 function populateDailyData(card, repo, userId, date) {
   const location = document.getElementById(card);
-  const innerElements = location.children[0].children;
+  const innerElements = location.children;
   for(var i = 0; i < innerElements.length; i++) {
+    let key = innerElements[i].id.split('-')[0]
     if (innerElements[i].classList.contains('number') && innerElements[i].id.includes('average')) {
-      let key = innerElements[i].id.split('-')[0]
-      innerElements[i].innerText = repo.calculateAverage(userId, key);
+      innerElements[i].innerText = repo.calculateAverage(key, userId);
     } else if (innerElements[i].classList.contains('number')) {
-      innerElements[i].innerText = repo.getData(userId, date, innerElements[i].id);
+      innerElements[i].innerText = repo.findById(userId, date)[key];
     }
   }
 }
