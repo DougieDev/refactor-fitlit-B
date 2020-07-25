@@ -67,7 +67,7 @@ function dataEventHandler(src) {
   if (src === 'userData') {
     today = hydrationRepo.getToday(currentUserId)
     console.log(userRepo);
-  } else if (src === 'hydrationData') {
+  } else if (src === 'userRepo') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
     console.log(hydrationRepo);
