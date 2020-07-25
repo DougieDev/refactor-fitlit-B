@@ -71,18 +71,10 @@ function displayCommunitySection(id, users, repo, activityType, date) {
   const streak = repo.getStreak(id, activityType);
  
 
-  const userMiles = document.getElementById("miles-card");
-  const streaks = document.getElementById("streaks");
-  const userStepsLeft = document.getElementById("steps");
-  const friend = document.getElementById("friend");
-
-  const displayCards = [
-    {html: milesCardHtml, selector: "miles-card"}, 
-    {html: stepGoalHtml, selector: "steps"}, 
-    {html: friendHtml, selector: "friend"},
-    {html: streakHtml, selector: "streaks"}
-    ];
- 
+  // const userMiles = document.getElementById("miles-card");
+  // const streaks = document.getElementById("streaks");
+  // const userStepsLeft = document.getElementById("steps");
+  // const friend = document.getElementById("friend");
 
   const milesHtml = `
     miles today:
@@ -100,7 +92,7 @@ function displayCommunitySection(id, users, repo, activityType, date) {
     <span class="number" id="step-goal">${stepGoalStatus}</span>
     great work! <br />
     steps to go:
-    <span class="number" id="best-steps">0</span>`
+    <span class="number" id="best-steps">${streak}</span>`
 
   const friendsHtml = `
     miles today:
@@ -131,10 +123,11 @@ function displayCommunitySection(id, users, repo, activityType, date) {
     { html: streakHtml, selector: "streaks" }
   ];
 
-  function displayCommunity() {
-    
-    
-    
+  const displayCommunity = displayCards => {
+    displayCards.forEach(card => {
+      let selector = document.getElementById(card.selector)
+      selector.innerHTML = card.html;
+    })
   }
 }
 
