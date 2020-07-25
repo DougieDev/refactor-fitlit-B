@@ -13,7 +13,7 @@ import {
   populateWeeklyDates,
   addInfoToUserSidebar,
   insertForm, 
-  insertWeeklyDataLayouts,
+  displayWeeklyData,
   addFriendSidebar
 } from './page-manipulation';
 
@@ -44,21 +44,32 @@ for(const button of buttons) {
 }
 
 function buttonHandler(event) {
+  let repoPass = determineRepo(event)
   if (event.target.id.includes('new')) {
     // originalCardContent = event.target.parentElement.innerHTML;
     insertForm(event);
   } else if (event.target.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
   } else if (event.target.id.includes('weekly')) {
-    insertWeeklyDataLayouts(event);
+    displayWeeklyData(event, repoPass, currentUserId);
+  }
+}
+
+function determineRepo(event) {
+  if (event.target.id.includes("hydration")) {
+    return hydrationRepo;
+  } else if (event.target.id.includes("sleep")) {
+    return sleepRepo;
+  } else if (event.target.id.includes("activity")) {
+    return activityRepo;
   }
 }
 
 function selectHandler(event) {
   unHideElements(
-    '.sleep-week-data-button', 
-    '.activity-week-data-button', 
-    '.hydration-week-data-button'
+    '#weekly-hydration', 
+    '#weekly-activity', 
+    '#weekly-sleep'
     )
 }
 
@@ -81,7 +92,7 @@ function catchData(src) {
     .then(response => response.json())
     .then(data => data[src])
     .then(result => classInfo.class.storeData(result, src))
-    .then(repo => dataEventHandler(src));
+    .then(repo => dataEventHandler(src))
 }
 
 function dataEventHandler(src) {

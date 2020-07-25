@@ -159,8 +159,9 @@ class Repo {
     }, []);
   }
 
-  presentWeeks(date, id) {
+  presentWeek(date, id) {
     let allDates = this.sortUserDataByDate(id);
+    allDates = allDates.map(dataPoint => dataPoint.date)
     let i = allDates.indexOf(date);
     return allDates.slice(i, i + 7);
   }
