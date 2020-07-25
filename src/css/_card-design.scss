@@ -1,12 +1,3 @@
-.card-container {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 2em;
-  justify-content: center;
-}
-
 .card {
   background-color: $white;
   border-radius: 5% 5%;
@@ -20,6 +11,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 6px 5px 8px 6px $card-shadow;
+}
+
+.card-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 2em;
+  justify-content: center;
 }
 
 .week-card {
