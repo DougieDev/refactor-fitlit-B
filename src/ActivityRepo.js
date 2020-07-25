@@ -27,10 +27,24 @@ class ActivityRepo extends Repo {
   //   return userActivityByDate.minutesActive;
   // } // this.findById
 
+
+  //need to add sad path if date or user is not defined
   accomplishStepGoal(id, date, users) {
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     return (userActivityByDate.numSteps === user.dailyStepGoal) ? true : false;
+  }
+
+  remainingSteps(id, date, users) {
+    let user = users.findUserById(id);
+    let userActivityByDate = this.findById(id, date);
+    if (userActivityByDate === undefined) {
+      return `No step activity found for ${date}`
+    }
+    let steps = user.dailyStepGoal - userActivityByDate.numSteps;
+    console.log(steps);
+    return (steps < 0) ? 'Congrats' : `You have ${steps} steps to go.`;
+     
   }
 
   getDaysGoalExceeded(id, users) {

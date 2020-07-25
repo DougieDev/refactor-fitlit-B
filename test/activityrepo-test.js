@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, AssertionError } from 'chai';
 import ActivityRepo from '../src/ActivityRepo';
 import UserRepo from '../src/UserRepo';
 import Repo from '../src/Repo';
@@ -231,7 +231,13 @@ describe('Activity', function() {
     expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
   });
 
-  it('should return all days that a given user exceeded their step goal', function() {
+  it('should return steps remaining to accomplish goal', function () {
+    expect(activity.remainingSteps(1, "2019/06/18", userRepo)).to.eql(`You have 2000 steps to go.`);
+    expect(activity.remainingSteps(1, "2019/06/22", userRepo)).to.eql('Congrats');
+    expect(activity.remainingSteps(2, "2019/06/20", userRepo)).to.eql('No step activity found for 2019/06/20');
+  })
+
+  it('should return all days that a given user exceeded their step goal', function () {
     expect(activity.getDaysGoalExceeded(1, userRepo)).to.eql([
       "2019/06/17",
       "2019/06/19",
@@ -242,7 +248,7 @@ describe('Activity', function() {
     ]);
   });
 
-  it('should return the highest number of stairs climbed in a day for all time', function() {
+  it('should return the highest number of stairs climbed in a day for all time', function () {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
