@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 class Repo {
   constructor(users) {
     this.data;
@@ -7,60 +9,67 @@ class Repo {
     if (Array.isArray(data)) {
       this.data = data;
     }
-  } 
-  
+  }
 
   findById(id, date) {
-    if (typeof id !== 'number') {
-      return 'This id is incorrect'
-    } else if (typeof date !== 'string' || !this.dateRule(date)) {
-      return 'This date is improperly formatted'
+    if (typeof id !== "number") {
+      return "This id is incorrect";
+    } else if (typeof date !== "string" || !this.dateRule(date)) {
+      return "This date is improperly formatted";
     }
 
-    return this.data.find(dataPoint => {
+    return this.data.find((dataPoint) => {
       return dataPoint.userID === id && dataPoint.date === date;
     });
   }
 
   dateRule(date) {
-    if (typeof date !== 'string') return false
-    date = date.split('/')
-    if (date[0].length === 4 && date[1].length === 2 && date[2].length === 2 
-      && date.every(number => parseInt(number))) {
-      return true
+    if (typeof date !== "string") return false;
+    date = date.split("/");
+    if (
+      date[0].length === 4 &&
+      date[1].length === 2 &&
+      date[2].length === 2 &&
+      date.every((number) => parseInt(number))
+    ) {
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   keyRule(key) {
-    this.data.every(dataPoint => Object.keys(dataPoint).includes(key))
+    this.data.every((dataPoint) => Object.keys(dataPoint).includes(key));
   }
 
   getAllDataById(id) {
-    if (typeof id !== 'number') return "This id is incorrect"
-    return this.data.filter(dataPoint => dataPoint.userID === id)
+    if (typeof id !== "number") return "This id is incorrect";
+    return this.data.filter((dataPoint) => dataPoint.userID === id);
   }
- 
-  calculateAverage(key, id) { 
-    let average = this.data.reduce((average, dataPoint) => {
-      if (typeof id === 'number' && dataPoint.userID === id) {
-        let userSet = this.data.filter(dataPoint => dataPoint.userID === id)
-        average += dataPoint[key] / userSet.length
-        return average;
-      } else if (!id) {
-        average += dataPoint[key] / this.data.length;
-        return average;
-      } else {
-        return average;
-      }
-    }, 0).toFixed(1);
+
+  calculateAverage(key, id) {
+    let average = this.data
+      .reduce((average, dataPoint) => {
+        if (typeof id === "number" && dataPoint.userID === id) {
+          let userSet = this.data.filter(
+            (dataPoint) => dataPoint.userID === id
+          );
+          average += dataPoint[key] / userSet.length;
+          return average;
+        } else if (!id) {
+          average += dataPoint[key] / this.data.length;
+          return average;
+        } else {
+          return average;
+        }
+      }, 0)
+      .toFixed(1);
     return average;
   }
 
   sortUserDataByDate(id) {
-    if (typeof id !== 'number') return "This id is incorrect"
-    let selectedID = this.getAllDataById(id)
+    if (typeof id !== "number") return "This id is incorrect";
+    let selectedID = this.getAllDataById(id);
     return selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 
@@ -70,7 +79,7 @@ class Repo {
   }
 
   getToday(id) {
-    if (typeof id !== 'number') return "This id is incorrect"
+    if (typeof id !== "number") return "This id is incorrect";
     return this.sortUserDataByDate(id)[0].date;
   }
 
@@ -79,52 +88,85 @@ class Repo {
   }
 
   getAllDataByDay(date) {
-    if (!this.dateRule(date)) return 'This date is improperly formatted'
-    return this.data.filter(dataItem => {
-      return dataItem.date === date
+    if (!this.dateRule(date)) return "This date is improperly formatted";
+    return this.data.filter((dataItem) => {
+      return dataItem.date === date;
     });
-  } 
-
-  getAllDataByWeek(date) { 
-    return this.data.filter(dataItem => {
-      // next line needs to get broken up
-
-      return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
-    })
   }
 
-  getUserDataByWeek(date, id) {  // returns a slice of a sorted array, with entire dataPoints. [{act} {act} ...]
+  getAllDataByWeek(date) {
+    return this.data.filter((dataItem) => {
+      // next line needs to get broken up
+
+      return (
+        new Date(date).setDate(new Date(date).getDate() - 7) <=
+          new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
+      );
+    });
+  }
+
+  getUserDataByWeek(date, id) {
+    // returns a slice of a sorted array, with entire dataPoints. [{act} {act} ...]
     let userDataByDate = this.sortUserDataByDate(id, this.data);
-    let dateIndex = userDataByDate.indexOf(userDataByDate.find(firstItem => firstItem.date === date));
+    let dateIndex = userDataByDate.indexOf(
+      userDataByDate.find((firstItem) => firstItem.date === date)
+    );
     return userDataByDate.slice(dateIndex, dateIndex + 7);
   }
 
   getUserAverageForWeek(id, date, key) {
     if (!this.dateRule(date)) {
-      return 'This date is improperly formatted'
-    } else if (typeof id !== 'number') {
-      return 'This id is not properly formatted'
+      return "This date is improperly formatted";
+    } else if (typeof id !== "number") {
+      return "This id is not properly formatted";
     } else if (this.keyRule(key) === false) {
-      return 'The key does not correspond with the dataset'
+      return "The key does not correspond with the dataset";
     }
 
-    let weekData = this.getUserDataByWeek(date, id)
-    return parseFloat(weekData.reduce((average, dataPoint) => {
-      average = average + dataPoint[key] / weekData.length
-      return average
-    }, 0).toFixed(1));
+    let weekData = this.getUserDataByWeek(date, id);
+    return parseFloat(
+      weekData
+        .reduce((average, dataPoint) => {
+          average = average + dataPoint[key] / weekData.length;
+          return average;
+        }, 0)
+        .toFixed(1)
+    );
   }
 
   getAllUserAverageForDay(date, key) {
-    if(!this.dateRule(date) || this.keyRule(key) === false) {
-      return 'One of the parameters are incorrect'
+    if (!this.dateRule(date) || this.keyRule(key) === false) {
+      return "One of the parameters are incorrect";
     }
     let selectedDayData = this.getAllDataByDay(date);
-    return parseFloat(selectedDayData.reduce((average, data) => {
-      average = average + data[key] / selectedDayData.length
-      return average;
-    }, 0).toFixed(1));
+    return parseFloat(
+      selectedDayData
+        .reduce((average, data) => {
+          average = average + data[key] / selectedDayData.length;
+          return average;
+        }, 0)
+        .toFixed(1)
+    );
+  }
+
+  findWeeklyStartDates(id) {
+    const sortedData = this.sortDataByDate(id);
+    return sortedData.reduce((mondays, dataPoint) => {
+      if (moment(dataPoint.date).format("dddd") === "Monday") {
+        mondays.push(dataPoint.date);
+      }
+      return mondays;
+    }, []);
+  }
+
+  presentWeeks(date, id) {
+    let allDates = this.sortUserDataByDate(id);
+    let i = allDates.indexOf(date);
+    return allDates.slice(i, i + 7);
   }
 }
 
 export default Repo
+
+// var date = "2020/07/24";
+// var test = moment(date).format("dddd");

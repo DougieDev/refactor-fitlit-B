@@ -1,3 +1,12 @@
+function populateWeeklyDates(repo, id) {
+  let mondays = repo.findWeeklyStartDates(id)
+  let selectBar = document.querySelector('select')
+  mondays.forEach(monday => {
+    let week = `Week of ${moment(monday).format('MMMM Do YYYY')}`
+    selectBar.insertAdjacentHTML('beforeend', week)
+  })
+}
+
 function insertForm(event) {
   const dateInput = `date: <input id="date" />`;
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
@@ -171,4 +180,10 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 
 
 
-export {populateDailyData, insertWeeklyDataLayouts, addInfoToUserSidebar, addFriendSidebar, insertForm}
+export {
+  populateDailyData, 
+  insertWeeklyDataLayouts, 
+  populateWeeklyDates, 
+  addInfoToUserSidebar, 
+  addFriendSidebar, 
+  insertForm}

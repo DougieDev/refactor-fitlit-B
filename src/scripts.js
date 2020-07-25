@@ -15,7 +15,8 @@ import {
   insertWeeklyDataLayouts,
   addFriendSidebar
 } from './page-manipulation';
-import Repo from './Repo';
+
+import moment from 'moment'
 
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
@@ -63,23 +64,20 @@ function catchData(src) {
     .then(repo => dataEventHandler(src));
 }
 
-
 function dataEventHandler(src) {
   if (src === 'userData') {
-    today = hydrationRepo.getToday(currentUserId)
     console.log(userRepo);
   } else if (src === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    
     console.log(hydrationRepo);
   } else if (src === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     populateDailyData('sleep-today', sleepRepo, currentUserId, today)
-    console.log(sleepRepo);
   } else if (src === 'activityData') {
     today = activityRepo.getToday(currentUserId)
     populateDailyData('activity-today', activityRepo, currentUserId, today)
-    console.log(activityRepo); 
   }
 }
 
