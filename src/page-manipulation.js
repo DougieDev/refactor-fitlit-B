@@ -48,6 +48,28 @@ function insertWeeklyDataLayouts(event) {
   }
 }
 
+function insertActivityData(event) {
+  const weekdays = document.querySelectorAll('.activity-xtra');
+  const milesTodayHtml = `<li class="miles" <span>class="number">0</span> miles walked</li>`;
+  const allMilesHtml = `<li class="total-miles">Total Miles: <span class="number">0</span>
+    Stair Count: <span class="number">0</span>
+    Minutes Active: <span class="number">0</span>`
+  const streakHtml= `<li class="streak">Current Streak: <span class="number">0</span>days in a row!</li>
+    Sleep Quality: <span class="number">0</span>out of 5`
+  // const insertLayout = (html) => {
+  //   for (var i = 0; i < weekdays.length; i++) {
+  //     weekdays[i].innerHTML = html;
+  //   }
+  };
+  if (event.target.id.includes('hydration')) {
+    insertLayout(hydrationWeekdayHtml);
+  } else if (event.target.id.includes('activity')) {
+    insertLayout(activityWeekdayHtml);
+  } else if (event.target.id.includes('sleep')) {
+    insertLayout(sleepWeekdayHtml);
+  }
+}
+
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {
       return `<li class='historical-list-listItem'>${friendName}</li>`;
@@ -62,7 +84,7 @@ function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
 
 function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => {
-    return `<li class="historical-list-listItem">${streakData}!</li>`
+    return `<li class="card activity-xtra">${streakData}!</li>`
   }).join('');
 }
 
