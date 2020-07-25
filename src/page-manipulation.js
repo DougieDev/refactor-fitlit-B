@@ -54,8 +54,8 @@ function insertActivityData(event) {
   const allMilesHtml = `<li class="total-miles">Total Miles: <span class="number">0</span>
     Stair Count: <span class="number">0</span>
     Minutes Active: <span class="number">0</span>`
-  const streakHtml= `<li class="streak">Current Streak: <span class="number">0</span>days in a row!</li>
-    Sleep Quality: <span class="number">0</span>out of 5`
+  const streakHtml = `Current Streak: <span class="number">0</span>days in a row!`
+  const stepsHtml = ``
   // const insertLayout = (html) => {
   //   for (var i = 0; i < weekdays.length; i++) {
   //     weekdays[i].innerHTML = html;

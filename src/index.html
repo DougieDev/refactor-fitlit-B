@@ -49,32 +49,6 @@
             <br>
             <input type="text" id="datepicker">
           </section>
-          <section class="card-container hidden" id="activity-information" tabindex="0">
-            <article class="card activity-info-miles">
-            Miles walked today: <br />
-            <span class="number" id="miles">0</span><br />
-            Your stair count today: <br />
-            <span class="number" id="flightsOfStairs">0</span> <br />
-            Your minutes active today: <br />
-            <span class="number" id="minutesActive">0</span>
-            </article>
-            <article class="card activity-info-stairs">
-              Miles walked today: <br />
-              <span class="number" id="miles">0</span><br />
-              Your stair count today: <br />
-              <span class="number" id="flightsOfStairs">0</span> <br />
-              Your minutes active today: <br />
-              <span class="number" id="minutesActive">0</span>
-            </article>
-            <article class="card activity-info-streaks">
-              Miles walked today: <br />
-              <span class="number" id="miles">0</span><br />
-              Your stair count today: <br />
-              <span class="number" id="flightsOfStairs">0</span> <br />
-              Your minutes active today: <br />
-              <span class="number" id="minutesActive">0</span>
-            </article>
-          </section>
           <!-- <section class="main-column-hydration"></section>
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
@@ -126,25 +100,29 @@
             </select>
           </section>
         </section>
-        <section class="card-container" id="active-cards" tabindex="0">
-          <h2> keep it up, your crushing it today</h2>
-          <section class="card activity-xtra" id="miles" tabindex="0">
-            <ul>
-              <li class="miles">Miles Today:</li>
-              <li class="total-miles">Total Miles:</li>
-            </ul>    
+        <section class="card-container">
+          <section class="card miles-card" id="miles-today" tabindex="0">
+            miles today:
+            <span class="number" id="miles">0</span>
+            walked today. <br />
+            your total miles walked
+            <span class="number" id="miles-total">0</span>
+            great work! <br />
+            steps to go:
+            <span class="number" id="steps-left">0</span>
           </section>
-          <section class="card activity-xtra" id="streaks" tabindex="0">
-            Step Goal: How Many More To Go
-            <ul>
-              <li>Current Streak:</li>
-              <li>Most Active Days:</li>
-            </ul>
-          </section>
-          <section class="card" id="user-streak" tabindex="0">
-            Your Current Streak: Longest Streak: 
-          </section>
+          <section class="card miles-card" id="miles-today" tabindex="0">
+            miles today:
+            <span class="number" id="miles">0</span>
+            walked today. <br />
+            your total miles walked
+            <span class="number" id="miles-total">0</span>
+            great work! <br />
+            steps to go:
+            <span class="number" id="steps-left">0</span>
+            </section>
         </section>
+        
       </section>
       <!-- <section class="main-sidebar-body"> -->
         <!-- <section class="sidebar-container" id="friends-sidebar"></section> -->
