@@ -35,7 +35,10 @@ function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 
+const selectBar = document.querySelector('#week-select')
 const buttons = document.querySelectorAll('button');
+
+selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
@@ -49,6 +52,22 @@ function buttonHandler(event) {
   } else if (event.target.id.includes('weekly')) {
     insertWeeklyDataLayouts(event);
   }
+}
+
+function selectHandler(event) {
+  unHideElements(
+    '.sleep-week-data-button', 
+    '.activity-week-data-button', 
+    '.hydration-week-data-button'
+    )
+}
+
+function unHideElements() {
+  const args = Array.from(arguments)
+  args.forEach(element => {
+    console.log(document.querySelector(element).classList.remove('hidden'))
+  })
+
 }
 
 function catchAllData() {

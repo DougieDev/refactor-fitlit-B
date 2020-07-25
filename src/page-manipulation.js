@@ -2,7 +2,7 @@ import moment from 'moment'
 
 function populateWeeklyDates(repo, id) {
   let mondays = repo.findWeeklyStartDates(id)
-  let selectBar = document.querySelector('#week-select')
+  let select = document.querySelector('#week-select')
   let options = mondays.reduce((week, monday) => {
     week += `
     <option value="${monday}>
@@ -10,8 +10,7 @@ function populateWeeklyDates(repo, id) {
     </option>`
     return week
   }, '')
-  console.log(mondays.length)
-  selectBar.insertAdjacentHTML('beforeend', options)
+  select.insertAdjacentHTML('beforeend', options)
 }
 
 function insertForm(event) {
