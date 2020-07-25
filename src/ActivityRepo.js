@@ -13,6 +13,15 @@ class ActivityRepo extends Repo {
     return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
 
+  getUserTotalMiles(id, users) {
+    let user = users.findUserById(id);
+    let allSteps = this.getAllDataById(id);
+    let miles = allSteps.reduce((total, steps) => {
+      return total + steps.numSteps;
+    }, 0);
+    return parseFloat(((miles * user.strideLength) / 5280).toFixed(1));
+  }
+
   // getActiveMinutesByDate(id, date) {
   //   let userActivityByDate = this.findById(id, date);
   //   return userActivityByDate.minutesActive;
