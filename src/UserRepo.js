@@ -111,20 +111,6 @@ class UserRepo extends Repo  {
     });
   }
 
-  determineBestSleepers(date, userRepo) {
-    let timeline = userRepo.chooseWeekDataForAllUsers(this.data, date);
-    let userSleepObject = userRepo.isolateUsernameAndRelevantData(this.data, date, 'sleepQuality', timeline);
-
-    return Object.keys(userSleepObject).filter(function (key) {
-      return (userSleepObject[key].reduce(function (sumSoFar, sleepQualityValue) {
-        sumSoFar += sleepQualityValue
-        return sumSoFar;
-      }, 0) / userSleepObject[key].length) > 3
-    }).map(function (sleeper) {
-      return userRepo.findById(parseInt(sleeper)).name;
-    })
-  }
-
   showChallengeListAndWinner(user, date) {
     let rankedList = user.getFriendsAverageStepsForWeek(date, this.data);
     return rankedList.map(listItem => {
@@ -135,7 +121,7 @@ class UserRepo extends Repo  {
   }
 
   showcaseWinner(user, date) {
-    let namedList = this.showChallengeListAndWinner(user, date);
+    // let namedList = this.showChallengeListAndWinner(user, date);
     let winner = this.showChallengeListAndWinner(user, date).shift();
     return winner;
   }

@@ -21,7 +21,6 @@ class DOMmanipulator {
     display.innerText = message
   }
 
-  
   insertForm(event) {
     const dateInput = `date: <input id="date" />`;
     event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
@@ -95,21 +94,21 @@ class DOMmanipulator {
   populateUserSidebar(user, repo) {
     const sidebarElements = document.getElementById('user-sidebar').children;
     for (var i = 0; i < sidebarElements.length; i++) {
-      let friendsHtml;
       if (sidebarElements[i].id === 'header-text') {
         sidebarElements[i].insertAdjacentHTML(
           'afterbegin', `${user.getFirstName()}'s `
         )
       } else if (sidebarElements[i].id === 'friends-list') {
+        let friendsHtml;
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = repo.findUserById(id);
-          return listItems += `<li class="friend" id="${friend.id}">${friend.name}</li>`
+          return listItems += 
+          `<li class="friend" id="${friend.id}">${friend.name}</li>`
         }, '');
+        sidebarElements[i].innerHTML = friendsHtml;
       }
-      sidebarElements[i].innerHTML = friendsHtml;
     }
   }
-  
   
   populateUserCard(user, repo) {
     const trainingStats = document.getElementById('training-stats').children;
@@ -156,7 +155,11 @@ class DOMmanipulator {
   goToDailyPage(hydrationRepo, sleepRepo, activityRepo, currentUserId, today) {
     this.unHideElements('#daily-cards')
     this.hideElements('#user-cards', '#community-cards')
-    this.populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    this.populateDailyData(
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today)
     this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     this.populateDailyData('activity-today', activityRepo, currentUserId, today)
     this.changeSystemMessage('Here are your stats for today')
@@ -165,17 +168,17 @@ class DOMmanipulator {
   goToContestPage() {
     this.unHideElements('#community-cards')
     this.hideElements('#daily-cards', '#user-cards')
-    this.changeSystemMessage('For support or competition, here`s how the community`s doing')
+    this.changeSystemMessage('Here`s how the community`s doing')
   }
 
-  seeFriendsStats(event) {
+  seeFriendsStats(event, hydrationRepo, sleepRepo, activityRepo, today) {
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData('hydration-today', hydrationRepo, userId, today)
     this.populateDailyData('sleep-today', sleepRepo, userId, today)
     this.populateDailyData('activity-today', activityRepo, userId, today)
-    this.changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
+    this.changeSystemMessage(`Here are ${event.target.innerText} stats today`)
   }
 }
 

@@ -1,7 +1,8 @@
+/* eslint-disable curly */
 import moment from 'moment';
 
 class Repo {
-  constructor(users) {
+  constructor() {
     this.data;
   }
 
@@ -106,7 +107,6 @@ class Repo {
   }
 
   getUserDataByWeek(date, id) {
-    // returns a slice of a sorted array, with entire dataPoints. [{act} {act} ...]
     let userDataByDate = this.sortUserDataByDate(id, this.data);
     let dateIndex = userDataByDate.indexOf(
       userDataByDate.find((firstItem) => firstItem.date === date)
@@ -168,6 +168,3 @@ class Repo {
 }
 
 export default Repo
-
-// var date = "2020/07/24";
-// var test = moment(date).format("dddd");

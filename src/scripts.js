@@ -54,7 +54,7 @@ function buttonHandler(event) {
 
 function sidebarHandler(event) {
   if (event.target.className === 'friend') {
-    page.seeFriendsStats(event)
+    page.seeFriendsStats(event, hydrationRepo, sleepRepo, activityRepo, today)
   }
   if (event.target.id.includes('stats')) {
     buttonHandler(event)
