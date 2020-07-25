@@ -8,7 +8,7 @@ function populateWeeklyDates(repo, id) {
   let options = mondays.reduce((week, monday) => {
     const momentMonday = moment(monday).format('MMMM Do YYYY')
     week += `
-    <option value="${monday}>
+    <option value="${monday}">
       Week of ${momentMonday}
     </option>`;
     return week;
@@ -68,7 +68,6 @@ function createWeeklyLayoutHtml() {
 function populateWeeklyData(repo, userId) {
   const calendar = document.querySelectorAll('.historic-data')
   let date = document.querySelector('select').value
-  date = date.slice(0, 10)
   let week = repo.presentWeek(date, userId)
   for(var i = 0; i < 8; i++) {
     populateDailyData(calendar[i].id, repo, userId, week[i]);
