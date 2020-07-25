@@ -12,10 +12,8 @@ import {
   populateUserInfo,
   populateDailyData,
   populateWeeklyDates,
-  addInfoToUserSidebar,
   insertForm, 
   displayWeeklyData,
-  addFriendSidebar,
   changeSystemMessage
 } from './page-manipulation';
 
@@ -29,8 +27,6 @@ const sleepRepo = new Repo();
 const currentUserId = getRandomNumber()
 let currentUser;
 let today;
-
-
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 50)
@@ -48,14 +44,6 @@ sideBar.addEventListener('click', sidebarHandler)
 selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
-}
-
-window.addEventListener('keydown', runTest);
-function runTest(event) {
-  // console.log(event)
-  if(event.key === 'a') {
-    console.log(currentUserId, currentUser);
-  }
 }
 
 function sidebarHandler(event) {
