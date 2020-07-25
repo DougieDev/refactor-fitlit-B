@@ -12,16 +12,18 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 6px 5px 8px 6px $card-shadow;
-}
 
-.card-container {
+  &-container {
   width: 100%;
   height: auto;
   display: flex;
   flex-wrap: wrap;
   padding-top: 2em;
   justify-content: center;
+  }
 }
+
+
 
 .week-card {
   display: flex;
