@@ -79,19 +79,30 @@ class DOMmanipulator {
   
   populateWeeklyData(repo, userId) {
     const calendar = document.querySelectorAll('.historic-data')
-    let date = document.querySelector('select').value
-    let week = repo.presentWeek(date, userId)
+    const date = document.querySelector('select').value
+    const week = repo.presentWeek(date, userId)
     for (var i = 0; i < 8; i++) {
       this.populateDailyData(calendar[i].id, repo, userId, week[i]);
     }
   }
   
-  displayWeeklyData(event, repo, id) {
+  displayWeeklyData(event, id) {
+    const repo = this.determineRepo(event)
     let weeklyHtml = this.createWeeklyLayoutHtml()
     this.insertWeekLayout(weeklyHtml[event.target.id])
     this.populateWeeklyData(repo, id)
   }
   
+  determineRepo(event) {
+    if (event.target.id.includes("hydration")) {
+      return hydrationRepo;
+    } else if (event.target.id.includes("sleep")) {
+      return sleepRepo;
+    } else if (event.target.id.includes("activity")) {
+      return activityRepo;
+    }
+  }
+
   populateUserInfo(user) {
     this.populateUserSidebar(user);
     this.populateUserCard(user);

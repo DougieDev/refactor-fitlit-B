@@ -13,19 +13,9 @@ import {
   currentUserId, 
 } from './globals';
 
-
-
 const page = new DOMmanipulator();
 let currentUser;
 let today;
-// const userRepo = new UserRepo();
-// const hydrationRepo = new Repo();
-// const activityRepo = new ActivityRepo(); 
-// const sleepRepo = new Repo();
-
-// const currentUserId = getRandomNumber()
-// let currentUser;
-// let today;
 
 const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
@@ -38,14 +28,13 @@ sideBar.addEventListener('click', sidebarHandler)
 selectBar.addEventListener('click', selectBarHandler)
 
 function buttonHandler(event) {
-  let repoPass = determineRepo(event)
   let button = event.target;
   if (button.id.includes('new')) {
     page.insertForm(event);
   } else if (button.id === 'submit') {
     //POST FUNCTIONALITY
   } else if (button.id.includes('weekly')) {
-    page.displayWeeklyData(event, repoPass, currentUserId);
+    page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
     page.goToUserPage();
   } else if (button.id.includes('daily-stats')) {
@@ -125,16 +114,6 @@ const findClassInfo = (dataSet) => {
     classInfo.class = hydrationRepo;
   }
   return classInfo;
-}
-
-const determineRepo = (event) => {
-  if (event.target.id.includes("hydration")) {
-    return hydrationRepo;
-  } else if (event.target.id.includes("sleep")) {
-    return sleepRepo;
-  } else if (event.target.id.includes("activity")) {
-    return activityRepo;
-  }
 }
 
 startApp();
