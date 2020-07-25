@@ -75,20 +75,20 @@ class DOMmanipulator {
     let date = document.querySelector('select').value
     let week = repo.presentWeek(date, userId)
     for(var i = 0; i < 8; i++) {
-      populateDailyData(calendar[i].id, repo, userId, week[i]);
+      this.populateDailyData(calendar[i].id, repo, userId, week[i]);
     }
   }
   
   displayWeeklyData(event, repo, id) {
-    let weeklyHtml = createWeeklyLayoutHtml()
-    insertWeekLayout(weeklyHtml[event.target.id])
-    populateWeeklyData(repo, id)
+    let weeklyHtml = this.createWeeklyLayoutHtml()
+    this.insertWeekLayout(weeklyHtml[event.target.id])
+    this.populateWeeklyData(repo, id)
   }
   
   populateUserInfo(user, userRepo) {
-    populateUserSidebar(user, userRepo);
-    populateUserCard(user, userRepo);
-    populateInfoCard(user);
+    this.populateUserSidebar(user, userRepo);
+    this.populateUserCard(user, userRepo);
+    this.populateInfoCard(user);
   } 
   
   populateUserSidebar(user, repo) {
@@ -125,6 +125,20 @@ class DOMmanipulator {
         accountInfo[i].innerText = user[accountInfo[i].id];
       }
     }
+  }
+
+  hideElements() {
+    const args = Array.from(arguments)
+    args.forEach(element => {
+      document.querySelector(element).classList.add('hidden')
+    })
+  }
+
+  unHideElements() {
+    const args = Array.from(arguments)
+    args.forEach(element => {
+      document.querySelector(element).classList.remove('hidden')
+    })
   }
 }
 
