@@ -29,7 +29,7 @@ class ActivityRepo extends Repo {
 
 
   //need to add sad path if date or user is not defined
-  accomplishStepGoal(id, date, users) {
+  accomplishedStepGoal(id, date, users) {
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     return (userActivityByDate.numSteps === user.dailyStepGoal) ? true : false;

@@ -48,14 +48,6 @@ function insertWeeklyDataLayouts(event) {
   }
 }
 
-function insertActivityData(event) {
-  const weekdays = document.querySelectorAll('.activity-xtra');
-  const milesTodayHtml = `<li class="miles" <span>class="number">0</span> miles walked</li>`;
-  const allMilesHtml = `<li class="total-miles">Total Miles: <span class="number">0</span>
-    Stair Count: <span class="number">0</span>
-    Minutes Active: <span class="number">0</span>`
-  const streakHtml = `Current Streak: <span class="number">0</span>days in a row!`
-  };
 
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {
@@ -69,10 +61,81 @@ function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
   }).join('');
 }
 
-function makeStepStreakHTML(id, activityInfo, userStorage, method) {
-  return method.map(streakData => {
-    return `<li class="card activity-xtra">${streakData}!</li>`
-  }).join('');
+
+function displayCommunitySection(id, users, repo, activityType, date) {
+  const totalMiles = repo.getUserTotalMiles(id, users);
+  const userMilesToday = repo.getMilesFromStepsByDate(id, date, user);
+  const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
+  const stepsToGo = repo.remainingSteps(id, date, users);
+  const stepGoalDates = repo.getDaysGoalExceeded(id, users);
+  const streak = repo.getStreak(id, activityType);
+ 
+
+  const userMiles = document.getElementById("miles-card");
+  const streaks = document.getElementById("streaks");
+  const userStepsLeft = document.getElementById("steps");
+  const friend = document.getElementById("friend");
+
+  const displayCards = [
+    {html: milesCardHtml, selector: "miles-card"}, 
+    {html: stepGoalHtml, selector: "steps"}, 
+    {html: friendHtml, selector: "friend"},
+    {html: streakHtml, selector: "streaks"}
+    ];
+ 
+
+  const milesHtml = `
+    miles today:
+    <span class = "number" id = "miles" >${userMilesToday}</span>
+    walked today. < br />
+    your total miles walked
+    < span class="number" id = "miles-total" >${totalMiles}</span >
+    great work! < br />`;
+
+  const stepsHtml = `
+    steps to go:
+    <span class="number" id="steps-left">${stepsToGo}</span>
+    walked today. <br />
+    your total miles walked
+    <span class="number" id="step-goal">${stepGoalStatus}</span>
+    great work! <br />
+    steps to go:
+    <span class="number" id="best-steps">0</span>`
+
+  const friendsHtml = `
+    miles today:
+    <span class="number" id="miles">0</span>
+    walked today. <br />
+    your total miles walked
+    <span class="number" id="miles-total">0</span>
+    great work! <br />
+    steps to go:
+    <span class="number" id="steps-left">0</span>
+    `;
+
+  const streakHtml = `
+    maybe contest info:
+    <span class="number" id="winner">0</span>
+    crushing it. <br />
+    compared stats maybe of winner:
+    <span class="number" id="winner-showcase">0</span>
+    great work! <br />
+    steps to go:
+    <span class="number" id="winner-compare">0</span>
+    `;
+
+  const displayCards = [
+    { html: milesCardHtml, selector: "miles-card" },
+    { html: stepGoalHtml, selector: "steps" },
+    { html: friendHtml, selector: "friend" },
+    { html: streakHtml, selector: "streaks" }
+  ];
+
+  function displayCommunity() {
+    
+    
+    
+  }
 }
 
 
