@@ -45,13 +45,23 @@ for(const button of buttons) {
 
 function buttonHandler(event) {
   let repoPass = determineRepo(event)
-  if (event.target.id.includes('new')) {
-    // originalCardContent = event.target.parentElement.innerHTML;
+  let button = event.target;
+  if (button.id.includes('new')) {
+    // originalCardContent = button.parentElement.innerHTML;
     insertForm(event);
-  } else if (event.target.id === 'submit') {
+  } else if (button.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
-  } else if (event.target.id.includes('weekly')) {
+  } else if (button.id.includes('weekly')) {
     displayWeeklyData(event, repoPass, currentUserId);
+  } else if (button.id.includes('user-stats')) {
+    unHideElements('#user-cards')
+    hideElements('#daily-cards', '#community-cards')
+  } else if (button.id.includes('daily-stats')) {
+    unHideElements('#daily-cards')
+    hideElements('#user-cards', '#community-cards')
+  } else if (button.id.includes('contest-stats')) {
+    unHideElements('#community-cards')
+    hideElements('#daily-cards', '#user-cards')
   }
 }
 
@@ -73,10 +83,17 @@ function selectHandler(event) {
     )
 }
 
+function hideElements() {
+  const args = Array.from(arguments)
+  args.forEach(element => {
+    document.querySelector(element).classList.add('hidden')
+  })
+}
+
 function unHideElements() {
   const args = Array.from(arguments)
   args.forEach(element => {
-    console.log(document.querySelector(element).classList.remove('hidden'))
+    document.querySelector(element).classList.remove('hidden')
   })
 
 }

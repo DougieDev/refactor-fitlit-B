@@ -75,7 +75,6 @@ function populateWeeklyData(repo, userId) {
 }
 
 function displayWeeklyData(event, repo, id) {
-  debugger
   let weeklyHtml = createWeeklyLayoutHtml()
   insertWeekLayout(weeklyHtml[event.target.id])
   populateWeeklyData(repo, id)

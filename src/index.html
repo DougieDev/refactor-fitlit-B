@@ -10,12 +10,14 @@
       <section class="sidebar-container" id="user-sidebar" tabindex="0">
         <h1 id="headerText" tabindex="0">Activity Tracker</h1>
         <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
-        <a href="" class="user-stats">User Profile</a>
+        <button id="daily-stats">Daily Fitness</button>
+        <button id="user-stats">User Profile</button>
+        <button id="contest-stats">Community Data</button>
         <h2>Friends</h2>
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">A message for the user</h2>
-        <section class="card-container hidden" id="daily-cards" tabindex="0">
+        <section class="card-container" id="daily-cards" tabindex="0">
           <h3 tabindex="0">Daily Fitness</h3>
           <section class="card hydration-card" id="hydration-today" tabindex="0">
               You drank
@@ -53,7 +55,7 @@
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
         </section>
-        <section class="card-container" id="user-cards" tabindex="0">
+        <section class="card-container hidden" id="user-cards" tabindex="0">
           <h2>User / Account</h2>
           <section class="card" id="user-goals" tabindex="0">
             user goals:<button id="update-goals">Update Info</button>
