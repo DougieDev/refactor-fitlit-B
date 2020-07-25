@@ -3,7 +3,6 @@ import moment from 'moment'
 
 function populateWeeklyDates(repo, id) {
   const mondays = repo.findWeeklyStartDates(id);
-  console.log(mondays);
   const select = document.querySelector("#week-select");
   let options = mondays.reduce((week, monday) => {
     const momentMonday = moment(monday).format('MMMM Do YYYY')
@@ -98,6 +97,25 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   }).join('');
 }
 
+function populateUserInfo(user, userRepo) {
+  populateUserSidebar(user, userRepo);
+
+} 
+
+function populateUserSidebar(user, repo) {
+  const sidebarElements = document.getElementById('user-sidebar').children;
+  for (var i = 0; i < sidebarElements.length; i++) {
+    if (sidebarElements[i].id === 'header-text') {
+      sidebarElements[i].insertAdjacentHTML('afterbegin', `${user.getFirstName()}'s `)
+    } else if (sidebarElements[i].id === 'friends-list') {
+      let friendsHtml = user.friends.reduce((listItems, id) => {
+        let friend = repo.findUserById(id)
+        return listItems += `<li id="friend.id">${friend.name}</li>`
+      }, '')
+      sidebarElements[i].innerHTML = friendsHtml;
+    }
+  }
+}
 
 function addInfoToUserSidebar(user, userStorage) {
   const sidebar = document.getElementById('user-sidebar');
@@ -201,6 +219,7 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
 }
 
 export {
+  populateUserInfo,
   populateDailyData, 
   displayWeeklyData, 
   populateWeeklyDates, 

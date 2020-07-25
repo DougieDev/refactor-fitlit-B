@@ -15,8 +15,8 @@ class UserRepo extends Repo  {
   }
 
   findCurrentUser() {
-    let index = this.GetRandomNumber()
-    let user = this.data.find(user => user.userId === index)
+    let index = this.getRandomNumber()
+    let user = this.data.find(user => user.id === index)
     this.currentUser = new User(user)
   }
 

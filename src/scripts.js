@@ -9,6 +9,7 @@ import UserRepo from './UserRepo';
 import Repo from './Repo'
 
 import {
+  populateUserInfo,
   populateDailyData,
   populateWeeklyDates,
   addInfoToUserSidebar,
@@ -25,6 +26,7 @@ const activityRepo = new ActivityRepo();
 const sleepRepo = new Repo();
 
 const currentUserId = getRandomNumber()
+let currentUser;
 let today;
 
 function getRandomNumber() {
@@ -47,7 +49,6 @@ function buttonHandler(event) {
   let repoPass = determineRepo(event)
   let button = event.target;
   if (button.id.includes('new')) {
-    // originalCardContent = button.parentElement.innerHTML;
     insertForm(event);
   } else if (button.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
@@ -114,6 +115,8 @@ function catchData(src) {
 
 function dataEventHandler(src) {
   if (src === 'userData') {
+    currentUser = new User(userRepo.findUserById(currentUserId));
+    populateUserInfo(currentUser, userRepo);
   } else if (src === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
@@ -144,7 +147,6 @@ function findClassInfo(src) {
   }
   return classInfo;
 }
-
 
 startApp();
 
