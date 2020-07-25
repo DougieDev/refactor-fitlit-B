@@ -15,7 +15,8 @@ import {
   addInfoToUserSidebar,
   insertForm, 
   displayWeeklyData,
-  addFriendSidebar
+  addFriendSidebar,
+  changeSystemMessage
 } from './page-manipulation';
 
 import moment from 'moment'
@@ -51,9 +52,9 @@ for(const button of buttons) {
 
 window.addEventListener('keydown', runTest);
 function runTest(event) {
+  // console.log(event)
   if(event.key === 'a') {
     console.log(currentUserId, currentUser);
-
   }
 }
 
@@ -65,6 +66,7 @@ function sidebarHandler(event) {
     populateDailyData('hydration-today', hydrationRepo, userId, today)
     populateDailyData('sleep-today', sleepRepo, userId, today)
     populateDailyData('activity-today', activityRepo, userId, today)
+    changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
   }
   if(event.target.id.includes('stats')) {
     buttonHandler(event)
@@ -81,18 +83,20 @@ function buttonHandler(event) {
   } else if (button.id.includes('weekly')) {
     displayWeeklyData(event, repoPass, currentUserId);
   } else if (button.id.includes('user-stats')) {
-
     unHideElements('#user-cards')
     hideElements('#daily-cards', '#community-cards')
+    changeSystemMessage('Looking in the mirror never felt so good')
   } else if (button.id.includes('daily-stats')) {
     unHideElements('#daily-cards')
     hideElements('#user-cards', '#community-cards')
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
     populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     populateDailyData('activity-today', activityRepo, currentUserId, today)
+    changeSystemMessage('Here are your stats for today')
   } else if (button.id.includes('contest-stats')) {
     unHideElements('#community-cards')
     hideElements('#daily-cards', '#user-cards')
+    changeSystemMessage('For support or competition, here`s how the community`s doing')
   }
 }
 

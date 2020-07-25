@@ -15,6 +15,11 @@ function populateWeeklyDates(repo, id) {
   select.insertAdjacentHTML("beforeend", options);
 }
 
+function changeSystemMessage(message) {
+  let display = document.getElementById('app-message')
+  display.innerText = message
+}
+
 function insertForm(event) {
   const dateInput = `date: <input id="date" />`;
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
@@ -241,5 +246,6 @@ export {
   populateWeeklyDates, 
   addInfoToUserSidebar, 
   addFriendSidebar, 
-  insertForm
+  insertForm,
+  changeSystemMessage
 }
