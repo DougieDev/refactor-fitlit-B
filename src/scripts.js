@@ -10,6 +10,7 @@ import Repo from './Repo'
 
 import {
   populateDailyData,
+  populateWeeklyDates,
   addInfoToUserSidebar,
   insertForm, 
   insertWeeklyDataLayouts,
@@ -66,12 +67,10 @@ function catchData(src) {
 
 function dataEventHandler(src) {
   if (src === 'userData') {
-    console.log(userRepo);
   } else if (src === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
-    
-    console.log(hydrationRepo);
+    populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (src === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     populateDailyData('sleep-today', sleepRepo, currentUserId, today)

@@ -1,10 +1,17 @@
+import moment from 'moment'
+
 function populateWeeklyDates(repo, id) {
   let mondays = repo.findWeeklyStartDates(id)
-  let selectBar = document.querySelector('select')
-  mondays.forEach(monday => {
-    let week = `Week of ${moment(monday).format('MMMM Do YYYY')}`
-    selectBar.insertAdjacentHTML('beforeend', week)
-  })
+  let selectBar = document.querySelector('#week-select')
+  let options = mondays.reduce((week, monday) => {
+    week += `
+    <option value="${monday}>
+      Week of ${moment(monday).format('MMMM Do YYYY')}
+    </option>`
+    return week
+  }, '')
+  console.log(mondays.length)
+  selectBar.insertAdjacentHTML('beforeend', options)
 }
 
 function insertForm(event) {
@@ -177,13 +184,11 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
   );
 }
 
-
-
-
 export {
   populateDailyData, 
   insertWeeklyDataLayouts, 
   populateWeeklyDates, 
   addInfoToUserSidebar, 
   addFriendSidebar, 
-  insertForm}
+  insertForm
+}
