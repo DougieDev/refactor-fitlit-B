@@ -39,9 +39,11 @@ function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
 }
 
+const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
 const buttons = document.querySelectorAll('button')
 
+sideBar.addEventListener('click', sidebarHandler)
 selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
@@ -55,6 +57,20 @@ function runTest(event) {
   }
 }
 
+function sidebarHandler(event) {
+  if(event.target.className === 'friend') {
+    let userId = parseInt(event.target.id);
+    unHideElements('#daily-cards')
+    hideElements('#user-cards', '#community-cards')
+    populateDailyData('hydration-today', hydrationRepo, userId, today)
+    populateDailyData('sleep-today', sleepRepo, userId, today)
+    populateDailyData('activity-today', activityRepo, userId, today)
+  }
+  if(event.target.id.includes('stats')) {
+    buttonHandler(event)
+  }
+}
+
 function buttonHandler(event) {
   let repoPass = determineRepo(event)
   let button = event.target;
@@ -65,11 +81,15 @@ function buttonHandler(event) {
   } else if (button.id.includes('weekly')) {
     displayWeeklyData(event, repoPass, currentUserId);
   } else if (button.id.includes('user-stats')) {
+
     unHideElements('#user-cards')
     hideElements('#daily-cards', '#community-cards')
   } else if (button.id.includes('daily-stats')) {
     unHideElements('#daily-cards')
     hideElements('#user-cards', '#community-cards')
+    populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    populateDailyData('sleep-today', sleepRepo, currentUserId, today)
+    populateDailyData('activity-today', activityRepo, currentUserId, today)
   } else if (button.id.includes('contest-stats')) {
     unHideElements('#community-cards')
     hideElements('#daily-cards', '#user-cards')

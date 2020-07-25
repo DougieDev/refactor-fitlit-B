@@ -93,7 +93,7 @@ function populateUserSidebar(user, repo) {
     } else if (sidebarElements[i].id === 'friends-list') {
       let friendsHtml = user.friends.reduce((listItems, id) => {
         let friend = repo.findUserById(id)
-        return listItems += `<li id="friend.id">${friend.name}</li>`
+        return listItems += `<li class="friend" id="${friend.id}">${friend.name}</li>`
       }, '')
       sidebarElements[i].innerHTML = friendsHtml;
     }
