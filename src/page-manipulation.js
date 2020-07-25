@@ -79,27 +79,10 @@ function displayWeeklyData(event, repo, id) {
   populateWeeklyData(repo, id)
 }
 
-function makeFriendHTML(user, userStorage) {
-  return user.getFriendsNames(userStorage).map((friendName) => {
-      return `<li class='historical-list-listItem'>${friendName}</li>`;
-    }).join("");
-}
-
-function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
-  return method.map(friendChallengeData => {
-    return `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`
-  }).join('');
-}
-
-function makeStepStreakHTML(id, activityInfo, userStorage, method) {
-  return method.map(streakData => {
-    return `<li class="historical-list-listItem">${streakData}!</li>`
-  }).join('');
-}
-
 function populateUserInfo(user, userRepo) {
   populateUserSidebar(user, userRepo);
-
+  populateUserCard(user, userRepo);
+  populateInfoCard(user);
 } 
 
 function populateUserSidebar(user, repo) {
@@ -115,6 +98,39 @@ function populateUserSidebar(user, repo) {
       sidebarElements[i].innerHTML = friendsHtml;
     }
   }
+}
+
+function populateUserCard(user, repo) {
+  const trainingStats = document.getElementById('training-stats').children;
+  for (var i = 0; i < trainingStats.length; i++) {
+    let key = trainingStats[i].id.split('-')[0];
+    if (trainingStats[i].classList.contains('number') && trainingStats[i].id.includes('average')) {
+      trainingStats[i].innerText = repo.calculateAverage(key);
+    } else if (trainingStats[i].classList.contains('number')) {
+      trainingStats[i].innerText = user[key]
+    }
+  } 
+}
+
+function populateInfoCard(user) {
+  const accountInfo = document.getElementById('account-info').children;
+  for(var i = 0; i < accountInfo.length; i++) {
+    if(accountInfo[i].classList.contains("number")) {
+      accountInfo[i].innerText = user[accountInfo[i].id];
+    }
+  }
+}
+
+function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
+  return method.map(friendChallengeData => {
+    return `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`
+  }).join('');
+}
+
+function makeStepStreakHTML(id, activityInfo, userStorage, method) {
+  return method.map(streakData => {
+    return `<li class="historical-list-listItem">${streakData}!</li>`
+  }).join('');
 }
 
 function addInfoToUserSidebar(user, userStorage) {

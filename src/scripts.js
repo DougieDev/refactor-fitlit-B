@@ -29,20 +29,30 @@ const currentUserId = getRandomNumber()
 let currentUser;
 let today;
 
+
+
 function getRandomNumber() {
   return Math.floor(Math.random() * 50)
 }
 
 function startApp() {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
 }
 
 const selectBar = document.querySelector('#week-select')
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button')
 
 selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
+}
+
+window.addEventListener('keydown', runTest);
+function runTest(event) {
+  if(event.key === 'a') {
+    console.log(currentUserId, currentUser);
+
+  }
 }
 
 function buttonHandler(event) {
