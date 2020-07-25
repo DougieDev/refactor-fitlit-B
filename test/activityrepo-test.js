@@ -208,7 +208,7 @@ describe('Activity', function() {
   });
 
 
-  it.only('should take in data', function() {
+  it('should take in data', function() {
     expect(activity.data[0].userID).to.eql(1);
     expect(activity.data[4].date).to.eql("2019/06/15");
     expect(activity.data[3].numSteps).to.eql(3486);
@@ -217,16 +217,21 @@ describe('Activity', function() {
     expect(userRepo.data[0].id).to.eql(1);
   });
 
-  it.only('should return the miles a given user has walked on a given date', function() {
+  it('should return the miles a given user has walked on a given date', function() {
     
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 
-  it.only('should return true/false if the given user met their step goal on a given day', function() {
+  it('should return total miles a given user has walked', function () {
+
+    expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
+  });
+
+  it('should return true/false if the given user met their step goal on a given day', function() {
     expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
   });
 
-  it.only('should return all days that a given user exceeded their step goal', function() {
+  it('should return all days that a given user exceeded their step goal', function() {
     expect(activity.getDaysGoalExceeded(1, userRepo)).to.eql([
       "2019/06/17",
       "2019/06/19",
@@ -237,16 +242,16 @@ describe('Activity', function() {
     ]);
   });
 
-  it.only('should return the highest number of stairs climbed in a day for all time', function() {
+  it('should return the highest number of stairs climbed in a day for all time', function() {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
-  it.only('should show a 3-day increasing streak for a users step count', function () {
-    expect(activity.getStreak(1, 'numSteps')).to.eql(['2019/06/17', '2019/06/18'])
+  it('should show a 3-day increasing streak for a users step count', function () {
+    expect(activity.getStreak(1, 'numSteps')).to.eql(['2019/06/17'])
   });
 
-  it.only('should show a 3-day increasing streak for a users minutes of activity', function () {
-    expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18'])
+  it('should show a 3-day increasing streak for a users minutes of activity', function () {
+    expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18', '2019/06/21', '2019/06/22'])
   });
 });
 

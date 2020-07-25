@@ -55,20 +55,7 @@ function insertActivityData(event) {
     Stair Count: <span class="number">0</span>
     Minutes Active: <span class="number">0</span>`
   const streakHtml = `Current Streak: <span class="number">0</span>days in a row!`
-  const stepsHtml = ``
-  // const insertLayout = (html) => {
-  //   for (var i = 0; i < weekdays.length; i++) {
-  //     weekdays[i].innerHTML = html;
-  //   }
   };
-  if (event.target.id.includes('hydration')) {
-    insertLayout(hydrationWeekdayHtml);
-  } else if (event.target.id.includes('activity')) {
-    insertLayout(activityWeekdayHtml);
-  } else if (event.target.id.includes('sleep')) {
-    insertLayout(sleepWeekdayHtml);
-  }
-}
 
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {

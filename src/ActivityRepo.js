@@ -42,18 +42,32 @@ class ActivityRepo extends Repo {
       return dates;
     },[]);
   }
+// method needs to check if day before meet goal, and check each date that made that goal until a goal wasn't made or a date was skipped, need to iterate all of the user data, data is sorted by most recent and needs to iterate until either a day is not concurrent or goal not made return index that the iteration stops at as the streak total days.
 
+//reach for reduce if previousData meets goal and currentData meets goal add 1 if doesnt stop iterating and return streak number
+
+  currentStreak(id, activityData) {
+    let userStreak = this.sortUserDataByDate(id);
+    let streaks = userStreak.reduce((previous, streak) => {
+
+    }, [])
+  }
+//I still want to refactor but this honestly is working per the test but it really is just showing days goal achieved. 
   getStreak(id, activityType) {
-    let sortedUserArray = (this.sortUserDataByDate(id));
-    sortedUserArray.reverse();
+    let sortedUserArray = (this.sortUserDataByDate(id)).reverse();
     let streaks = sortedUserArray.filter((activity, index) => {
       if (index >= 2) {
         return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType] && sortedUserArray[index - 1][activityType] < sortedUserArray[index][activityType])
       }
     });
+    console.log(streaks)
     return streaks.map(streak => {
       return streak.date;
     })
+  }
+//make method to grab largest consecutive days a streak was made. This would be a stretch method if the project gets caught up and we have some additional time
+  longestStreak() {
+
   }
   
   getStairRecord(id) {
