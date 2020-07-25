@@ -23,7 +23,7 @@ const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
 const buttons = document.querySelectorAll('button')
 
-for(const button of buttons) {
+for (const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
 sideBar.addEventListener('click', sidebarHandler)
@@ -35,49 +35,35 @@ function buttonHandler(event) {
   if (button.id.includes('new')) {
     page.insertForm(event);
   } else if (button.id === 'submit') {
-    console.log(`run populate data, POST function, and do something with new date information.`)
+    //POST FUNCTIONALITY
   } else if (button.id.includes('weekly')) {
     page.displayWeeklyData(event, repoPass, currentUserId);
   } else if (button.id.includes('user-stats')) {
-    page.unHideElements('#user-cards')
-    page.hideElements('#daily-cards', '#community-cards')
-    page.changeSystemMessage('Looking in the mirror never felt so good')
+    page.goToUserPage();
   } else if (button.id.includes('daily-stats')) {
-    page.unHideElements('#daily-cards')
-    page.hideElements('#user-cards', '#community-cards')
-    page.populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
-    page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
-    page.populateDailyData('activity-today', activityRepo, currentUserId, today)
-    page.changeSystemMessage('Here are your stats for today')
+    page.goToDailyPage(
+      hydrationRepo, 
+      sleepRepo, 
+      activityRepo, 
+      currentUserId, 
+      today);
   } else if (button.id.includes('contest-stats')) {
-    page.unHideElements('#community-cards')
-    page.hideElements('#daily-cards', '#user-cards')
-    page.changeSystemMessage('For support or competition, here`s how the community`s doing')
+    page.goToContestPage();
   }
 }
 
 function sidebarHandler(event) {
-  if(event.target.className === 'friend') {
-    let userId = parseInt(event.target.id);
-    page.unHideElements('#daily-cards')
-    page.hideElements('#user-cards', '#community-cards')
-    page.populateDailyData('hydration-today', hydrationRepo, userId, today)
-    page.populateDailyData('sleep-today', sleepRepo, userId, today)
-    page.populateDailyData('activity-today', activityRepo, userId, today)
-    page.changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
+  if (event.target.className === 'friend') {
+    page.seeFriendsStats(event)
   }
-  if(event.target.id.includes('stats')) {
+  if (event.target.id.includes('stats')) {
     buttonHandler(event)
   }
 }
 
 function selectBarHandler() {
-  page.unHideElements(
-    '#weekly-hydration',
-    '#weekly-activity',
-    '#weekly-sleep'
-    )
-  }
+  page.unHideElements('#weekly-hydration', '#weekly-activity', '#weekly-sleep')
+}
   
 const dataEventHandler = (dataSet) => {
   if (dataSet === 'userData') {
@@ -85,7 +71,12 @@ const dataEventHandler = (dataSet) => {
     page.populateUserInfo(currentUser, userRepo);
   } else if (dataSet === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
-    page.populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    page.populateDailyData(
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
@@ -107,11 +98,12 @@ function catchAllData() {
 
 const catchData = (dataSet) => {
   const classInfo = findClassInfo(dataSet);
-  return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${dataSet}`)
+  const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
+  return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
     .then(response => response.json())
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
-    .then(trigger => dataEventHandler(dataSet));
+    .then(() => dataEventHandler(dataSet));
 }
 
 const findClassInfo = (dataSet) => {

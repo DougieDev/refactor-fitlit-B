@@ -27,7 +27,7 @@ class DOMmanipulator {
     event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
     const innerElements = event.target.parentElement.children;
     for (var i = 0; i < innerElements.length; i++) {
-      if(innerElements[i].classList.contains('number')
+      if (innerElements[i].classList.contains('number')
       && !innerElements[i].id.includes('average')) {
         let id = innerElements[i].id;
         innerElements[i].innerHTML = `<input id=${id} />`
@@ -39,9 +39,10 @@ class DOMmanipulator {
   populateDailyData(card, repo, userId, date) {
     let location = document.getElementById(card);
     const innerElements = location.children;
-    for(var i = 0; i < innerElements.length; i++) {
+    for (var i = 0; i < innerElements.length; i++) {
       let key = innerElements[i].id.split('-')[0]
-      if (innerElements[i].classList.contains('number') && innerElements[i].id.includes('average')) {
+      if (innerElements[i].classList.contains('number') 
+      && innerElements[i].id.includes('average')) {
         innerElements[i].innerText = repo.calculateAverage(key, userId);
       } else if (innerElements[i].classList.contains('number')) {
         innerElements[i].innerText = repo.findById(userId, date)[key];
@@ -54,19 +55,19 @@ class DOMmanipulator {
     for (var i = 0; i < weekdays.length; i++) {
       weekdays[i].innerHTML = html;
     }
-  };
+  }
   
   createWeeklyLayoutHtml() {
     return {
       'weekly-hydration': `
-        <span class="number" id="numOunces">
-          0
-        </span> oz drank`,
-      'weekly-activity': `Step Count: <span class="number" id="numSteps">0</span>
+        <span class="number" id="numOunces">0</span> oz drank`,
+      'weekly-activity': 
+        `Step Count: <span class="number" id="numSteps">0</span>
         Stair Count: <span class="number" id="flightsOfStairs">0</span>
         Minutes Active: <span class="number" id="minutesActive">0</span>`,
-      'weekly-sleep': `Hours Asleep: <span class="number" id="hoursSlept">0</span>
-          Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
+      'weekly-sleep': 
+        `Hours Asleep: <span class="number" id="hoursSlept">0</span>
+        Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
     }
   }
   
@@ -74,7 +75,7 @@ class DOMmanipulator {
     const calendar = document.querySelectorAll('.historic-data')
     let date = document.querySelector('select').value
     let week = repo.presentWeek(date, userId)
-    for(var i = 0; i < 8; i++) {
+    for (var i = 0; i < 8; i++) {
       this.populateDailyData(calendar[i].id, repo, userId, week[i]);
     }
   }
@@ -94,23 +95,28 @@ class DOMmanipulator {
   populateUserSidebar(user, repo) {
     const sidebarElements = document.getElementById('user-sidebar').children;
     for (var i = 0; i < sidebarElements.length; i++) {
+      let friendsHtml;
       if (sidebarElements[i].id === 'header-text') {
-        sidebarElements[i].insertAdjacentHTML('afterbegin', `${user.getFirstName()}'s `)
+        sidebarElements[i].insertAdjacentHTML(
+          'afterbegin', `${user.getFirstName()}'s `
+        )
       } else if (sidebarElements[i].id === 'friends-list') {
-        let friendsHtml = user.friends.reduce((listItems, id) => {
-          let friend = repo.findUserById(id)
+        friendsHtml = user.friends.reduce((listItems, id) => {
+          let friend = repo.findUserById(id);
           return listItems += `<li class="friend" id="${friend.id}">${friend.name}</li>`
-        }, '')
-        sidebarElements[i].innerHTML = friendsHtml;
+        }, '');
       }
+      sidebarElements[i].innerHTML = friendsHtml;
     }
   }
+  
   
   populateUserCard(user, repo) {
     const trainingStats = document.getElementById('training-stats').children;
     for (var i = 0; i < trainingStats.length; i++) {
       let key = trainingStats[i].id.split('-')[0];
-      if (trainingStats[i].classList.contains('number') && trainingStats[i].id.includes('average')) {
+      if (trainingStats[i].classList.contains('number') 
+      && trainingStats[i].id.includes('average')) {
         trainingStats[i].innerText = repo.calculateAverage(key);
       } else if (trainingStats[i].classList.contains('number')) {
         trainingStats[i].innerText = user[key]
@@ -120,8 +126,8 @@ class DOMmanipulator {
   
   populateInfoCard(user) {
     const accountInfo = document.getElementById('account-info').children;
-    for(var i = 0; i < accountInfo.length; i++) {
-      if(accountInfo[i].classList.contains("number")) {
+    for (var i = 0; i < accountInfo.length; i++) {
+      if (accountInfo[i].classList.contains("number")) {
         accountInfo[i].innerText = user[accountInfo[i].id];
       }
     }
@@ -140,7 +146,37 @@ class DOMmanipulator {
       document.querySelector(element).classList.remove('hidden')
     })
   }
-}
 
+  goToUserPage() {
+    this.unHideElements('#user-cards')
+    this.hideElements('#daily-cards', '#community-cards')
+    this.changeSystemMessage('Looking in the mirror never felt so good')
+  }
+
+  goToDailyPage(hydrationRepo, sleepRepo, activityRepo, currentUserId, today) {
+    this.unHideElements('#daily-cards')
+    this.hideElements('#user-cards', '#community-cards')
+    this.populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
+    this.populateDailyData('activity-today', activityRepo, currentUserId, today)
+    this.changeSystemMessage('Here are your stats for today')
+  }
+
+  goToContestPage() {
+    this.unHideElements('#community-cards')
+    this.hideElements('#daily-cards', '#user-cards')
+    this.changeSystemMessage('For support or competition, here`s how the community`s doing')
+  }
+
+  seeFriendsStats(event) {
+    let userId = parseInt(event.target.id);
+    this.unHideElements('#daily-cards')
+    this.hideElements('#user-cards', '#community-cards')
+    this.populateDailyData('hydration-today', hydrationRepo, userId, today)
+    this.populateDailyData('sleep-today', sleepRepo, userId, today)
+    this.populateDailyData('activity-today', activityRepo, userId, today)
+    this.changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
+  }
+}
 
 export default DOMmanipulator
