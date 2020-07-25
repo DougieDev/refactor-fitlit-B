@@ -6,46 +6,89 @@ import './images/arnie.jpg';
 import User from './User';
 import ActivityRepo from './ActivityRepo';
 import UserRepo from './UserRepo';
-import Repo from './Repo'
+import Repo from './Repo';
+import DOMmanipulator from './page-manipulation'
 
-import {
-  populateDailyData,
-  addInfoToUserSidebar,
-  insertForm, 
-  insertWeeklyDataLayouts,
-  addFriendSidebar
-} from './page-manipulation';
-
+const page = new DOMmanipulator();
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
 const activityRepo = new ActivityRepo(); 
 const sleepRepo = new Repo();
 
 const currentUserId = getRandomNumber()
+let currentUser;
 let today;
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * 50)
-}
+const sideBar = document.querySelector('.sidebar-container')
+const selectBar = document.querySelector('#week-select')
+const buttons = document.querySelectorAll('button')
 
-function startApp() {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
-}
-
-const buttons = document.querySelectorAll('button');
-for(const button of buttons) {
+for (const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
+sideBar.addEventListener('click', sidebarHandler)
+selectBar.addEventListener('click', selectBarHandler)
 
 function buttonHandler(event) {
-  if (event.target.id.includes('new')) {
-    // originalCardContent = event.target.parentElement.innerHTML;
-    insertForm(event);
-  } else if (event.target.id === 'submit') {
-    console.log(`run populate data, POST function, and do something with new date information.`)
-  } else if (event.target.id.includes('weekly')) {
-    insertWeeklyDataLayouts(event);
+  let repoPass = determineRepo(event)
+  let button = event.target;
+  if (button.id.includes('new')) {
+    page.insertForm(event);
+  } else if (button.id === 'submit') {
+    //POST FUNCTIONALITY
+  } else if (button.id.includes('weekly')) {
+    page.displayWeeklyData(event, repoPass, currentUserId);
+  } else if (button.id.includes('user-stats')) {
+    page.goToUserPage();
+  } else if (button.id.includes('daily-stats')) {
+    page.goToDailyPage(
+      hydrationRepo, 
+      sleepRepo, 
+      activityRepo, 
+      currentUserId, 
+      today);
+  } else if (button.id.includes('contest-stats')) {
+    page.goToContestPage();
   }
+}
+
+function sidebarHandler(event) {
+  if (event.target.className === 'friend') {
+    page.seeFriendsStats(event)
+  }
+  if (event.target.id.includes('stats')) {
+    buttonHandler(event)
+  }
+}
+
+function selectBarHandler() {
+  page.unHideElements('#weekly-hydration', '#weekly-activity', '#weekly-sleep')
+}
+  
+const dataEventHandler = (dataSet) => {
+  if (dataSet === 'userData') {
+    currentUser = new User(userRepo.findUserById(currentUserId));
+    page.populateUserInfo(currentUser, userRepo);
+  } else if (dataSet === 'hydrationData') {
+    today = hydrationRepo.getToday(currentUserId)
+    page.populateDailyData(
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
+    page.populateWeeklyDates(hydrationRepo, currentUserId)
+  } else if (dataSet === 'sleepData') {
+    today = sleepRepo.getToday(currentUserId)
+    page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
+  } else if (dataSet === 'activityData') {
+    today = activityRepo.getToday(currentUserId)
+    page.populateDailyData('activity-today', activityRepo, currentUserId, today)
+  }
+}
+
+const startApp = () => {
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
 }
 
 function catchAllData() {
@@ -53,55 +96,46 @@ function catchAllData() {
   args.forEach(arg => catchData(arg));
 }
 
-function catchData(src) {
-  const classInfo = findClassInfo(src);
-  return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${src}`)
+const catchData = (dataSet) => {
+  const classInfo = findClassInfo(dataSet);
+  const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
+  return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
     .then(response => response.json())
-    .then(data => data[src])
-    .then(result => classInfo.class.storeData(result, src))
-    .then(repo => dataEventHandler(src));
+    .then(data => data[dataSet])
+    .then(result => classInfo.class.storeData(result, dataSet))
+    .then(() => dataEventHandler(dataSet));
 }
 
-
-function dataEventHandler(src) {
-  if (src === 'userData') {
-    today = hydrationRepo.getToday(currentUserId)
-    console.log(userRepo);
-  } else if (src === 'userRepo') {
-    today = hydrationRepo.getToday(currentUserId)
-    populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
-    console.log(hydrationRepo);
-  } else if (src === 'sleepData') {
-    today = sleepRepo.getToday(currentUserId)
-    populateDailyData('sleep-today', sleepRepo, currentUserId, today)
-    console.log(sleepRepo);
-  } else if (src === 'activityData') {
-    today = activityRepo.getToday(currentUserId)
-    populateDailyData('activity-today', activityRepo, currentUserId, today)
-    console.log(activityRepo); 
-  }
-}
-
-function findClassInfo(src) {
+const findClassInfo = (dataSet) => {
   const classInfo = {}
-  if (src.includes('user')) {
+  if (dataSet.includes('user')) {
     classInfo.url = 'users';
     classInfo.class = userRepo;
-  } else if (src.includes('sleep')) {
+  } else if (dataSet.includes('sleep')) {
     classInfo.url = 'sleep';
     classInfo.class = sleepRepo;
-  } else if (src.includes('activity')) {
+  } else if (dataSet.includes('activity')) {
     classInfo.url = 'activity';
     classInfo.class = activityRepo;
-  } else if (src.includes('hydration')) {
+  } else if (dataSet.includes('hydration')) {
     classInfo.url = 'hydration';
     classInfo.class = hydrationRepo;
   }
   return classInfo;
 }
 
+function getRandomNumber() {
+  return Math.floor(Math.random() * 50)
+}
+
+const determineRepo = (event) => {
+  if (event.target.id.includes("hydration")) {
+    return hydrationRepo;
+  } else if (event.target.id.includes("sleep")) {
+    return sleepRepo;
+  } else if (event.target.id.includes("activity")) {
+    return activityRepo;
+  }
+}
 
 startApp();
-
-
-

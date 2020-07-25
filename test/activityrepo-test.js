@@ -248,16 +248,16 @@ describe('Activity', function() {
     ]);
   });
 
-  it('should return the highest number of stairs climbed in a day for all time', function () {
+  it('should return the highest number of stairs climbed in a day for all time', function() {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
   it('should show a 3-day increasing streak for a users step count', function () {
-    expect(activity.getStreak(1, 'numSteps')).to.eql(['2019/06/17'])
+    expect(activity.getStreak(1, 'numSteps')).to.eql(['2019/06/17', '2019/06/18'])
   });
 
   it('should show a 3-day increasing streak for a users minutes of activity', function () {
-    expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18', '2019/06/21', '2019/06/22'])
+    expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18'])
   });
 });
 

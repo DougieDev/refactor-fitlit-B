@@ -283,4 +283,8 @@ describe('Repo', () => {
     expect(result).to.equal(22.5)
   })
   
+  it.only('should be able to return Mondays from a given users data', () => {
+    let result = sleepRepo.findWeeklyStartDates(3000)
+    expect(result).to.deep.equal([`2040/01/09`]);
+  })
 });
