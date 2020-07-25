@@ -4,20 +4,28 @@ import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
 import User from './User';
-import ActivityRepo from './ActivityRepo';
-import UserRepo from './UserRepo';
-import Repo from './Repo';
-import DOMmanipulator from './page-manipulation'
+import DOMmanipulator from './page-manipulation';
+import {
+  userRepo, 
+  hydrationRepo, 
+  activityRepo, 
+  sleepRepo, 
+  currentUserId, 
+} from './globals';
+
+
 
 const page = new DOMmanipulator();
-const userRepo = new UserRepo();
-const hydrationRepo = new Repo();
-const activityRepo = new ActivityRepo(); 
-const sleepRepo = new Repo();
-
-const currentUserId = getRandomNumber()
 let currentUser;
 let today;
+// const userRepo = new UserRepo();
+// const hydrationRepo = new Repo();
+// const activityRepo = new ActivityRepo(); 
+// const sleepRepo = new Repo();
+
+// const currentUserId = getRandomNumber()
+// let currentUser;
+// let today;
 
 const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
@@ -41,12 +49,7 @@ function buttonHandler(event) {
   } else if (button.id.includes('user-stats')) {
     page.goToUserPage();
   } else if (button.id.includes('daily-stats')) {
-    page.goToDailyPage(
-      hydrationRepo, 
-      sleepRepo, 
-      activityRepo, 
-      currentUserId, 
-      today);
+    page.goToDailyPage(today);
   } else if (button.id.includes('contest-stats')) {
     page.goToContestPage();
   }
@@ -54,7 +57,7 @@ function buttonHandler(event) {
 
 function sidebarHandler(event) {
   if (event.target.className === 'friend') {
-    page.seeFriendsStats(event, hydrationRepo, sleepRepo, activityRepo, today)
+    page.seeFriendsStats(event, today)
   }
   if (event.target.id.includes('stats')) {
     buttonHandler(event)
@@ -68,7 +71,7 @@ function selectBarHandler() {
 const dataEventHandler = (dataSet) => {
   if (dataSet === 'userData') {
     currentUser = new User(userRepo.findUserById(currentUserId));
-    page.populateUserInfo(currentUser, userRepo);
+    page.populateUserInfo(currentUser);
   } else if (dataSet === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     page.populateDailyData(
@@ -124,10 +127,6 @@ const findClassInfo = (dataSet) => {
   return classInfo;
 }
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * 50)
-}
-
 const determineRepo = (event) => {
   if (event.target.id.includes("hydration")) {
     return hydrationRepo;
@@ -139,3 +138,5 @@ const determineRepo = (event) => {
 }
 
 startApp();
+
+export {currentUser, today}

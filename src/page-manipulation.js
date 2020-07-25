@@ -1,4 +1,11 @@
-import moment from 'moment'
+import moment from 'moment';
+import {
+  userRepo,
+  hydrationRepo,
+  activityRepo,
+  sleepRepo,
+  currentUserId,
+} from './globals';
 
 class DOMmanipulator {
   
@@ -85,13 +92,13 @@ class DOMmanipulator {
     this.populateWeeklyData(repo, id)
   }
   
-  populateUserInfo(user, userRepo) {
-    this.populateUserSidebar(user, userRepo);
-    this.populateUserCard(user, userRepo);
+  populateUserInfo(user) {
+    this.populateUserSidebar(user);
+    this.populateUserCard(user);
     this.populateInfoCard(user);
   } 
   
-  populateUserSidebar(user, repo) {
+  populateUserSidebar(user) {
     const sidebarElements = document.getElementById('user-sidebar').children;
     for (var i = 0; i < sidebarElements.length; i++) {
       if (sidebarElements[i].id === 'header-text') {
@@ -101,7 +108,7 @@ class DOMmanipulator {
       } else if (sidebarElements[i].id === 'friends-list') {
         let friendsHtml;
         friendsHtml = user.friends.reduce((listItems, id) => {
-          let friend = repo.findUserById(id);
+          let friend = userRepo.findUserById(id);
           return listItems += 
           `<li class="friend" id="${friend.id}">${friend.name}</li>`
         }, '');
@@ -110,13 +117,13 @@ class DOMmanipulator {
     }
   }
   
-  populateUserCard(user, repo) {
+  populateUserCard(user) {
     const trainingStats = document.getElementById('training-stats').children;
     for (var i = 0; i < trainingStats.length; i++) {
       let key = trainingStats[i].id.split('-')[0];
       if (trainingStats[i].classList.contains('number') 
       && trainingStats[i].id.includes('average')) {
-        trainingStats[i].innerText = repo.calculateAverage(key);
+        trainingStats[i].innerText = userRepo.calculateAverage(key);
       } else if (trainingStats[i].classList.contains('number')) {
         trainingStats[i].innerText = user[key]
       }
@@ -152,7 +159,7 @@ class DOMmanipulator {
     this.changeSystemMessage('Looking in the mirror never felt so good')
   }
 
-  goToDailyPage(hydrationRepo, sleepRepo, activityRepo, currentUserId, today) {
+  goToDailyPage(today) {
     this.unHideElements('#daily-cards')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
@@ -171,7 +178,7 @@ class DOMmanipulator {
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
-  seeFriendsStats(event, hydrationRepo, sleepRepo, activityRepo, today) {
+  seeFriendsStats(event, today) {
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
     this.hideElements('#user-cards', '#community-cards')
