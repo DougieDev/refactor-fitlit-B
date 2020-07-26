@@ -44,8 +44,8 @@ function buttonHandler(event) {
     page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
-  } else if (button.id.includes('contest-stats')) {
-    page.goToContestPage();
+  } else if (button.id.includes('community-stats')) {
+    page.goToContestPage(today);
   }
 }
 

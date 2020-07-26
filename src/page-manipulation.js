@@ -185,7 +185,7 @@ class DOMmanipulator {
     this.clearInputForms();
   }
 
-  goToContestPage() {
+  goToContestPage(today) {
     this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
     this.clearInputForms();
@@ -336,6 +336,7 @@ class DOMmanipulator {
     let hydrationData = hydrationRepo.sortUserDataByDate(id)
     return hydrationData.map(date => date.date)
   }
+
   displayCommunitySection(id, users, activity, date) {
     const totalMiles = activity.getUserTotalMiles(id, users);
     const userMilesToday = activity.getMilesFromStepsByDate(id, date, users);
@@ -405,6 +406,7 @@ class DOMmanipulator {
       let select = document.getElementById(card.selector)
       select.innerHTML = card.html;
     })
+  }
 }
 
 
