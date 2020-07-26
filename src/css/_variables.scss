@@ -52,15 +52,15 @@ $solid-border: 1px solid $black;
 }
 
 @mixin card-animation-right($speed) {
-  animation moveInRight $speed ease-out;
+  animation: moveInRight $speed ease-out;
 }
 
 @mixin card-animation-left($speed) {
-  animation moveInLeft $speed ease-out;
+  animation: moveInLeft $speed ease-out;
 }
 
 @mixin card-animation-top($speed) {
-  animation moveInTop $speed ease-out;
+  animation: moveInTop $speed ease-out;
 }
 
 @mixin name-animation {
@@ -79,6 +79,26 @@ $solid-border: 1px solid $black;
   0% {
     opacity: 0;
     transform: translateY(200px);
+  }
+
+  40% {
+    opacity: .4;
+  }
+
+  80% {
+    opacity: .8;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-200px);
   }
 
   40% {

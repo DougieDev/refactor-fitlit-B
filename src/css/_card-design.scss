@@ -61,17 +61,17 @@
 
 .hydration-card {
   background-color: $teal;
-  @include card-animation-bottom(1.2s);
+  @include card-animation-top(1.2s);
 }
 
 .sleep-card {
   background-color: $pink;
-  @include card-animation-bottom(1.2s);
+  @include card-animation-left(1.2s);
 }
 
 .activity-card {
   background-color: $yellow;
-  @include card-animation-bottom(1.2s);
+  @include card-animation-right(1.2s);
 }
 
 .calendar-card {
