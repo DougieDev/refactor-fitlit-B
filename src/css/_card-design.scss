@@ -50,8 +50,6 @@
 
 }
 
-
-
 .week-card {
   display: flex;
   flex-direction: column;
@@ -86,6 +84,16 @@
   @include card-animation-bottom(1.2s);
 }
 
+.pika-button {
+  background-color: $white;
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.is-disabled > * {
+  color: $sidebar-grey;
+}
 // .calendar-container {
 //   @include card-animation-bottom(1.4s);  
 //   }
@@ -94,10 +102,8 @@
 As of right now, I can't see any other use for it.
 Likely needs its name changed.*/
 
-.historical-list-listItem {
-  padding: .3em;
-  font-weight: bold;
-  font-family: sans-serif;
+#new-info {
+  width: 100%
 }
 
 
