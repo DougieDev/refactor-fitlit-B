@@ -65,6 +65,7 @@ function createWeeklyLayoutHtml() {
   }
 }
 
+
 function populateWeeklyData(repo, userId) {
   const calendar = document.querySelectorAll('.historic-data')
   let date = document.querySelector('select').value
@@ -96,7 +97,7 @@ function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
 
 function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => {
-    return `<li class="historical-list-listItem">${streakData}!</li>`
+    return `<li class="card activity-xtra">${streakData}!</li>`
   }).join('');
 }
 
