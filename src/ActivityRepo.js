@@ -47,7 +47,7 @@ class ActivityRepo extends Repo {
      
   }
 
-  getDaysGoalExceeded(id, users) {
+  getDaysStepGoalExceeded(id, users) {
     let user = users.findUserById(id);
     return this.data.reduce((dates, data) => {
       if (id === data.userID && data.numSteps > user.dailyStepGoal) {
@@ -60,12 +60,7 @@ class ActivityRepo extends Repo {
 
 //reach for reduce if previousData meets goal and currentData meets goal add 1 if doesnt stop iterating and return streak number
 
-  currentStreak(id, activityData) {
-    let userStreak = this.sortUserDataByDate(id);
-    let streaks = userStreak.reduce((previous, streak) => {
-
-    }, [])
-  }
+ 
 //I still want to refactor but this honestly is working per the test but it really is just showing days goal achieved. 
   getStreak(id, activityType) {
     let sortedUserArray = (this.sortUserDataByDate(id)).reverse();
@@ -79,10 +74,7 @@ class ActivityRepo extends Repo {
       return streak.date;
     })
   }
-//make method to grab largest consecutive days a streak was made. This would be a stretch method if the project gets caught up and we have some additional time
-  longestStreak() {
 
-  }
   
   getStairRecord(id) {
     return this.data

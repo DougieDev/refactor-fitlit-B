@@ -187,7 +187,10 @@ class DOMmanipulator {
     const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
     const stepsToGo = repo.remainingSteps(id, date, users);
     const stepGoalDates = repo.getDaysGoalExceeded(id, users);
-    const streak = repo.getStreak(id, 'numSteps');
+    const numStepsStreak = repo.getStreak(id, 'numSteps');
+    const minutesActiveStreak = repo.getStreak(id, 'minutesActive');
+    const flightsStreak = repo.getStreak(id, 'flightsOfStairs');
+    const stairRecord = repo.getStairRecord(id);
 
 
     // const userMiles = document.getElementById("miles-card");
@@ -203,11 +206,11 @@ class DOMmanipulator {
     great work! <br />`;
 
     const stepsHtml = `
-    <span class="number" id="steps-left">${stepsToGo}</span>
+    <span class="message " id="steps-left">${stepsToGo}</span>
     <br />
-    <span class="number" id="step-goal">${!stepGoalStatus}</span>
+    <span class="message" id="step-goal">${!stepGoalStatus}</span>
     <br />
-    <span class="number" id="best-steps">${stepGoalDates[0,1,2]}</span>`
+    <span class="number" id="best-steps"></span>`
 
     const friendsHtml = `
     miles today:
@@ -220,21 +223,22 @@ class DOMmanipulator {
     `;
 
     const streaksHtml = `
-    total streak:
-    <span class="number" id="streak">${streak.length}</span>
-    crushing it. <br />
-    compared stats maybe of winner:
-    <span class="number" id="winner-showcase">0</span>
+    Minutes Active Streaks:
+    <span class="number" id="streak">${minutesActiveStreak.length}</span>
+    Step Count Streaks:<br />
+    <span class="number" id="winner-showcase">${numStepsStreak.length}</span>
     great work! <br />
-    steps to go:
-    <span class="number" id="winner-compare">0</span>
+    <span class="number" id="winner-showcase">${flightsStreak.length}</span>
+    great work! <br />
+    Stair record:
+    <span class="number" id="winner-compare">${stairRecord}</span>
     `;
 
     const displayCards = [
-      { html: milesHtml, selector: "miles-card" },
-      { html: stepsHtml, selector: "steps" },
-      { html: friendsHtml, selector: "friend" },
-      { html: streaksHtml, selector: "streaks" }
+      { html: milesHtml, selector: "miles-card"},
+      { html: stepsHtml, selector: "steps"},
+      { html: friendsHtml, selector: "friend"},
+      { html: streaksHtml, selector: "streaks"}
     ];
 
     displayCards.forEach(card => {
