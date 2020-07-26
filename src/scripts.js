@@ -84,6 +84,7 @@ const dataEventHandler = (dataSet) => {
   } else if (dataSet === 'activityData') {
     today = activityRepo.getToday(currentUserId)
     page.populateDailyData('activity-today', activityRepo, currentUserId, today)
+    page.displayCommunitySection(currentUserId, userRepo, activityRepo, today)
   }
 }
 

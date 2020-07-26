@@ -163,9 +163,10 @@ class DOMmanipulator {
     this.changeSystemMessage('Here are your stats for today')
   }
 
-  goToContestPage() {
+  goToContestPage(currentUserId, userRepo, activityRepo, today) {
     this.unHideElements('#community-cards')
     this.hideElements('#daily-cards', '#user-cards')
+    this.displayCommunitySection(currentUserId, userRepo, activityRepo, today)
     this.changeSystemMessage('For support or competition, here`s how the community`s doing')
   }
 
@@ -178,59 +179,49 @@ class DOMmanipulator {
     this.populateDailyData('activity-today', activityRepo, userId, today)
     this.changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
   }
-}
 
 
-
-export default DOMmanipulator
-
-
-function displayCommunitySection(id, users, repo, activityType, date) {
-  const totalMiles = repo.getUserTotalMiles(id, users);
-  const userMilesToday = repo.getMilesFromStepsByDate(id, date, user);
-  const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
-  const stepsToGo = repo.remainingSteps(id, date, users);
-  const stepGoalDates = repo.getDaysGoalExceeded(id, users);
-  const streak = repo.getStreak(id, activityType);
+  displayCommunitySection(id, users, repo, date) {
+    const totalMiles = repo.getUserTotalMiles(id, users);
+    const userMilesToday = repo.getMilesFromStepsByDate(id, date, users);
+    const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
+    const stepsToGo = repo.remainingSteps(id, date, users);
+    const stepGoalDates = repo.getDaysGoalExceeded(id, users);
+    const streak = repo.getStreak(id, 'numSteps');
 
 
-  // const userMiles = document.getElementById("miles-card");
-  // const streaks = document.getElementById("streaks");
-  // const userStepsLeft = document.getElementById("steps");
-  // const friend = document.getElementById("friend");
+    // const userMiles = document.getElementById("miles-card");
+    // const streaks = document.getElementById("streaks");
+    // const userStepsLeft = document.getElementById("steps");
+    // const friend = document.getElementById("friend");
 
-  const milesHtml = `
-    miles today:
-    <span class = "number" id = "miles" >${userMilesToday}</span>
-    walked today. < br />
-    your total miles walked
-    < span class="number" id = "miles-total" >${totalMiles}</span >
-    great work! < br />`;
-
-  const stepsHtml = `
-    steps to go:
-    <span class="number" id="steps-left">${stepsToGo}</span>
+    const milesHtml = `
+    <span class="number" id= "miles" >${userMilesToday}</span>
     walked today. <br />
-    your total miles walked
-    <span class="number" id="step-goal">${stepGoalStatus}</span>
-    great work! <br />
-    steps to go:
-    <span class="number" id="best-steps">${streak}</span>`
+    your total miles walked:
+    <span class="number" id= "miles-total">${totalMiles}</span>
+    great work! <br />`;
 
-  const friendsHtml = `
+    const stepsHtml = `
+    <span class="number" id="steps-left">${stepsToGo}</span>
+    <br />
+    <span class="number" id="step-goal">${!stepGoalStatus}</span>
+    <br />
+    <span class="number" id="best-steps">${stepGoalDates[0,1,2]}</span>`
+
+    const friendsHtml = `
     miles today:
     <span class="number" id="miles">0</span>
     walked today. <br />
-    your total miles walked
     <span class="number" id="miles-total">0</span>
     great work! <br />
     steps to go:
     <span class="number" id="steps-left">0</span>
     `;
 
-  const streakHtml = `
-    maybe contest info:
-    <span class="number" id="winner">0</span>
+    const streaksHtml = `
+    total streak:
+    <span class="number" id="streak">${streak.length}</span>
     crushing it. <br />
     compared stats maybe of winner:
     <span class="number" id="winner-showcase">0</span>
@@ -239,17 +230,39 @@ function displayCommunitySection(id, users, repo, activityType, date) {
     <span class="number" id="winner-compare">0</span>
     `;
 
-  const displayCards = [
-    { html: milesCardHtml, selector: "miles-card" },
-    { html: stepGoalHtml, selector: "steps" },
-    { html: friendHtml, selector: "friend" },
-    { html: streakHtml, selector: "streaks" }
-  ];
+    const displayCards = [
+      { html: milesHtml, selector: "miles-card" },
+      { html: stepsHtml, selector: "steps" },
+      { html: friendsHtml, selector: "friend" },
+      { html: streaksHtml, selector: "streaks" }
+    ];
 
-  const displayCommunity = displayCards => {
     displayCards.forEach(card => {
       let selector = document.getElementById(card.selector)
       selector.innerHTML = card.html;
     })
   }
 }
+
+
+
+export default DOMmanipulator
+
+
+
+
+
+// populateCommunityData(card, repo, userId, date, users, activityType) {
+//   let location = document.getElementById(card);
+//   const innerElements = location.children;
+//   for (var i = 0; i < innerElements.length; i++) {
+//     let key = innerElements[i].id.split('-')[0]
+//     if (innerElements[i].classList.contains('number')
+//       && innerElements[i].id.includes('average')) {
+//       innerElements[i].innerText = repo.calculateAverage(key, userId);
+//     } else if (innerElements[i].classList.contains('number')) {
+//       innerElements[i].innerText = repo.findById(userId, date)[key];
+//     }
+//   }
+// }
+
