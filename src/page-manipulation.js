@@ -303,6 +303,14 @@ class DOMmanipulator {
     const minutesActiveStreak = activity.getStreak(id, 'minutesActive');
     const flightsStreak = activity.getStreak(id, 'flightsOfStairs');
     const stairRecord = activity.getStairRecord(id);
+    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
+    // const userFriendActivity = user.getFrendsActivity();
+    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
+    // const friendAverage = user.getFriendAverage();
+    // const stepWinner = users.showcaseWinner(user, date);
+    // const bestSleeper = determineSleepWinnerForWeek(date);
+    // const winnerShowcase = showcaseWinner(user, date)
+
 
     const milesHtml = `
       <p class="message-miles">-----</p>
@@ -321,13 +329,15 @@ class DOMmanipulator {
       <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
     `;
 
+
+    //this may need to become a winners section or may a top user showcase
     const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform">FIX METHOD</span>
+      <p class="message-comm">Friend Activity:</p>
+      <span class="message-friend" id="friend-activity">FIX METHOD</span>
       <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">0</span>
-      <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">0</span>
-      <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">0</span>
+      <span class="number" id="">FIX METHOD</span>
     `;
 
     const streaksHtml = `

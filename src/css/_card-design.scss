@@ -23,21 +23,29 @@
   justify-content: center;
   }
 
+
+
+  &-streak {
+    background-color: $teal;
+    @include card-animation-top(1.2s);
+  }
+
   &-steps {
-    background-color: $steps-color;
+    background-color: $yellow;
+    @include card-animation-left(1.2s);
   }
 
   &-friends {
-    background-color: $friends-color;
+    background-color: $pink;
+    @include card-animation-right(1.2s);
   }
 
   &-miles {
-    background-color: $miles-color;
+    background-color: $white;
+    @include card-animation-bottom(1.2s);
   }
   
-  &-streaks {
-    background-color: $streaks-color;
-  }
+  
 
 
 }
