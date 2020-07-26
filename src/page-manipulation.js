@@ -71,8 +71,9 @@ class DOMmanipulator {
 
   
   populateWeeklyData(repo, userId) {
+    debugger
     const calendar = document.querySelectorAll('.historic-data')
-    const date = document.querySelector('select').value
+    const date = document.getElementById('week-select').value
     const week = repo.presentWeek(date, userId)
     for (var i = 0; i < 8; i++) {
       this.populateDailyData(calendar[i].id, repo, userId, week[i]);
