@@ -69,6 +69,7 @@ function createWeeklyLayoutHtml() {
   }
 }
 
+
 function populateWeeklyData(repo, userId) {
   const calendar = document.querySelectorAll('.historic-data')
   let date = document.querySelector('select').value
@@ -83,6 +84,7 @@ function displayWeeklyData(event, repo, id) {
   insertWeekLayout(weeklyHtml[event.target.id])
   populateWeeklyData(repo, id)
 }
+
 
 function populateUserInfo(user, userRepo) {
   populateUserSidebar(user, userRepo);
