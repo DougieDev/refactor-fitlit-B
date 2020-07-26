@@ -1,6 +1,6 @@
 .card {
   background-color: $white;
-  border-radius: 15px;
+  @include card-border-radius;
   height: auto;
   width: 40%;
   margin: 2.5% 2.5%;

@@ -1,15 +1,14 @@
 // Is this working properly??
 @use './node_modules/pikaday/css/pikaday.scss';
-
+@import 'media-query';
 @import 'variables';
 @import 'sidebar-design';
 @import 'card-design';
+@import 'reset';
 
 body {
   font-family: 'Open Sans';
-  margin: 0;
   background-color: $background-grey;
-  height: auto;
 }
 
 h1 {
