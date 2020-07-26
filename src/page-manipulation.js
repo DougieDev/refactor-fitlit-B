@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Pikaday from 'pikaday';
 import {
   userRepo,
   hydrationRepo,
@@ -10,6 +11,8 @@ import {
 class DOMmanipulator {
   constructor() {
     this.dateField = document.getElementById('new-date');
+    this.calendar = document.querySelector('#calendar-container')
+    this.comingSoon = document.querySelector('#friends-calendar')
   }
   
   populateWeeklyDates(repo, id) {
@@ -116,6 +119,7 @@ class DOMmanipulator {
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
+   
   }
   
   populateUserCard(user) {
@@ -156,22 +160,26 @@ class DOMmanipulator {
   }
 
   goToUserPage(user) {
+    this.comingSoon.classList.add('hidden')
+    this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
     this.populateUserCard(user);
     this.populateInfoCard(user);
-    this.clearInputForms();
     this.changeSystemMessage('Looking in the mirror never felt so good')
   }
 
   goToDailyPage(today) {
+    this.comingSoon.classList.add('hidden')
+    this.calendar.classList.remove('hidden')
     this.unHideElements('#daily-cards', '#new-info')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
-    'hydration-today', 
-    hydrationRepo, 
-    currentUserId, 
-    today)
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
     this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     this.populateDailyData('activity-today', activityRepo, currentUserId, today)
     this.changeSystemMessage('Here are your stats for today')
@@ -179,6 +187,7 @@ class DOMmanipulator {
   }
 
   goToContestPage() {
+    this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
@@ -186,6 +195,8 @@ class DOMmanipulator {
   }
 
   seeFriendsStats(event, today) {
+    this.calendar.classList.add('hidden')
+    this.comingSoon.classList.remove('hidden')
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
     this.clearInputForms();
@@ -197,6 +208,7 @@ class DOMmanipulator {
   }
 
   insertForm(event) {
+    this.calendar.classList.add('hidden')
     const inputElements = document.querySelectorAll('.number');
     for (var i = 0; i < inputElements.length; i++) {
       if (inputElements[i].classList.contains('number')
@@ -217,7 +229,7 @@ class DOMmanipulator {
         numOunces: '',
         date: newDate
       },
-      sleep:{
+      sleep: {
         userID: id,
         hoursSlept: '',
         sleepQuality: '',
@@ -234,6 +246,7 @@ class DOMmanipulator {
   }
 
   pullInfoFromPage(id) {
+    
     if (this.checkValueFields() === false) {
       this.changeSystemMessage('Please fill in all of the information')
       return `All required values are not present`
@@ -268,12 +281,13 @@ class DOMmanipulator {
     }
     this.dateField.classList.add('hidden')
     const submit = document.getElementById('submit')
-    submit.id = `new-fitness-entry`;
-    event.target.innerText = `add new info`;
+    if (inputs === null) {
+      submit.innerText = `add new info`;
+      submit.id = `new-fitness-entry`;
+    }
   }
 
   checkValueFields() {
-    // debugger
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
     for (var i = 0; i < inputNodes.length; i++) {
@@ -289,8 +303,38 @@ class DOMmanipulator {
     }
   }
 
+  addCalendar(id) {
+    const pikaday = new Pikaday({
+      field: document.getElementById('calendar-container'),
+      bound: false,
+      container: document.getElementById('calendar-container'),
+      disableDayFn: (date) => {
+        date = moment(date).format('YYYY/MM/DD')
+        const datesWithData = this.findEligibleDates(id)
+        if (!datesWithData.includes(date)) return date
+      },
+      onSelect: () => {
+        let calDate = pikaday.getMoment().format('YYYY/MM/DD');
+        this.goToDailyPage(calDate)
+        this.changeSystemMessage('Here are your stats form ' +
+        `${moment(calDate).format('MMMM Do YYYY')}`)
+      }
+    })
 
+  }
 
+  addUserDate(today) {
+    const currentDate = document.getElementById('user-date')
+    currentDate.insertAdjacentHTML(
+      'afterbegin', `Your most recent entry is from <br />
+      ${moment(today).format('MMMM Do YYYY')}`
+    )
+  }
+
+  findEligibleDates(id) {
+    let hydrationData = hydrationRepo.sortUserDataByDate(id)
+    return hydrationData.map(date => date.date)
+  }
 }
 
 export default DOMmanipulator
