@@ -7,6 +7,9 @@
 
 * {
   margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+  text-transform: capitalize;
 }
 
 body {
@@ -90,4 +93,6 @@ table {
 .hidden {
   display: none;
 }
+
+
 
