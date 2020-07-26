@@ -8,6 +8,9 @@ import {
 } from './globals';
 
 class DOMmanipulator {
+  constructor() {
+    this.dateField = document.getElementById('new-date');
+  }
   
   populateWeeklyDates(repo, id) {
     const mondays = repo.findWeeklyStartDates(id);
@@ -150,35 +153,41 @@ class DOMmanipulator {
     })
   }
 
-  goToUserPage() {
+  goToUserPage(user) {
     this.unHideElements('#user-cards')
-    this.hideElements('#daily-cards', '#community-cards')
+    this.hideElements('#daily-cards', '#community-cards', '#new-info')
+    this.populateUserCard(user);
+    this.populateInfoCard(user);
+    this.clearInputForms();
     this.changeSystemMessage('Looking in the mirror never felt so good')
   }
 
   goToDailyPage(today) {
-    this.unHideElements('#daily-cards')
+    this.unHideElements('#daily-cards', '#new-info')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
-      'hydration-today', 
-      hydrationRepo, 
-      currentUserId, 
-      today)
+    'hydration-today', 
+    hydrationRepo, 
+    currentUserId, 
+    today)
     this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     this.populateDailyData('activity-today', activityRepo, currentUserId, today)
     this.changeSystemMessage('Here are your stats for today')
+    this.clearInputForms();
   }
 
   goToContestPage() {
     this.unHideElements('#community-cards')
-    this.hideElements('#daily-cards', '#user-cards')
+    this.clearInputForms();
+    this.hideElements('#daily-cards', '#user-cards', '#new-info')
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
   seeFriendsStats(event, today) {
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
-    this.hideElements('#user-cards', '#community-cards')
+    this.clearInputForms();
+    this.hideElements('#user-cards', '#community-cards', '#new-info')
     this.populateDailyData('hydration-today', hydrationRepo, userId, today)
     this.populateDailyData('sleep-today', sleepRepo, userId, today)
     this.populateDailyData('activity-today', activityRepo, userId, today)
@@ -194,7 +203,7 @@ class DOMmanipulator {
         inputElements[i].innerHTML = `<input id=${id} />`
       }
     }
-    document.getElementById('#new-date');
+    this.dateField.classList.remove('hidden')
     event.target.id = `submit`;
     event.target.innerText = `submit`;
   }
@@ -238,12 +247,11 @@ class DOMmanipulator {
     let inputs = document.querySelectorAll('input');
     for (var i = 0; i < inputs.length; i++) {
       let grandparent = inputs[i].parentNode.parentNode
-      if (inputs[i].id !== 'new-date' 
+      if (inputs[i].id !== 'new-date-field' 
       && !grandparent.parentNode.classList.contains('hidden')) {
         let key = grandparent.id.split('-')[0]
         let childKey = inputs[i].id
         data[key][childKey] = inputs[i].value
-
       }
     }
     this.changeSystemMessage('Thanks for sticking with ' + 
@@ -251,11 +259,15 @@ class DOMmanipulator {
     return data
   }
 
-  clearValueFields() {
+  clearInputForms() {
     let inputs = document.querySelectorAll('input');
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].value = ''
     }
+    this.dateField.classList.add('hidden')
+    const submit = document.getElementById('submit')
+    submit.id = `new-fitness-entry`;
+    event.target.innerText = `add new info`;
   }
 
   checkValueFields() {

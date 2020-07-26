@@ -38,10 +38,12 @@ function buttonHandler(event) {
     let newInfo = page.pullInfoFromPage(currentUserId);
     let fetchPackage = organizePost(newInfo);
     postAllData(fetchPackage);
+    page.clearInputForms()
+    page.goToDailyPage()
   } else if (button.id.includes('weekly')) {
     page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
-    page.goToUserPage();
+    page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
   } else if (button.id.includes('contest-stats')) {
@@ -111,7 +113,9 @@ const catchData = (dataSet) => {
     .then(response => response.json())
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
-    .then(() => dataEventHandler(dataSet));
+    .then(() => dataEventHandler(dataSet))
+    .catch(() => page.changeSystemMessage('Something went wrong' +
+    'please try again'))
 }
 
 const findClassInfo = (dataSet) => {
