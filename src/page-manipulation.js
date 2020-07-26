@@ -181,7 +181,7 @@ class DOMmanipulator {
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
-    this.displayCommunitySection(currentUserId, userRepo, activityRepo, today)
+    this.displayCommunitySection(currentUserId, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -293,23 +293,23 @@ class DOMmanipulator {
   }
 
 
-  displayCommunitySection(id, users, activity, date) {
-    const totalMiles = activity.getUserTotalMiles(id, users);
-    const userMilesToday = activity.getMilesFromStepsByDate(id, date, users);
-    const stepGoalStatus = activity.accomplishedStepGoal(id, date, users);
-    const stepsToGo = activity.remainingSteps(id, date, users);
-    const stepGoalDates = activity.getDaysGoalExceeded(id, users);
-    const numStepsStreak = activity.getStreak(id, 'numSteps');
-    const minutesActiveStreak = activity.getStreak(id, 'minutesActive');
-    const flightsStreak = activity.getStreak(id, 'flightsOfStairs');
-    const stairRecord = activity.getStairRecord(id);
-    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
-    // const userFriendActivity = user.getFrendsActivity();
-    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
-    // const friendAverage = user.getFriendAverage();
-    // const stepWinner = users.showcaseWinner(user, date);
-    // const bestSleeper = determineSleepWinnerForWeek(date);
-    // const winnerShowcase = showcaseWinner(user, date)
+  displayCommunitySection(id, date) {
+    console.log(currentUserId)
+    const user = userRepo.findUserById(currentUserId);
+    console.log(user)
+    const totalMiles = activityRepo.getUserTotalMiles(currentUserId);
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(id, date);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(id, date);
+    const stepsToGo = activityRepo.remainingSteps(id, date);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(id);
+    const numStepsStreak = activityRepo.getStreak(id, 'numSteps');
+    const minutesActiveStreak = activityRepo.getStreak(id, 'minutesActive');
+    const flightsStreak = activityRepo.getStreak(id, 'flightsOfStairs');
+    const stairRecord = activityRepo.getStairRecord(id);
+    
+    // const stepWinner = userRepo.showcaseWinner(user, date);
+    // const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+    
 
 
     const milesHtml = `
@@ -333,11 +333,11 @@ class DOMmanipulator {
     //this may need to become a winners section or may a top user showcase
     const friendsHtml = `
       <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform">FIX METHOD</span>
+      <span class="message-friend" id="friend-perform"></span>
       <p class="message-comm">Friend Activity:</p>
-      <span class="message-friend" id="friend-activity">FIX METHOD</span>
+      <span class="message-friend" id="friend-activity"></span>
       <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">FIX METHOD</span>
+      <span class="number" id=""></span>
     `;
 
     const streaksHtml = `

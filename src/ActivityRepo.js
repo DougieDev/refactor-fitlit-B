@@ -1,20 +1,25 @@
 import Repo from "./Repo";
-
-
+import {
+  userRepo,
+  hydrationRepo,
+  activityRepo,
+  sleepRepo,
+  currentUserId,
+} from './globals';
 
 class ActivityRepo extends Repo {
   constructor(activityData) {
     super(activityData)
   }
 
-  getMilesFromStepsByDate(id, date, users) {
-    let user = users.findUserById(id);
+  getMilesFromStepsByDate(id, date) {
+    let user = userRepo.findUserById(id);
     let userMiles = this.findById(id, date);
     return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
 
-  getUserTotalMiles(id, users) {
-    let user = users.findUserById(id);
+  getUserTotalMiles(id) {
+    let user = userRepo.findUserById(id);
     let allSteps = this.getAllDataById(id);
     let miles = allSteps.reduce((total, steps) => {
       return total + steps.numSteps;
@@ -29,15 +34,15 @@ class ActivityRepo extends Repo {
 
 
   //need to add sad path if date or user is not defined
-  accomplishedStepGoal(id, date, users) {
-    let user = users.findUserById(id);
+  accomplishedStepGoal(id, date) {
+    let user = userRepo.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     return (userActivityByDate.numSteps > user.dailyStepGoal) ? `Keep it up ${user.name}, you crushed your goal` : `You got this ${user.name}, just a few more steps`;
   };
 
-  remainingSteps(id, date, users) {
+  remainingSteps(id, date) {
     let completeMessage = 'Step goal, crushed!, Keep it up!';
-    let user = users.findUserById(id);
+    let user = userRepo.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     if (userActivityByDate === undefined) {
       return `No step activity found for ${date}`
@@ -46,8 +51,8 @@ class ActivityRepo extends Repo {
     return (steps < 0) ? completeMessage : `You have ${steps} steps to go.`;
   }
 
-  getDaysGoalExceeded(id, users) {
-    let user = users.findUserById(id);
+  getDaysGoalExceeded(id) {
+    let user = userRepo.findUserById(id);
     return this.data.reduce((dates, data) => {
       if (id === data.userID && data.numSteps > user.dailyStepGoal) {
         dates.push(data.date);
