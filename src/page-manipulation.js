@@ -68,6 +68,7 @@ class DOMmanipulator {
         Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
     }
   }
+
   
   populateWeeklyData(repo, userId) {
     const calendar = document.querySelectorAll('.historic-data')
@@ -145,6 +146,7 @@ class DOMmanipulator {
       }
     }
   }
+
 
   hideElements() {
     const args = Array.from(arguments)
