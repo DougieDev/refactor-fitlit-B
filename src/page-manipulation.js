@@ -166,10 +166,11 @@ class DOMmanipulator {
     this.unHideElements('#daily-cards', '#new-info')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
-    'hydration-today', 
-    hydrationRepo, 
-    currentUserId, 
-    today)
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
     this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     this.populateDailyData('activity-today', activityRepo, currentUserId, today)
     this.changeSystemMessage('Here are your stats for today')
@@ -215,7 +216,7 @@ class DOMmanipulator {
         numOunces: '',
         date: newDate
       },
-      sleep:{
+      sleep: {
         userID: id,
         hoursSlept: '',
         sleepQuality: '',
