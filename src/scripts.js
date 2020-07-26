@@ -13,6 +13,8 @@ import {
   currentUserId, 
 } from './globals';
 
+
+const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
 let today;
@@ -90,7 +92,6 @@ function catchAllData() {
 
 const catchData = (dataSet) => {
   const classInfo = findClassInfo(dataSet);
-  const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
   return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
     .then(response => response.json())
     .then(data => data[dataSet])
@@ -115,6 +116,18 @@ const findClassInfo = (dataSet) => {
   }
   return classInfo;
 }
+
+const makePostObject = (data) => {
+  return {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }
+}
+
+
 
 startApp();
 

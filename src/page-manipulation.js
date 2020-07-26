@@ -198,6 +198,36 @@ class DOMmanipulator {
     this.populateDailyData('activity-today', activityRepo, userId, today)
     this.changeSystemMessage(`Here are ${event.target.innerText} stats today`)
   }
+
+  makePostDataFormat(id) {
+    return {
+      hydration: {
+        id: id,
+        numOunces: '',
+      },
+      sleep:{
+        id: id,
+        hoursSlept: '',
+        sleepQuality: '',
+      },
+      activity: {
+        id: id,
+        numSteps: '',
+        flightsOfStairs: '',
+        minutesActive: ''
+      },
+    }
+  }
+
+  pullInfoFromPage() {
+    let data = this.makePostDataFormat();
+    let inputs = document.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) {
+      let key = inputs[i].parentNode.id.split('-')[0]
+      data[key] = inputs[i].value
+    }
+    return data
+  }
 }
 
 export default DOMmanipulator
