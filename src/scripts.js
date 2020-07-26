@@ -9,12 +9,12 @@ import UserRepo from './UserRepo';
 import Repo from './Repo'
 
 import {
+  populateUserInfo,
   populateDailyData,
   populateWeeklyDates,
-  addInfoToUserSidebar,
   insertForm, 
   displayWeeklyData,
-  addFriendSidebar
+  changeSystemMessage
 } from './page-manipulation';
 
 import moment from 'moment'
@@ -25,6 +25,7 @@ const activityRepo = new ActivityRepo();
 const sleepRepo = new Repo();
 
 const currentUserId = getRandomNumber()
+let currentUser;
 let today;
 
 function getRandomNumber() {
@@ -32,26 +33,58 @@ function getRandomNumber() {
 }
 
 function startApp() {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
 }
 
+const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button')
 
+sideBar.addEventListener('click', sidebarHandler)
 selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
 
+function sidebarHandler(event) {
+  if(event.target.className === 'friend') {
+    let userId = parseInt(event.target.id);
+    unHideElements('#daily-cards')
+    hideElements('#user-cards', '#community-cards')
+    populateDailyData('hydration-today', hydrationRepo, userId, today)
+    populateDailyData('sleep-today', sleepRepo, userId, today)
+    populateDailyData('activity-today', activityRepo, userId, today)
+    changeSystemMessage(`Here are today's stats from ${event.target.innerText}`)
+  }
+  if(event.target.id.includes('stats')) {
+    buttonHandler(event)
+  }
+}
+
 function buttonHandler(event) {
   let repoPass = determineRepo(event)
-  if (event.target.id.includes('new')) {
-    // originalCardContent = event.target.parentElement.innerHTML;
+  let button = event.target;
+  if (button.id.includes('new')) {
     insertForm(event);
-  } else if (event.target.id === 'submit') {
+  } else if (button.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
-  } else if (event.target.id.includes('weekly')) {
+  } else if (button.id.includes('weekly')) {
     displayWeeklyData(event, repoPass, currentUserId);
+  } else if (button.id.includes('user-stats')) {
+    unHideElements('#user-cards')
+    hideElements('#daily-cards', '#community-cards')
+    changeSystemMessage('Looking in the mirror never felt so good')
+  } else if (button.id.includes('daily-stats')) {
+    unHideElements('#daily-cards')
+    hideElements('#user-cards', '#community-cards')
+    populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
+    populateDailyData('sleep-today', sleepRepo, currentUserId, today)
+    populateDailyData('activity-today', activityRepo, currentUserId, today)
+    changeSystemMessage('Here are your stats for today')
+  } else if (button.id.includes('contest-stats')) {
+    unHideElements('#community-cards')
+    hideElements('#daily-cards', '#user-cards')
+    changeSystemMessage('For support or competition, here`s how the community`s doing')
   }
 }
 
@@ -73,10 +106,17 @@ function selectHandler(event) {
     )
 }
 
+function hideElements() {
+  const args = Array.from(arguments)
+  args.forEach(element => {
+    document.querySelector(element).classList.add('hidden')
+  })
+}
+
 function unHideElements() {
   const args = Array.from(arguments)
   args.forEach(element => {
-    console.log(document.querySelector(element).classList.remove('hidden'))
+    document.querySelector(element).classList.remove('hidden')
   })
 
 }
@@ -97,6 +137,8 @@ function catchData(src) {
 
 function dataEventHandler(src) {
   if (src === 'userData') {
+    currentUser = new User(userRepo.findUserById(currentUserId));
+    populateUserInfo(currentUser, userRepo);
   } else if (src === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
@@ -127,7 +169,6 @@ function findClassInfo(src) {
   }
   return classInfo;
 }
-
 
 startApp();
 

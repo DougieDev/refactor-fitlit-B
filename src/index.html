@@ -8,14 +8,18 @@
   <body>
     <section class="main" tabindex="0">
       <section class="sidebar-container" id="user-sidebar" tabindex="0">
-        <h1 id="headerText" tabindex="0">Activity Tracker</h1>
+        <h1 id="header-text" tabindex="0">Activity Tracker</h1>
         <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
-        <a href="" class="user-stats">User Profile</a>
+        <p id="steps-goal-message"></p> 
+        <button id="daily-stats">Daily Fitness</button>
+        <button id="user-stats">User Profile</button>
+        <button id="contest-stats">Community Data</button>
         <h2>Friends</h2>
+        <ul id="friends-list"></ul>
       </section>
       <section class="body-main-infoContainter" tabindex="0">
-        <h2 id="app-message" tabindex="0">A message for the user</h2>
-        <section class="card-container hidden" id="daily-cards" tabindex="0">
+        <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
+        <section class="card-container" id="daily-cards" tabindex="0">
           <h3 tabindex="0">Daily Fitness</h3>
           <section class="card hydration-card" id="hydration-today" tabindex="0">
               You drank
@@ -53,13 +57,25 @@
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
         </section>
-        <section class="card-container" id="user-cards" tabindex="0">
+        <section class="card-container hidden" id="user-cards" tabindex="0">
           <h2>User / Account</h2>
-          <section class="card" id="user-goals" tabindex="0">
-            user goals:<button id="update-goals">Update Info</button>
+          <section class="card" id="training-stats" tabindex="0">
+            Training Statistics
+            <button id="update-goals">Update Info</button>
+            Stride Length: 
+            <span class="number" id="strideLength"></span>
+            Daily Step Goal: 
+            <span class="number" id="dailyStepGoal"></span>
+            Community Average Step Goal: 
+            <span class="number" id="dailyStepGoal-average"></span>
           </section>
           <section class="card" id="account-info" tabindex="0">
-            account info:<button id="update-info">Update Info</button>
+            Account Info
+            <button id="update-info">Update Info</button>
+            Address: 
+            <span class="number" id="address"></span>
+            Email Address: 
+            <span class="number" id="email"></span>
           </section>
           <section class="week-card" id="user-trends" tabindex="0">
             <label>
@@ -100,47 +116,8 @@
             </select>
           </section>
         </section>
-        <section class="card-container hidden" id="community-cards">
-          <section class="card miles-card" id="miles-today" tabindex="0">
-            miles today:
-            <span class="number" id="miles">0</span>
-            walked today. <br />
-            your total miles walked
-            <span class="number" id="miles-total">0</span>
-            great work! <br />
-            steps to go:
-            <span class="number" id="steps-left">0</span>
-          </section>
-          <section class="card streaks" id="streaks" tabindex="0">
-            your current streak:
-            <span class="number" id="streak-count">0</span>
-            <br />
-            your best day:
-            <span class="best-day" id="most-steps">0</span>
-            great work! <br />
-            steps to go:
-            <span class="number" id="steps-left">0</span>
-            </section>
-          <section class="card friend" id="friend" tabindex="0">
-            you have a friend
-            <span class="number" id="streak-count">0</span>
-            <br />
-            i have a friend
-            <span class="best-day" id="most-steps">0</span>
-            friend <br />
-            friend
-            <span class="number" id="steps-left">0</span>
-          </section>
-          <section class="card xtra" id="xtra" tabindex="0">
-            fill me in
-            <span class="number" id="xtra1">0</span>
-            <br />
-            hello
-            <span class="number" id="xtra2">0</span>
-            friend <br />
-            hi
-            <span class="number" id="xtra3">0</span>
-          </section>
+        <section class="card-container" id="community-cards" tabindex="0">
+
         </section>
       </section>
       <!-- <section class="main-sidebar-body"> -->
