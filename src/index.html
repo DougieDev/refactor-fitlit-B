@@ -10,9 +10,6 @@
       <section class="sidebar-container" id="user-sidebar" tabindex="0">
         <h1 id="header-text" tabindex="0">Activity Tracker</h1>
         <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
-        <h2 id="user-date">
-          Your most recent entry is from<br />
-        </h2>
         <p id="steps-goal-message"></p> 
         <button id="daily-stats">Daily Fitness</button>
         <button id="user-stats">User Profile</button>
@@ -49,7 +46,9 @@
           </section>
           <section class="card" id="calendar" tabindex="0">
             <!-- <span id="calendar"></span>   -->
-            <span id="calendar-container"></span>
+            <h4 id="user-date"></h4>
+            <span id="calendar-container">
+            </span>
             <span class="hidden" id="friends-calendar">Friend's calendar coming soon!</span>
             <span class="hidden" id="new-date">Date:<input id="new-date-field" /></span>
           </section>

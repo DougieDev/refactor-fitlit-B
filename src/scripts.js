@@ -65,7 +65,7 @@ function selectBarHandler() {
 const dataEventHandler = (dataSet) => {
   if (dataSet === 'userData') {
     currentUser = new User(userRepo.findUserById(currentUserId));
-    page.populateUserInfo(currentUser, today);
+    page.populateUserInfo(currentUser);
   } else if (dataSet === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     page.populateDailyData(
@@ -75,6 +75,7 @@ const dataEventHandler = (dataSet) => {
       today
     )
     page.addCalendar(currentUserId)
+    page.addUserDate(today)
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)

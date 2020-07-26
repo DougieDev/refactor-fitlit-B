@@ -96,14 +96,13 @@ class DOMmanipulator {
     }
   }
 
-  populateUserInfo(user, date) {
-    this.populateUserSidebar(user, date);
+  populateUserInfo(user) {
+    this.populateUserSidebar(user);
     this.populateUserCard(user);
     this.populateInfoCard(user);
   } 
   
-  populateUserSidebar(user, date) {
-    const currentDate = document.getElementById('user-date')
+  populateUserSidebar(user) {
     const sidebarElements = document.getElementById('user-sidebar').children;
     for (var i = 0; i < sidebarElements.length; i++) {
       if (sidebarElements[i].id === 'header-text') {
@@ -120,9 +119,7 @@ class DOMmanipulator {
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
-    currentDate.insertAdjacentHTML(
-      'beforeend', `${moment(date).format('MMMM Do YYYY')}`
-    )
+   
   }
   
   populateUserCard(user) {
@@ -249,6 +246,7 @@ class DOMmanipulator {
   }
 
   pullInfoFromPage(id) {
+    
     if (this.checkValueFields() === false) {
       this.changeSystemMessage('Please fill in all of the information')
       return `All required values are not present`
@@ -322,8 +320,15 @@ class DOMmanipulator {
         `${moment(calDate).format('MMMM Do YYYY')}`)
       }
     })
-    // button.pika - button.pikaday
-      // < button class="pika-button pika-day" type = "button" data-pika-year="2020" data - pika - month="0" data - pika - day="9" > 9</button >
+
+  }
+
+  addUserDate(today) {
+    const currentDate = document.getElementById('user-date')
+    currentDate.insertAdjacentHTML(
+      'afterbegin', `Your most recent entry is from <br />
+      ${moment(today).format('MMMM Do YYYY')}`
+    )
   }
 
   findEligibleDates(id) {
