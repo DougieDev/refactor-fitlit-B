@@ -1,4 +1,4 @@
-//colors
+//COLORS
 
 $background-grey: #4d4e4f;
 $sidebar-grey: #9A9DAB;
@@ -9,24 +9,23 @@ $pink: #EC96A4;
 $yellow: #DFE166;
 
 
-//new colors for design checking accessibility
+//? COLOR SCHEME 
 $friends-color: #fc09f0;
 $steps-color: #1b4c8b;
 $miles-color: #1b8b82;
 $streaks-color: #fc09f0;
 
-//layout
+//STYLING ELEMENTS
 $card-shadow: #3b3b0f;
 $solid-border: 1px solid $black;
 
-
-//media query variables
+//MEDIA VARIABLES
 
 $phone-width: 560px;
 $tablet-width: 768px;
 $desktop-width: 1024px;
 
-//mix ins
+//MIXINS
 
 @mixin shadow {
   -webkit-box-shadow: 6px 5px 8px 6px $card-shadow;

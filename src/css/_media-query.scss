@@ -1,14 +1,5 @@
-$tablet-width: 768px;
-$desktop-width: 1024px;
+//MEDIA QUERY SETUP
 
-@mixin tablet {
-  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-    @content;
-  }
-}
+@include tablet;
 
-@mixin desktop {
-  @media (min-width: #{$desktop-width}) {
-    @content;
-  }
-}
+@include desktop;
