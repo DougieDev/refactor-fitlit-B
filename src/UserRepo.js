@@ -96,6 +96,7 @@ class UserRepo extends Repo  {
     });
   }
 
+  
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     let rankedUsersAndAverages = this.rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod)
@@ -120,8 +121,15 @@ class UserRepo extends Repo  {
     })
   }
 
+  getFriendsAverageStepsForWeek(user, date, userRepo) {
+    let friendsActivity = this.getFriendsActivity(user, userRepo);
+    let timeline = userRepo.chooseWeekDataForAllUsers(friendsActivity, date);
+    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
+  }
+
+
+
   showcaseWinner(user, date) {
-    // let namedList = this.showChallengeListAndWinner(user, date);
     let winner = this.showChallengeListAndWinner(user, date).shift();
     return winner;
   }
