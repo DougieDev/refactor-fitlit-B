@@ -348,7 +348,6 @@ class DOMmanipulator {
       your all time miles walked:
       <span class="number" id= "miles-total">${totalMiles}</span>
       <p class="message-miles">WOW!</p>`;
-
     display.innerHTML = milesHtml;
   }
 
@@ -358,7 +357,6 @@ class DOMmanipulator {
     const flightsStreak = activityRepo.getStreak(currentUserId, 'flightsOfStairs');
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
-
     const streaksHtml = `
       <p class="message-comm">Minutes Active:</p>
       <span class="number" id="streak">${minutesActiveStreak.length}</span>
@@ -369,16 +367,28 @@ class DOMmanipulator {
       <p class="message-comm"Stair record:</p>
       <span class="number" id="">${stairRecord}</span>
     `;
-
     display.innerHTML = streaksHtml;
+  }
+
+  communitySectionSteps(date) {
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date, userRepo);
+    const stepsToGo = activityRepo.remainingSteps(currentUserId, date, userRepo);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
+    let display = document.getElementById('steps');
+    const stepsHtml = `
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      <p class="message-step">Last time goal hit:</p>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <p class="message-step>Keep it up!</p>
+    `;
+    display.innerHTML = stepsHtml;
   }
 
 
   displayCommunitySection(date) {
     // const user = userRepo.findUserById(currentUserId);
-    // const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date);
-    // const stepsToGo = activityRepo.remainingSteps(currentUserId, date);
-    // const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId);
+    
     
     
     // const stepWinner = users.showcaseWinner(user, date);
@@ -388,14 +398,7 @@ class DOMmanipulator {
 
     
 
-    // const stepsHtml = `
-    //   <span class="message" id="steps-left">${stepsToGo}</span>
-    //   <p class="message-step" id="step-goal">${stepGoalStatus}</p>
-    //   <p class="message-step">Last three step streaks:</p>
-    //   <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
-    //   <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
-    //   <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
-    // `;
+    
 
 
     // //this may need to become a winners section or may a top user showcase
@@ -419,6 +422,7 @@ class DOMmanipulator {
 
     this.communitySectionMiles();
     this.communitySectionStreak();
+    this.communitySectionSteps();
     
   }
 }
