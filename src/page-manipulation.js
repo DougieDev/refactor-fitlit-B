@@ -154,11 +154,11 @@ class DOMmanipulator {
   }
 
   goToUserPage(user) {
+    this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
     this.populateUserCard(user);
     this.populateInfoCard(user);
-    this.clearInputForms();
     this.changeSystemMessage('Looking in the mirror never felt so good')
   }
 
@@ -216,7 +216,7 @@ class DOMmanipulator {
         numOunces: '',
         date: newDate
       },
-      sleep: {
+      sleep:{
         userID: id,
         hoursSlept: '',
         sleepQuality: '',
@@ -267,8 +267,10 @@ class DOMmanipulator {
     }
     this.dateField.classList.add('hidden')
     const submit = document.getElementById('submit')
-    submit.id = `new-fitness-entry`;
-    event.target.innerText = `add new info`;
+    if (inputs === null) {
+      submit.id = `new-fitness-entry`;
+      event.target.innerText = `add new info`;
+    }
   }
 
   checkValueFields() {
