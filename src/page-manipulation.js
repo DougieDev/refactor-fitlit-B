@@ -194,14 +194,9 @@ class DOMmanipulator {
         inputElements[i].innerHTML = `<input id=${id} />`
       }
     }
-    const dateInput = `date: <input id="new-date" />`;
+    document.getElementById('#new-date');
     event.target.id = `submit`;
     event.target.innerText = `submit`;
-    event.target.insertAdjacentHTML('afterend', dateInput)
-  }
-
-  beginPostSequence(id) {
-    console.log(this.pullInfoFromPage(id))
   }
 
   makePostDataFormat(id, newDate) {
@@ -256,6 +251,13 @@ class DOMmanipulator {
     return data
   }
 
+  clearValueFields() {
+    let inputs = document.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = ''
+    }
+  }
+
   checkValueFields() {
     // debugger
     const inputNodes = document.querySelectorAll('input')
@@ -272,6 +274,8 @@ class DOMmanipulator {
       return false
     }
   }
+
+
 
 }
 

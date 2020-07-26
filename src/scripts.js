@@ -12,8 +12,9 @@ import {
   sleepRepo, 
   currentUserId, 
 } from './globals';
+import { object } from 'chai-spies';
 
-
+console.log(currentUserId)
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
@@ -34,7 +35,9 @@ function buttonHandler(event) {
   if (button.id.includes('new')) {
     page.insertForm(event);
   } else if (button.id === 'submit') {
-    page.beginPostSequence(currentUserId);
+    let newInfo = page.pullInfoFromPage(currentUserId);
+    let fetchPackage = organizePost(newInfo);
+    postAllData(fetchPackage);
   } else if (button.id.includes('weekly')) {
     page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
@@ -90,6 +93,18 @@ function catchAllData() {
   args.forEach(arg => catchData(arg));
 }
 
+const postAllData = (data) => {
+  data.forEach(postObject => postData(postObject))
+}
+
+const postData = (data) => {
+  fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(err => console.log('YOU done did BAD:', err));
+}
+
+
 const catchData = (dataSet) => {
   const classInfo = findClassInfo(dataSet);
   return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
@@ -127,7 +142,17 @@ const makePostObject = (data) => {
   }
 }
 
-
+const organizePost = (info) => {
+  const dataSets = Object.keys(info);
+  return dataSets.reduce((postPackages, key) => {
+    postPackages.push({
+      path: key,
+      destination: key + 'Data',
+      postObject: makePostObject(info[key])
+    })
+    return postPackages
+  }, [])  
+}
 
 startApp();
 
