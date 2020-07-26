@@ -140,7 +140,6 @@ class DOMmanipulator {
     }
   }
 
-
   hideElements() {
     const args = Array.from(arguments)
     args.forEach(element => {
@@ -178,11 +177,11 @@ class DOMmanipulator {
     this.clearInputForms();
   }
 
-  goToContestPage() {
+  goToContestPage(today) {
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
-    displayCommunitySection(currentUserId, userRepo, activityRepo, today)
+    this.displayCommunitySection(currentUserId, userRepo, activityRepo, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -269,9 +268,12 @@ class DOMmanipulator {
     }
     this.dateField.classList.add('hidden')
     const submit = document.getElementById('submit')
-    submit.id = `new-fitness-entry`;
-    event.target.innerText = `add new info`;
+    if (inputs === null) {
+      submit.id = `new-fitness-entry`;
+      event.target.innerText = `add new info`;
+    }
   }
+
 
   checkValueFields() {
     // debugger
@@ -291,17 +293,21 @@ class DOMmanipulator {
   }
 
 
-  displayCommunitySection(id, users, repo, date) {
-    const community = document.getElementById('community-cards');
-    const totalMiles = repo.getUserTotalMiles(id, users);
-    const userMilesToday = repo.getMilesFromStepsByDate(id, date, users);
-    const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
-    const stepsToGo = repo.remainingSteps(id, date, users);
-    const stepGoalDates = repo.getDaysGoalExceeded(id, users);
-    const numStepsStreak = repo.getStreak(id, 'numSteps');
-    const minutesActiveStreak = repo.getStreak(id, 'minutesActive');
-    const flightsStreak = repo.getStreak(id, 'flightsOfStairs');
-    const stairRecord = repo.getStairRecord(id);
+  displayCommunitySection(id, users, activity, date) {
+    const totalMiles = activity.getUserTotalMiles(id, users);
+    const userMilesToday = activity.getMilesFromStepsByDate(id, date, users);
+    const stepGoalStatus = activity.accomplishedStepGoal(id, date, users);
+    const stepsToGo = activity.remainingSteps(id, date, users);
+    const stepGoalDates = activity.getDaysGoalExceeded(id, users);
+    const numStepsStreak = activity.getStreak(id, 'numSteps');
+    const minutesActiveStreak = activity.getStreak(id, 'minutesActive');
+    const flightsStreak = activity.getStreak(id, 'flightsOfStairs');
+    const stairRecord = activity.getStairRecord(id);
+
+    const stepGoalMessage = () => {
+      (stepGoalStatus === true) ? 'Great work, getting those steps in!' : 'Keep it up, almost there!'
+    }
+
 
 
     // const userMiles = document.getElementById("miles-card");
@@ -310,54 +316,52 @@ class DOMmanipulator {
     // const friend = document.getElementById("friend");
 
     const milesHtml = `
-    <span class="number" id= "miles" >${userMilesToday}</span>
-    walked today. <br />
-    your all time miles walked:
-    <span class="number" id= "miles-total">${totalMiles}</span>
-    great work! <br />`;
+      <span class="number" id= "miles" >${userMilesToday}</span>
+      walked today. <br />
+      your all time miles walked:
+      <span class="number" id= "miles-total">${totalMiles}</span>
+      great work! <br />`;
 
     const stepsHtml = `
-    <span class="message" id="steps-left">${stepsToGo}</span>
-    <br />
-    <p class="message-step" id="step-goal">${!stepGoalStatus}</p>
-    <br />
-    Last three step streaks:
-    <li class="message step-list" id="best-steps">${stepGoalDates[0]}</li>
-    <li class="message step-list" id="best-steps">${stepGoalDates[1]}</li>
-    <li class="message step-list" id="best-steps">${stepGoalDates[2]}</li>
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      Last three step streaks:
+      <li class="message step-list" id="best-steps">${stepGoalDates[0]}</li>
+      <li class="message step-list" id="best-steps">${stepGoalDates[1]}</li>
+      <li class="message step-list" id="best-steps">${stepGoalDates[2]}</li>
+    `;
 
     const friendsHtml = `
-    <section class="card card-friends" id="friends"
-    best friend:
-    <span class="number" id="miles">0</span>
-    walked today. <br />
-    <span class="number" id="miles-total">0</span>
-    great work! <br />
-    steps to go:
-    <span class="number" id="steps-left">0</span>
+      best friend:
+      <span class="number" id="miles">0</span>
+      walked today. <br />
+      <span class="number" id="miles-total">0</span>
+      great work! <br />
+      steps to go:
+      <span class="number" id="steps-left">0</span>
     `;
 
     const streaksHtml = `
-    Minutes Active Streaks:
-    <span class="number" id="streak">${minutesActiveStreak.length}</span>
-    Step Count Streaks:<br />
-    <span class="number" id="winner-showcase">${numStepsStreak.length}</span>
-    great work! <br />
-    <span class="number" id="winner-showcase">${flightsStreak.length}</span>
-    great work! <br />
-    Stair record:
-    <span class="number" id="winner-compare">${stairRecord}</span>
+      <p class="message-comm">Minutes Active:</p>
+      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <p class="message-comm">Step Goal Total:</p>
+      <span class="number" id="">${numStepsStreak.length}</span>
+      <p class="message-comm">Stair Goal Total:</p>
+      <span class="number" id="">${flightsStreak.length}</span>
+      <p class="message-comm"Stair record:</p>
+      <span class="number" id="">${stairRecord}</span>
     `;
 
     const displayCards = [
-      { html: milesHtml, selector: "miles-card" },
-      { html: stepsHtml, selector: "steps" },
-      { html: friendsHtml, selector: "friends" },
-      { html: streaksHtml, selector: "streaks" }
+      {html: milesHtml, selector: "miles"},
+      {html: stepsHtml, selector: "steps"},
+      {html: friendsHtml, selector: "friends"},
+      {html: streaksHtml, selector: "streaks"}
     ];
 
     displayCards.forEach(card => {
-      community.innerHTML = card.html;
+      let select = document.getElementById(card.selector)
+      select.innerHTML = card.html;
     })
   }
 }
