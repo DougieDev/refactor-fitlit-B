@@ -102,8 +102,8 @@ const postAllData = (data) => {
 const postData = (data) => {
   fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
     .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(err => console.log('YOU done did BAD:', err));
+    .then(() => page.changeSystemMessage('Success!'))
+    .catch(err => page.changeSystemMessage(err));
 }
 
 

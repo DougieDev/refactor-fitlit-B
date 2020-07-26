@@ -114,7 +114,7 @@ class DOMmanipulator {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<li class="friend" id="${friend.id}">${friend.name}</li>`
+          `<p class="friend" id="${friend.id}">${friend.name}</p>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -143,7 +143,6 @@ class DOMmanipulator {
       }
     }
   }
-
 
   hideElements() {
     const args = Array.from(arguments)
@@ -191,6 +190,7 @@ class DOMmanipulator {
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
+    this.displayCommunitySection(currentUserId, userRepo, activityRepo, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -287,6 +287,7 @@ class DOMmanipulator {
     }
   }
 
+
   checkValueFields() {
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
@@ -335,6 +336,76 @@ class DOMmanipulator {
     let hydrationData = hydrationRepo.sortUserDataByDate(id)
     return hydrationData.map(date => date.date)
   }
+  displayCommunitySection(id, users, activity, date) {
+    const totalMiles = activity.getUserTotalMiles(id, users);
+    const userMilesToday = activity.getMilesFromStepsByDate(id, date, users);
+    const stepGoalStatus = activity.accomplishedStepGoal(id, date, users);
+    const stepsToGo = activity.remainingSteps(id, date, users);
+    const stepGoalDates = activity.getDaysGoalExceeded(id, users);
+    const numStepsStreak = activity.getStreak(id, 'numSteps');
+    const minutesActiveStreak = activity.getStreak(id, 'minutesActive');
+    const flightsStreak = activity.getStreak(id, 'flightsOfStairs');
+    const stairRecord = activity.getStairRecord(id);
+    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
+    // const userFriendActivity = user.getFrendsActivity();
+    /*MAY NOT NEED THIS MAY BE DISPLAYED ELSEWHERE*/
+    // const friendAverage = user.getFriendAverage();
+    // const stepWinner = users.showcaseWinner(user, date);
+    // const bestSleeper = determineSleepWinnerForWeek(date);
+    // const winnerShowcase = showcaseWinner(user, date)
+
+
+    const milesHtml = `
+      <p class="message-miles">-----</p>
+      <span class="number" id= "miles" >${userMilesToday}</span>
+      <p class="message-miles">-----</p>
+      your all time miles walked:
+      <span class="number" id= "miles-total">${totalMiles}</span>
+      <p class="message-miles">-----</p>`;
+
+    const stepsHtml = `
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      <p class="message-step">Last three step streaks:</p>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
+    `;
+
+
+    //this may need to become a winners section or may a top user showcase
+    const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform">FIX METHOD</span>
+      <p class="message-comm">Friend Activity:</p>
+      <span class="message-friend" id="friend-activity">FIX METHOD</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">FIX METHOD</span>
+    `;
+
+    const streaksHtml = `
+      <p class="message-comm">Minutes Active:</p>
+      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <p class="message-comm">Step Goal Total:</p>
+      <span class="number" id="">${numStepsStreak.length}</span>
+      <p class="message-comm">Stair Goal Total:</p>
+      <span class="number" id="">${flightsStreak.length}</span>
+      <p class="message-comm"Stair record:</p>
+      <span class="number" id="">${stairRecord}</span>
+    `;
+
+    const displayCards = [
+      {html: milesHtml, selector: "miles"},
+      {html: stepsHtml, selector: "steps"},
+      {html: friendsHtml, selector: "friends"},
+      {html: streaksHtml, selector: "streaks"}
+    ];
+
+    displayCards.forEach(card => {
+      let select = document.getElementById(card.selector)
+      select.innerHTML = card.html;
+    })
 }
+
 
 export default DOMmanipulator

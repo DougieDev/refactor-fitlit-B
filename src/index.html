@@ -15,7 +15,7 @@
         <button id="user-stats">User Profile</button>
         <button id="contest-stats">Community Data</button>
         <h2>Friends</h2>
-        <ul id="friends-list"></ul>
+        <div class="friends-list" id="friends-list"></div>
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
@@ -52,10 +52,9 @@
             <span class="hidden" id="friends-calendar">Friend's calendar coming soon!</span>
             <span class="hidden" id="new-date">Date:<input id="new-date-field" /></span>
           </section>
-        
-                <span id="new-info">
-                  <button id="new-fitness-entry">add new info</button>
-                </span>
+          <span id="new-info">
+            <button id="new-fitness-entry">add new info</button>
+          </span>
         </section>
         <section class="card-container hidden" id="user-cards" tabindex="0">
           <h2>User / Account</h2>
@@ -117,7 +116,27 @@
           </section>
         </section>
         <section class="card-container" id="community-cards" tabindex="0">
-
+          <section class="card card-streak" id="streaks">
+            <!-- <span class="number" id="streak-numSteps"></span>
+            <span class="number" id="streak-flights"></span>
+            <span class="number" id="streak-minutes"></span>
+            <span class="number" id="streak-stair"></span> -->
+          </section>
+          <section class="card card-steps" id="steps">
+            <!-- <span class="message-steps" id="steps-remain"></span>
+            <span class="message-steps" id="steps-status"></span>
+            <span class="number" id="steps-goal"></span>
+            <span class="number" id="steps-date"></span> -->
+          </section>
+          <section class="card card-friends" id="friends">
+            <!-- <span class="number" id="friends-winner"></span>
+            <span class="number" id="friends-compare"></span>
+            <span class="number" id="friends-minutes"></span> -->
+          </section>
+          <section class="card card-miles" id="miles">
+            <!-- <span class="number" id="miles-today"></span>
+            <span class="number" id="miles-total"></span> -->
+          </section>
         </section>
       </section>
       <!-- <section class="main-sidebar-body"> -->

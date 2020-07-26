@@ -1,7 +1,6 @@
-import { expect, AssertionError } from 'chai';
+import { expect } from 'chai';
 import ActivityRepo from '../src/ActivityRepo';
 import UserRepo from '../src/UserRepo';
-import Repo from '../src/Repo';
 
 let userRepo;
 
@@ -13,9 +12,7 @@ describe('Activity', function() {
   let user3;
   let user4;
   let users;
-  let repo;
-  
-
+ 
   beforeEach(function() {
     activityData = [{
       "userID": 1,
@@ -218,7 +215,6 @@ describe('Activity', function() {
   });
 
   it('should return the miles a given user has walked on a given date', function() {
-    
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 
@@ -227,14 +223,14 @@ describe('Activity', function() {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
   });
 
-  it('should return true/false if the given user met their step goal on a given day', function() {
-    expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
+  it.only('should return true/false if the given user met their step goal on a given day', function() {
+    expect(activity.accomplishedStepGoal(4, "2019/06/15", userRepo)).to.eql(`You got this Patrick the Starfish, just a few more steps`);
   });
 
 
   it('should return steps remaining to accomplish goal', function () {
     expect(activity.remainingSteps(1, "2019/06/18", userRepo)).to.eql(`You have 2000 steps to go.`);
-    expect(activity.remainingSteps(1, "2019/06/22", userRepo)).to.eql('Congrats');
+    expect(activity.remainingSteps(1, "2019/06/22", userRepo)).to.eql('Step goal, crushed!, Keep it up!');
     expect(activity.remainingSteps(2, "2019/06/20", userRepo)).to.eql('No step activity found for 2019/06/20');
   })
 

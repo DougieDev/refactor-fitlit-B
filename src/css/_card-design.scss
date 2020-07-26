@@ -1,6 +1,6 @@
 .card {
   background-color: $white;
-  border-radius: 5% 5%;
+  @include card-border-radius;
   height: auto;
   width: 40%;
   margin: 2.5% 2.5%;
@@ -11,7 +11,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 6px 5px 8px 6px $card-shadow;
+  @include shadow;
+
 
   &-container {
   width: 100%;
@@ -21,37 +22,66 @@
   padding-top: 2em;
   justify-content: center;
   }
+
+
+
+  &-streak {
+    background-color: $teal;
+    @include card-animation-top(1.2s);
+  }
+
+  &-steps {
+    background-color: $yellow;
+    @include card-animation-left(1.2s);
+  }
+
+  &-friends {
+    background-color: $pink;
+    @include card-animation-right(1.2s);
+  }
+
+  &-miles {
+    background-color: $white;
+    @include card-animation-bottom(1.2s);
+  }
+  
+  
+
+
 }
 
 .week-card {
   display: flex;
   flex-direction: column;
   background-color: $white;
-  border-radius: 5%;
+  border-radius: 15px;
   height: auto;
   width: 85%;
   margin: 0 2.5% 2.5%;
 
-  .calendar-container {
-    // display: flex;
-
-    #weekly-data-options {
+  #weekly-data-options {
       // display: flex;
       // flex-direction: column;
-    }
   }
 }
 
 .hydration-card {
   background-color: $teal;
+  @include card-animation-top(1.2s);
 }
 
 .sleep-card {
   background-color: $pink;
+  @include card-animation-left(1.2s);
 }
 
 .activity-card {
   background-color: $yellow;
+  @include card-animation-right(1.2s);
+}
+
+.calendar-card {
+  @include card-animation-bottom(1.2s);
 }
 
 .pika-button {
@@ -64,6 +94,13 @@
 .is-disabled > * {
   color: $sidebar-grey;
 }
+// .calendar-container {
+//   @include card-animation-bottom(1.4s);  
+//   }
+
+/* This controls the friends list on the left-sidebar.
+As of right now, I can't see any other use for it.
+Likely needs its name changed.*/
 
 #new-info {
   width: 100%
