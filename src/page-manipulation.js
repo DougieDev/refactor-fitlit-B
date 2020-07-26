@@ -182,6 +182,7 @@ class DOMmanipulator {
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
+    displayCommunitySection(currentUserId, userRepo, activityRepo, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -290,7 +291,76 @@ class DOMmanipulator {
   }
 
 
+  displayCommunitySection(id, users, repo, date) {
+    const community = document.getElementById('community-cards');
+    const totalMiles = repo.getUserTotalMiles(id, users);
+    const userMilesToday = repo.getMilesFromStepsByDate(id, date, users);
+    const stepGoalStatus = repo.accomplishedStepGoal(id, date, users);
+    const stepsToGo = repo.remainingSteps(id, date, users);
+    const stepGoalDates = repo.getDaysGoalExceeded(id, users);
+    const numStepsStreak = repo.getStreak(id, 'numSteps');
+    const minutesActiveStreak = repo.getStreak(id, 'minutesActive');
+    const flightsStreak = repo.getStreak(id, 'flightsOfStairs');
+    const stairRecord = repo.getStairRecord(id);
 
+
+    // const userMiles = document.getElementById("miles-card");
+    // const streaks = document.getElementById("streaks");
+    // const userStepsLeft = document.getElementById("steps");
+    // const friend = document.getElementById("friend");
+
+    const milesHtml = `
+    <span class="number" id= "miles" >${userMilesToday}</span>
+    walked today. <br />
+    your all time miles walked:
+    <span class="number" id= "miles-total">${totalMiles}</span>
+    great work! <br />`;
+
+    const stepsHtml = `
+    <span class="message" id="steps-left">${stepsToGo}</span>
+    <br />
+    <p class="message-step" id="step-goal">${!stepGoalStatus}</p>
+    <br />
+    Last three step streaks:
+    <li class="message step-list" id="best-steps">${stepGoalDates[0]}</li>
+    <li class="message step-list" id="best-steps">${stepGoalDates[1]}</li>
+    <li class="message step-list" id="best-steps">${stepGoalDates[2]}</li>
+
+    const friendsHtml = `
+    <section class="card card-friends" id="friends"
+    best friend:
+    <span class="number" id="miles">0</span>
+    walked today. <br />
+    <span class="number" id="miles-total">0</span>
+    great work! <br />
+    steps to go:
+    <span class="number" id="steps-left">0</span>
+    `;
+
+    const streaksHtml = `
+    Minutes Active Streaks:
+    <span class="number" id="streak">${minutesActiveStreak.length}</span>
+    Step Count Streaks:<br />
+    <span class="number" id="winner-showcase">${numStepsStreak.length}</span>
+    great work! <br />
+    <span class="number" id="winner-showcase">${flightsStreak.length}</span>
+    great work! <br />
+    Stair record:
+    <span class="number" id="winner-compare">${stairRecord}</span>
+    `;
+
+    const displayCards = [
+      { html: milesHtml, selector: "miles-card" },
+      { html: stepsHtml, selector: "steps" },
+      { html: friendsHtml, selector: "friends" },
+      { html: streaksHtml, selector: "streaks" }
+    ];
+
+    displayCards.forEach(card => {
+      community.innerHTML = card.html;
+    })
+  }
 }
+
 
 export default DOMmanipulator

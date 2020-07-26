@@ -32,7 +32,7 @@ class ActivityRepo extends Repo {
   accomplishStepGoal(id, date, users) {
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
-    return (userActivityByDate.numSteps === user.dailyStepGoal) ? true : false;
+    return (userActivityByDate.numSteps > user.dailyStepGoal) ? true : false;
   }
 
   remainingSteps(id, date, users) {
