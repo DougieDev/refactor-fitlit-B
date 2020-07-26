@@ -10,6 +10,9 @@
       <section class="sidebar-container" id="user-sidebar" tabindex="0">
         <h1 id="header-text" tabindex="0">Activity Tracker</h1>
         <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
+        <h2 id="user-date">
+          Your most recent entry is from<br />
+        </h2>
         <p id="steps-goal-message"></p> 
         <button id="daily-stats">Daily Fitness</button>
         <button id="user-stats">User Profile</button>
@@ -19,10 +22,6 @@
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
-        <span id="new-info">
-          <button id="new-fitness-entry">add new info</button>
-          <span  class="hidden" id="new-date" >Date:<input id="new-date-field"/></span>
-        </span>
         <section class="card-container" id="daily-cards" tabindex="0">
           <h3 tabindex="0">Daily Fitness</h3>
           <section class="card hydration-card" id="hydration-today" tabindex="0">
@@ -48,12 +47,16 @@
               <span class="number" id="sleepQuality">0</span>
               out of 5.
           </section>
-          <section class="card" tabindex="0">
-            calendar anybody?
-            <label for="datepicker">Date:</label>
-            <br>
-            <!-- <input type="text" id="datepicker"> -->
+          <section class="card" id="calendar" tabindex="0">
+            <!-- <span id="calendar"></span>   -->
+            <span id="calendar-container"></span>
+            <span class="hidden" id="friends-calendar">Friend's calendar coming soon!</span>
+            <span class="hidden" id="new-date">Date:<input id="new-date-field" /></span>
           </section>
+        
+                <span id="new-info">
+                  <button id="new-fitness-entry">add new info</button>
+                </span>
         </section>
         <section class="card-container hidden" id="user-cards" tabindex="0">
           <h2>User / Account</h2>

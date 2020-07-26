@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Pikaday from 'pikaday';
 import {
   userRepo,
   hydrationRepo,
@@ -10,6 +11,8 @@ import {
 class DOMmanipulator {
   constructor() {
     this.dateField = document.getElementById('new-date');
+    this.calendar = document.querySelector('#calendar-container')
+    this.comingSoon = document.querySelector('#friends-calendar')
   }
   
   populateWeeklyDates(repo, id) {
@@ -92,13 +95,14 @@ class DOMmanipulator {
     }
   }
 
-  populateUserInfo(user) {
-    this.populateUserSidebar(user);
+  populateUserInfo(user, date) {
+    this.populateUserSidebar(user, date);
     this.populateUserCard(user);
     this.populateInfoCard(user);
   } 
   
-  populateUserSidebar(user) {
+  populateUserSidebar(user, date) {
+    const currentDate = document.getElementById('user-date')
     const sidebarElements = document.getElementById('user-sidebar').children;
     for (var i = 0; i < sidebarElements.length; i++) {
       if (sidebarElements[i].id === 'header-text') {
@@ -115,6 +119,9 @@ class DOMmanipulator {
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
+    currentDate.insertAdjacentHTML(
+      'beforeend', `${moment(date).format('MMMM Do YYYY')}`
+    )
   }
   
   populateUserCard(user) {
@@ -154,6 +161,7 @@ class DOMmanipulator {
   }
 
   goToUserPage(user) {
+    this.comingSoon.classList.add('hidden')
     this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
@@ -163,6 +171,8 @@ class DOMmanipulator {
   }
 
   goToDailyPage(today) {
+    this.comingSoon.classList.add('hidden')
+    this.calendar.classList.remove('hidden')
     this.unHideElements('#daily-cards', '#new-info')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
@@ -178,6 +188,7 @@ class DOMmanipulator {
   }
 
   goToContestPage() {
+    this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
@@ -185,6 +196,8 @@ class DOMmanipulator {
   }
 
   seeFriendsStats(event, today) {
+    this.calendar.classList.add('hidden')
+    this.comingSoon.classList.remove('hidden')
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
     this.clearInputForms();
@@ -196,6 +209,7 @@ class DOMmanipulator {
   }
 
   insertForm(event) {
+    this.calendar.classList.add('hidden')
     const inputElements = document.querySelectorAll('.number');
     for (var i = 0; i < inputElements.length; i++) {
       if (inputElements[i].classList.contains('number')
@@ -216,7 +230,7 @@ class DOMmanipulator {
         numOunces: '',
         date: newDate
       },
-      sleep:{
+      sleep: {
         userID: id,
         hoursSlept: '',
         sleepQuality: '',
@@ -268,13 +282,12 @@ class DOMmanipulator {
     this.dateField.classList.add('hidden')
     const submit = document.getElementById('submit')
     if (inputs === null) {
+      submit.innerText = `add new info`;
       submit.id = `new-fitness-entry`;
-      event.target.innerText = `add new info`;
     }
   }
 
   checkValueFields() {
-    // debugger
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
     for (var i = 0; i < inputNodes.length; i++) {
@@ -290,8 +303,31 @@ class DOMmanipulator {
     }
   }
 
+  addCalendar(id) {
+    const pikaday = new Pikaday({
+      field: document.getElementById('calendar-container'),
+      bound: false,
+      container: document.getElementById('calendar-container'),
+      disableDayFn: (date) => {
+        date = moment(date).format('YYYY/MM/DD')
+        const datesWithData = this.findEligibleDates(id)
+        if (!datesWithData.includes(date)) return date
+      },
+      onSelect: () => {
+        let calDate = pikaday.getMoment().format('YYYY/MM/DD');
+        this.goToDailyPage(calDate)
+        this.changeSystemMessage('Here are your stats form ' +
+        `${moment(calDate).format('MMMM Do YYYY')}`)
+      }
+    })
+    // button.pika - button.pikaday
+      // < button class="pika-button pika-day" type = "button" data-pika-year="2020" data - pika - month="0" data - pika - day="9" > 9</button >
+  }
 
-
+  findEligibleDates(id) {
+    let hydrationData = hydrationRepo.sortUserDataByDate(id)
+    return hydrationData.map(date => date.date)
+  }
 }
 
 export default DOMmanipulator

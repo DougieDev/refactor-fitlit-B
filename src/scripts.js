@@ -12,9 +12,7 @@ import {
   sleepRepo, 
   currentUserId, 
 } from './globals';
-import { object } from 'chai-spies';
 
-console.log(currentUserId)
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
@@ -67,7 +65,7 @@ function selectBarHandler() {
 const dataEventHandler = (dataSet) => {
   if (dataSet === 'userData') {
     currentUser = new User(userRepo.findUserById(currentUserId));
-    page.populateUserInfo(currentUser);
+    page.populateUserInfo(currentUser, today);
   } else if (dataSet === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     page.populateDailyData(
@@ -76,6 +74,7 @@ const dataEventHandler = (dataSet) => {
       currentUserId, 
       today
     )
+    page.addCalendar(currentUserId)
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
@@ -87,7 +86,7 @@ const dataEventHandler = (dataSet) => {
 }
 
 const startApp = () => {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 
 function catchAllData() {
@@ -114,7 +113,7 @@ const catchData = (dataSet) => {
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
     .then(() => dataEventHandler(dataSet))
-    .catch(() => page.changeSystemMessage('Something went wrong' +
+    .catch(() => page.changeSystemMessage('Something went wrong ' +
     'please try again'))
 }
 
