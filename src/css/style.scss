@@ -16,6 +16,8 @@ h1 {
   color: $black;
   height: 80px;
   padding-top: 10px;
+
+  @include header-animation;
 }
 
 h2 {
@@ -33,6 +35,9 @@ h3 {
 #app-message {
   display: flex;
   justify-content: center;
+
+  @include title-animation;
+
 }
 
 .main {

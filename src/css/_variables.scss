@@ -44,3 +44,85 @@ $solid-border: 1px solid $black;
     box-sizing: border-box;
   }
 }
+
+//ANIMATION
+
+@mixin card-animation-bottom($speed) {
+  animation: moveInBottom $speed ease-out;
+}
+
+@mixin card-animation-right($speed) {
+  animation moveInRight $speed ease-out;
+}
+
+@mixin card-animation-left($speed) {
+  animation moveInLeft $speed ease-out;
+}
+
+@mixin card-animation-top($speed) {
+  animation moveInTop $speed ease-out;
+}
+
+@mixin name-animation {
+  animation: moveInLeft 1.2s ease-out;
+}
+
+@mixin header-animation {
+  animation: moveInLeft 1.2s ease-out;
+}
+
+@mixin title-animation {
+  animation: moveInRight 1.2s ease-out;
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+
+  40% {
+    opacity: .4;
+  }
+
+  80% {
+    opacity: .8;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}

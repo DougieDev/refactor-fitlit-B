@@ -8,6 +8,8 @@
   overflow: scroll;
   width: 25%;
   height: 100%;
+
+  
 }
 
 .sidebar-friendslist-header {
@@ -34,11 +36,13 @@ list on the left sidebar */
   width: 200px;
   margin: 4px 2px 2px;
   justify-content: center;
+  @include name-animation;
 }
 
 .sidebar-body-friendContainer {
   display: flex;
   flex-direction: column;
+  @include name-animation;
 }
 
 .sidebar-friendContainer-listItems {

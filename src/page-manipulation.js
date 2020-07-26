@@ -111,7 +111,7 @@ class DOMmanipulator {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<li class="friend" id="${friend.id}">${friend.name}</li>`
+          `<p class="friend" id="${friend.id}">${friend.name}</p>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -305,29 +305,29 @@ class DOMmanipulator {
     const stairRecord = activity.getStairRecord(id);
 
     const milesHtml = `
+      <p class="message-miles">-----</p>
       <span class="number" id= "miles" >${userMilesToday}</span>
-      walked today. <br />
+      <p class="message-miles">-----</p>
       your all time miles walked:
       <span class="number" id= "miles-total">${totalMiles}</span>
-      great work! <br />`;
+      <p class="message-miles">-----</p>`;
 
     const stepsHtml = `
       <span class="message" id="steps-left">${stepsToGo}</span>
       <p class="message-step" id="step-goal">${stepGoalStatus}</p>
       <p class="message-step">Last three step streaks:</p>
-      <li class="message step-list" id="best-steps">${stepGoalDates[0]}</li>
-      <li class="message step-list" id="best-steps">${stepGoalDates[1]}</li>
-      <li class="message step-list" id="best-steps">${stepGoalDates[2]}</li>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
     `;
 
     const friendsHtml = `
-      best friend:
-      <span class="number" id="miles">0</span>
-      walked today. <br />
-      <span class="number" id="miles-total">0</span>
-      great work! <br />
-      steps to go:
-      <span class="number" id="steps-left">0</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">0</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">0</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">0</span>
     `;
 
     const streaksHtml = `

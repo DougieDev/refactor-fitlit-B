@@ -13,7 +13,6 @@
   justify-content: space-between;
   @include shadow;
 
-  
 
   &-container {
   width: 100%;
@@ -54,27 +53,34 @@
   width: 85%;
   margin: 0 2.5% 2.5%;
 
-  .calendar-container {
-    // display: flex;
-
-    #weekly-data-options {
+  #weekly-data-options {
       // display: flex;
       // flex-direction: column;
-    }
   }
 }
 
 .hydration-card {
   background-color: $teal;
+  @include card-animation-bottom(1.2s);
 }
 
 .sleep-card {
   background-color: $pink;
+  @include card-animation-bottom(1.2s);
 }
 
 .activity-card {
   background-color: $yellow;
+  @include card-animation-bottom(1.2s);
 }
+
+.calendar-card {
+  @include card-animation-bottom(1.2s);
+}
+
+// .calendar-container {
+//   @include card-animation-bottom(1.4s);  
+//   }
 
 /* This controls the friends list on the left-sidebar.
 As of right now, I can't see any other use for it.
