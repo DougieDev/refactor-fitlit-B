@@ -10,11 +10,14 @@ import Repo from './Repo'
 
 import {
   populateDailyData,
+  populateWeeklyDates,
   addInfoToUserSidebar,
   insertForm, 
-  insertWeeklyDataLayouts,
+  displayWeeklyData,
   addFriendSidebar
 } from './page-manipulation';
+
+import moment from 'moment'
 
 const userRepo = new UserRepo();
 const hydrationRepo = new Repo();
@@ -32,20 +35,50 @@ function startApp() {
   catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 
+const selectBar = document.querySelector('#week-select')
 const buttons = document.querySelectorAll('button');
+
+selectBar.addEventListener('click', selectHandler)
 for(const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
 
 function buttonHandler(event) {
+  let repoPass = determineRepo(event)
   if (event.target.id.includes('new')) {
     // originalCardContent = event.target.parentElement.innerHTML;
     insertForm(event);
   } else if (event.target.id === 'submit') {
     console.log(`run populate data, POST function, and do something with new date information.`)
   } else if (event.target.id.includes('weekly')) {
-    insertWeeklyDataLayouts(event);
+    displayWeeklyData(event, repoPass, currentUserId);
   }
+}
+
+function determineRepo(event) {
+  if (event.target.id.includes("hydration")) {
+    return hydrationRepo;
+  } else if (event.target.id.includes("sleep")) {
+    return sleepRepo;
+  } else if (event.target.id.includes("activity")) {
+    return activityRepo;
+  }
+}
+
+function selectHandler(event) {
+  unHideElements(
+    '#weekly-hydration', 
+    '#weekly-activity', 
+    '#weekly-sleep'
+    )
+}
+
+function unHideElements() {
+  const args = Array.from(arguments)
+  args.forEach(element => {
+    console.log(document.querySelector(element).classList.remove('hidden'))
+  })
+
 }
 
 function catchAllData() {
@@ -59,26 +92,21 @@ function catchData(src) {
     .then(response => response.json())
     .then(data => data[src])
     .then(result => classInfo.class.storeData(result, src))
-    .then(repo => dataEventHandler(src));
+    .then(repo => dataEventHandler(src))
 }
-
 
 function dataEventHandler(src) {
   if (src === 'userData') {
-    today = hydrationRepo.getToday(currentUserId)
-    console.log(userRepo);
-  } else if (src === 'userRepo') {
+  } else if (src === 'hydrationData') {
     today = hydrationRepo.getToday(currentUserId)
     populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
-    console.log(hydrationRepo);
+    populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (src === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     populateDailyData('sleep-today', sleepRepo, currentUserId, today)
-    console.log(sleepRepo);
   } else if (src === 'activityData') {
     today = activityRepo.getToday(currentUserId)
     populateDailyData('activity-today', activityRepo, currentUserId, today)
-    console.log(activityRepo); 
   }
 }
 

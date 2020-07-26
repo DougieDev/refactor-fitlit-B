@@ -222,14 +222,15 @@ describe('Activity', function() {
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 
-  it('should return total miles a given user has walked', function () {
 
+  it('should return total miles a given user has walked', function () {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
   });
 
   it('should return true/false if the given user met their step goal on a given day', function() {
     expect(activity.accomplishStepGoal(4, "2019/06/15", userRepo)).to.eql(false);
   });
+
 
   it('should return steps remaining to accomplish goal', function () {
     expect(activity.remainingSteps(1, "2019/06/18", userRepo)).to.eql(`You have 2000 steps to go.`);

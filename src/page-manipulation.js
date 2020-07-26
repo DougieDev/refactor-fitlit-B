@@ -1,3 +1,21 @@
+import moment from 'moment'
+// import subtract from 'moment'
+
+function populateWeeklyDates(repo, id) {
+  const mondays = repo.findWeeklyStartDates(id);
+  console.log(mondays);
+  const select = document.querySelector("#week-select");
+  let options = mondays.reduce((week, monday) => {
+    const momentMonday = moment(monday).format('MMMM Do YYYY')
+    week += `
+    <option value="${monday}>
+      Week of ${momentMonday}
+    </option>`;
+    return week;
+  }, "");
+  select.insertAdjacentHTML("beforeend", options);
+}
+
 function insertForm(event) {
   const dateInput = `date: <input id="date" />`;
   event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
@@ -14,7 +32,7 @@ function insertForm(event) {
 }
 
 function populateDailyData(card, repo, userId, date) {
-  const location = document.getElementById(card);
+  let location = document.getElementById(card);
   const innerElements = location.children;
   for(var i = 0; i < innerElements.length; i++) {
     let key = innerElements[i].id.split('-')[0]
@@ -26,36 +44,44 @@ function populateDailyData(card, repo, userId, date) {
   }
 }
 
-function insertWeeklyDataLayouts(event) {
+const insertWeekLayout = (html) => {
   const weekdays = document.querySelectorAll('.historic-data');
-  const hydrationWeekdayHtml = `<span class="number">0</span> oz drank`;
-  const activityWeekdayHtml =  `Step Count: <span class="number">0</span>
-    Stair Count: <span class="number">0</span>
-    Minutes Active: <span class="number">0</span>`
-  const sleepWeekdayHtml = `Hours Asleep: <span class="number">0</span>
-    Sleep Quality: <span class="number">0</span>out of 5`
-  const insertLayout = (html) => {
-    for (var i = 0; i < weekdays.length; i++) {
-      weekdays[i].innerHTML = html;
-    }
-  };
-  if (event.target.id.includes('hydration')) {
-    insertLayout(hydrationWeekdayHtml);
-  } else if (event.target.id.includes('activity')) {
-    insertLayout(activityWeekdayHtml);
-  } else if (event.target.id.includes('sleep')) {
-    insertLayout(sleepWeekdayHtml);
+  for (var i = 0; i < weekdays.length; i++) {
+    weekdays[i].innerHTML = html;
+  }
+};
+
+function createWeeklyLayoutHtml() {
+  return {
+    'weekly-hydration': `
+      <span class="number" id="numOunces">
+        0
+      </span> oz drank`,
+    'weekly-activity': `Step Count: <span class="number" id="numSteps">0</span>
+      Stair Count: <span class="number" id="flightsOfStairs">0</span>
+      Minutes Active: <span class="number" id="minutesActive">0</span>`,
+    'weekly-sleep': `Hours Asleep: <span class="number" id="hoursSlept">0</span>
+        Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
   }
 }
 
-function insertActivityData(event) {
-  const weekdays = document.querySelectorAll('.activity-xtra');
-  const milesTodayHtml = `<li class="miles" <span>class="number">0</span> miles walked</li>`;
-  const allMilesHtml = `<li class="total-miles">Total Miles: <span class="number">0</span>
-    Stair Count: <span class="number">0</span>
-    Minutes Active: <span class="number">0</span>`
-  const streakHtml = `Current Streak: <span class="number">0</span>days in a row!`
-  };
+
+function populateWeeklyData(repo, userId) {
+  const calendar = document.querySelectorAll('.historic-data')
+  let date = document.querySelector('select').value
+  date = date.slice(0, 10)
+  let week = repo.presentWeek(date, userId)
+  for(var i = 0; i < 8; i++) {
+    populateDailyData(calendar[i].id, repo, userId, week[i]);
+  }
+}
+
+function displayWeeklyData(event, repo, id) {
+  debugger
+  let weeklyHtml = createWeeklyLayoutHtml()
+  insertWeekLayout(weeklyHtml[event.target.id])
+  populateWeeklyData(repo, id)
+}
 
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map((friendName) => {
@@ -177,7 +203,11 @@ function addFriendSidebar(id, activityInfo, userStorage, dateString, laterDateSt
   );
 }
 
-
-
-
-export {populateDailyData, insertWeeklyDataLayouts, addInfoToUserSidebar, addFriendSidebar, insertForm}
+export {
+  populateDailyData, 
+  displayWeeklyData, 
+  populateWeeklyDates, 
+  addInfoToUserSidebar, 
+  addFriendSidebar, 
+  insertForm
+}

@@ -15,7 +15,7 @@
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">A message for the user</h2>
-        <section class="card-container" id="daily-cards" tabindex="0">
+        <section class="card-container hidden" id="daily-cards" tabindex="0">
           <h3 tabindex="0">Daily Fitness</h3>
           <section class="card hydration-card" id="hydration-today" tabindex="0">
               You drank
@@ -53,7 +53,7 @@
           <section class="main-column-activity"></section>
           <section class="main-column-sleep"></section> -->
         </section>
-        <section class="card-container hidden" id="user-cards" tabindex="0">
+        <section class="card-container" id="user-cards" tabindex="0">
           <h2>User / Account</h2>
           <section class="card" id="user-goals" tabindex="0">
             user goals:<button id="update-goals">Update Info</button>
@@ -64,27 +64,27 @@
           <section class="week-card" id="user-trends" tabindex="0">
             <label>
               Use to select the week
-              <select name="week" id="week-select">
             </label>
-             <option value='date'>
-               boy howdy how are we gonna populate weeks to choose from
+              <select name="week" id="week-select">
+             <option value='blank'>
+               --
              </option>
              </select>
              <section class="calendar-container" tabindex="0">
-               <nav id="weekly-data-options">
-                 <button id="weekly-hydration">Hydration</button>
-                 <button id="weekly-activity">Activity</button>
-                 <button id="weekly-sleep">Sleep</button>
+               <nav class="weekly-nav" id="weekly-data-options">
+                 <button class="hidden" id="weekly-hydration">Hydration</button>
+                 <button class="hidden" id="weekly-activity">Activity</button>
+                 <button class="hidden" id="weekly-sleep">Sleep</button>
                </nav>
                <table>
                  <tr>
-                   <th>Monday</th>
-                   <th>Tuesday</th>
-                   <th>Wednesday</th>
-                   <th>Thursday</th>
-                   <th>Friday</th>
-                   <th>Saturday</th>
-                   <th>Sunday</th>
+                   <th id="mon-date">Monday</th>
+                   <th id="tues-date">Tuesday</th>
+                   <th id="weds-date">Wednesday</th>
+                   <th id="thurs-date">Thursday</th>
+                   <th id="fri-date">Friday</th>
+                   <th id="sat-date">Saturday</th>
+                   <th id="sun-date">Sunday</th>
                   </tr>
                   <tr>
                     <th class="historic-data" id="monday-data"></th>
