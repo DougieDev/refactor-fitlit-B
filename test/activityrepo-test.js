@@ -215,7 +215,6 @@ describe('Activity', function() {
   });
 
   it('should return the miles a given user has walked on a given date', function() {
-    
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 

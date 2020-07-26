@@ -8,7 +8,66 @@ $teal: #5BC8AC;
 $pink: #EC96A4;
 $yellow: #DFE166;
 
+
+//new colors for design checking accessibility
+$friends-color: #fc09f0;
+$steps-color: #1b4c8b;
+$miles-color: #1b8b82;
+$streaks-color: #fc09f0;
+
 //layout
 $card-shadow: #3b3b0f;
 $solid-border: 1px solid $black;
 
+
+//media query variables
+
+$phone-width: 560px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+//mix ins
+
+@mixin shadow {
+  -webkit-box-shadow: 6px 5px 8px 6px $card-shadow;
+    -moz-box-shadow: 6px 5px 8px 6px $card-shadow;
+        box-shadow: 6px 5px 8px 6px $card-shadow;
+  }
+
+@mixin card-border-radius {
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+          border-radius: 15px;
+}
+
+@mixin card-border {
+  border: $solid-border;
+}
+
+@mixin phone {
+  @media (min-width: #{$phone-width}) and 
+  (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin page-reset {
+  * {
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+    text-transform: capitalize;
+  }
+}

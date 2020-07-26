@@ -304,17 +304,6 @@ class DOMmanipulator {
     const flightsStreak = activity.getStreak(id, 'flightsOfStairs');
     const stairRecord = activity.getStairRecord(id);
 
-    const stepGoalMessage = () => {
-      (stepGoalStatus === true) ? 'Great work, getting those steps in!' : 'Keep it up, almost there!'
-    }
-
-
-
-    // const userMiles = document.getElementById("miles-card");
-    // const streaks = document.getElementById("streaks");
-    // const userStepsLeft = document.getElementById("steps");
-    // const friend = document.getElementById("friend");
-
     const milesHtml = `
       <span class="number" id= "miles" >${userMilesToday}</span>
       walked today. <br />
@@ -325,7 +314,7 @@ class DOMmanipulator {
     const stepsHtml = `
       <span class="message" id="steps-left">${stepsToGo}</span>
       <p class="message-step" id="step-goal">${stepGoalStatus}</p>
-      Last three step streaks:
+      <p class="message-step">Last three step streaks:</p>
       <li class="message step-list" id="best-steps">${stepGoalDates[0]}</li>
       <li class="message step-list" id="best-steps">${stepGoalDates[1]}</li>
       <li class="message step-list" id="best-steps">${stepGoalDates[2]}</li>

@@ -1,6 +1,6 @@
 .sidebar-container {
   background-color: $sidebar-grey;
-  border: 1px solid $black;
+  @include card-border;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,13 +22,13 @@
 list on the left sidebar */
 .sidebar-header-line {
   color: $white;
-  border: 1px solid $black;
+  @include card-border;
   margin: 1em 1em 0 1em;
   width: 80%;
 }
 
 .sidebar-header-userImage {
-  border: 1px solid $black;
+  @include card-border;
   border-radius: 50%;
   height: 200px;
   width: 200px;
@@ -46,7 +46,6 @@ list on the left sidebar */
 }
 /* What is this doing? Come back to this later */
 .card-vertical-list {
-  list-style-type: none;
   font-weight: lighter;
   font-style: italic;
   padding-left: 0;
