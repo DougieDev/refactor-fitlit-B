@@ -12,20 +12,13 @@ import {
   sleepRepo, 
   currentUserId, 
 } from './globals';
+import { object } from 'chai-spies';
 
-
-
+console.log(currentUserId)
+const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
 let today;
-// const userRepo = new UserRepo();
-// const hydrationRepo = new Repo();
-// const activityRepo = new ActivityRepo(); 
-// const sleepRepo = new Repo();
-
-// const currentUserId = getRandomNumber()
-// let currentUser;
-// let today;
 
 const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
@@ -38,16 +31,19 @@ sideBar.addEventListener('click', sidebarHandler)
 selectBar.addEventListener('click', selectBarHandler)
 
 function buttonHandler(event) {
-  let repoPass = determineRepo(event)
   let button = event.target;
   if (button.id.includes('new')) {
     page.insertForm(event);
   } else if (button.id === 'submit') {
-    //POST FUNCTIONALITY
+    let newInfo = page.pullInfoFromPage(currentUserId);
+    let fetchPackage = organizePost(newInfo);
+    postAllData(fetchPackage);
+    page.clearInputForms()
+    page.goToDailyPage()
   } else if (button.id.includes('weekly')) {
-    page.displayWeeklyData(event, repoPass, currentUserId);
+    page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
-    page.goToUserPage();
+    page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
   } else if (button.id.includes('contest-stats')) {
@@ -99,14 +95,27 @@ function catchAllData() {
   args.forEach(arg => catchData(arg));
 }
 
+const postAllData = (data) => {
+  data.forEach(postObject => postData(postObject))
+}
+
+const postData = (data) => {
+  fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(err => console.log('YOU done did BAD:', err));
+}
+
+
 const catchData = (dataSet) => {
   const classInfo = findClassInfo(dataSet);
-  const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
   return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
     .then(response => response.json())
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
-    .then(() => dataEventHandler(dataSet));
+    .then(() => dataEventHandler(dataSet))
+    .catch(() => page.changeSystemMessage('Something went wrong' +
+    'please try again'))
 }
 
 const findClassInfo = (dataSet) => {
@@ -127,14 +136,26 @@ const findClassInfo = (dataSet) => {
   return classInfo;
 }
 
-const determineRepo = (event) => {
-  if (event.target.id.includes("hydration")) {
-    return hydrationRepo;
-  } else if (event.target.id.includes("sleep")) {
-    return sleepRepo;
-  } else if (event.target.id.includes("activity")) {
-    return activityRepo;
+const makePostObject = (data) => {
+  return {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   }
+}
+
+const organizePost = (info) => {
+  const dataSets = Object.keys(info);
+  return dataSets.reduce((postPackages, key) => {
+    postPackages.push({
+      path: key,
+      destination: key + 'Data',
+      postObject: makePostObject(info[key])
+    })
+    return postPackages
+  }, [])  
 }
 
 startApp();

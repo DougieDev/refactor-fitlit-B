@@ -19,6 +19,10 @@
       </section>
       <section class="body-main-infoContainter" tabindex="0">
         <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
+        <span id="new-info">
+          <button id="new-fitness-entry">add new info</button>
+          <span  class="hidden" id="new-date" >Date:<input id="new-date-field"/></span>
+        </span>
         <section class="card-container" id="daily-cards" tabindex="0">
           <h3 tabindex="0">Daily Fitness</h3>
           <section class="card hydration-card" id="hydration-today" tabindex="0">
@@ -27,7 +31,6 @@
               oz today. <br />
               Your average water intake is
               <span class="number" id="numOunces-average">0</span>
-            <button id="new-hydration">add new info</button>
           </section>
           <section class="card activity-card" id="activity-today" tabindex="0">
               Your step count today: <br />
@@ -35,8 +38,7 @@
               Your stair count today: <br />
               <span class="number" id="flightsOfStairs">0</span> <br />
               Your minutes active today: <br />
-              <span class="number" id="minutesActive">0</span>
-            <button id="new-activity">add new info</button>
+              <span class="number" id="minutesActive">0</span>  
           </section>
           <section class="card sleep-card" id="sleep-today" tabindex="0">
               You slept
@@ -45,17 +47,13 @@
               Your sleep quality was
               <span class="number" id="sleepQuality">0</span>
               out of 5.
-            <button id="new-sleep">add new info</button>
           </section>
           <section class="card" tabindex="0">
             calendar anybody?
             <label for="datepicker">Date:</label>
             <br>
-            <input type="text" id="datepicker">
+            <!-- <input type="text" id="datepicker"> -->
           </section>
-          <!-- <section class="main-column-hydration"></section>
-          <section class="main-column-activity"></section>
-          <section class="main-column-sleep"></section> -->
         </section>
         <section class="card-container hidden" id="user-cards" tabindex="0">
           <h2>User / Account</h2>
