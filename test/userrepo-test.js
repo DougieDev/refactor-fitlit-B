@@ -8,7 +8,7 @@ describe('UserRepo', function() {
   let user1, user2, rawUsers, userRepo;
   beforeEach(function() {
     user1 = new User ({
-      id: 3000,
+      id: 1,
       name: 'Joshua Danger Sevy',
       address: "3000 Champions Lane, Mars",
       email: "google@gmail.com",
@@ -17,7 +17,7 @@ describe('UserRepo', function() {
       friends: [1]
     });
     user2 = new User({
-      id: 1,
+      id: 2,
       name: '#D0UG13',
       address: 'Inter-dimensional Palace',
       email: "google@gmail.com",
@@ -29,15 +29,15 @@ describe('UserRepo', function() {
     userRepo = new UserRepo();
   });
 
-  it('should be a function', function() {
+  it.only('should be a function', function() {
     expect(UserRepo).to.be.a('function')
   });
 
-  it('should be an instance of UserRepo', function() {
+  it.only('should be an instance of UserRepo', function() {
     expect(userRepo).to.be.an.instanceof(UserRepo)
   });
 
-  it('should be able to store data', function() {
+  it.only('should be able to store data', function() {
     userRepo.storeData(users)
 
     expect(userRepo.data).to.deep.equal(users)
@@ -45,7 +45,7 @@ describe('UserRepo', function() {
 
 /* THE EXPECTATION HERE IS AN INSTANCEOF RESULT BECAUSE OF THE getRandomNumber
 METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
-  it('should be able to find the current user', function() {
+  it.only('should be able to find the current user', function() {
     userRepo.storeData(users)
 
     expect(userRepo.currentUser).to.equal(null)
@@ -53,23 +53,21 @@ METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
     expect(userRepo.currentUser).to.be.an.instanceof(User)
   });
 
-  it('should be able to find a user by their ID', function() {
+  it.only('should be able to find a user by their ID', function() {
     userRepo.storeData(users)
-    userRepo.findUserById(3000)
-    let results = userRepo.findUserById(3000)
+    userRepo.findUserById(1)
+    let results = userRepo.findUserById(1)
 
     expect(results.name).to.equal('Joshua Danger Sevy')
   });
 
-  it('should return a random number', function() {
+  it.only('should return a random number', function() {
     userRepo.getRandomNumber()
 
     expect(userRepo.getRandomNumber()).to.be.a('number')
   });
 
-/* COME BACK TO THIS */
-  // it('should be able to isolate the username and relevant data', function() {
-  //   userRepo.isolateUsernameAndRelevantData()
+  // it.only('', function() {
   //   expect().to.equal()
   // })
 })
