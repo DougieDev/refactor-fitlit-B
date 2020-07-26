@@ -28,20 +28,6 @@ class DOMmanipulator {
     display.innerText = message
   }
 
-  insertForm(event) {
-    const dateInput = `date: <input id="date" />`;
-    event.target.parentElement.insertAdjacentHTML('afterbegin', dateInput);
-    const innerElements = event.target.parentElement.children;
-    for (var i = 0; i < innerElements.length; i++) {
-      if (innerElements[i].classList.contains('number')
-      && !innerElements[i].id.includes('average')) {
-        let id = innerElements[i].id;
-        innerElements[i].innerHTML = `<input id=${id} />`
-      }
-    }
-    event.target.id = `submit`;
-    event.target.innerText = `submit`;
-  }
   populateDailyData(card, repo, userId, date) {
     let location = document.getElementById(card);
     const innerElements = location.children;
@@ -199,35 +185,94 @@ class DOMmanipulator {
     this.changeSystemMessage(`Here are ${event.target.innerText} stats today`)
   }
 
-  makePostDataFormat(id) {
+  insertForm(event) {
+    const inputElements = document.querySelectorAll('.number');
+    for (var i = 0; i < inputElements.length; i++) {
+      if (inputElements[i].classList.contains('number')
+        && !inputElements[i].id.includes('average')) {
+        let id = inputElements[i].id;
+        inputElements[i].innerHTML = `<input id=${id} />`
+      }
+    }
+    const dateInput = `date: <input id="new-date" />`;
+    event.target.id = `submit`;
+    event.target.innerText = `submit`;
+    event.target.insertAdjacentHTML('afterend', dateInput)
+  }
+
+  beginPostSequence(id) {
+    console.log(this.pullInfoFromPage(id))
+  }
+
+  makePostDataFormat(id, newDate) {
     return {
       hydration: {
-        id: id,
+        userID: id,
         numOunces: '',
+        date: newDate
       },
       sleep:{
-        id: id,
+        userID: id,
         hoursSlept: '',
         sleepQuality: '',
+        date: newDate
       },
       activity: {
-        id: id,
+        userID: id,
         numSteps: '',
         flightsOfStairs: '',
-        minutesActive: ''
+        minutesActive: '',
+        date: newDate
       },
     }
   }
 
-  pullInfoFromPage() {
-    let data = this.makePostDataFormat();
+  pullInfoFromPage(id) {
+    if (this.checkValueFields() === false) {
+      this.changeSystemMessage('Please fill in all of the information')
+      return `All required values are not present`
+    }
+    let newDate = document.getElementById('new-date').value;
+    newDate = moment(newDate).format('YYYY/MM/DD')
+    if (newDate === 'Invalid date') {
+      this.changeSystemMessage('The date you`ve provided is' + 
+        ' improperly formatted')
+      return `invalid date`
+    }
+    let data = this.makePostDataFormat(id, newDate);
     let inputs = document.querySelectorAll('input');
     for (var i = 0; i < inputs.length; i++) {
-      let key = inputs[i].parentNode.id.split('-')[0]
-      data[key] = inputs[i].value
+      let grandparent = inputs[i].parentNode.parentNode
+      if (inputs[i].id !== 'new-date' 
+      && !grandparent.parentNode.classList.contains('hidden')) {
+        let key = grandparent.id.split('-')[0]
+        let childKey = inputs[i].id
+        data[key][childKey] = inputs[i].value
+
+      }
     }
+    this.changeSystemMessage('Thanks for sticking with ' + 
+      'it being fit\'s pretty lit')
     return data
   }
+
+  checkValueFields() {
+    // debugger
+    const inputNodes = document.querySelectorAll('input')
+    const visibleNodes = [];
+    for (var i = 0; i < inputNodes.length; i++) {
+      const grandparent = inputNodes[i].parentNode.parentNode.parentNode;
+      if (!grandparent.classList.contains('hidden')) {
+        visibleNodes.push(inputNodes[i])
+      }
+    }
+    if (visibleNodes.every(nodes => nodes.value !== '')) {
+      return true
+    } else {
+      return false
+    }
+  }
+
 }
 
 export default DOMmanipulator

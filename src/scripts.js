@@ -34,7 +34,7 @@ function buttonHandler(event) {
   if (button.id.includes('new')) {
     page.insertForm(event);
   } else if (button.id === 'submit') {
-    //POST FUNCTIONALITY
+    page.beginPostSequence(currentUserId);
   } else if (button.id.includes('weekly')) {
     page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
