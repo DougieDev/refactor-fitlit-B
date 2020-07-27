@@ -12,7 +12,11 @@ describe('Activity', function() {
   let user3;
   let user4;
   let users;
- 
+
+  let repo;
+
+
+
   beforeEach(function() {
     activityData = [{
       "userID": 1,
@@ -195,13 +199,13 @@ describe('Activity', function() {
       dailyStepGoal: 13000,
       friends: [1, 2]
     };
-    
+
     users = [user1, user2, user3, user4];
     activity = new ActivityRepo();
     activity.storeData(activityData);
     userRepo = new UserRepo();
     userRepo.storeData(users);
-    
+
   });
 
 
@@ -255,8 +259,6 @@ describe('Activity', function() {
 
   it('should show a 3-day increasing streak for a users minutes of activity', function () {
     expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18', '2019/06/21', '2019/06/22'])
+
   });
 });
-
-  
-
