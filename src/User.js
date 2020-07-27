@@ -11,10 +11,16 @@ class User {
   getFirstName() {
     return this.name.split(' ', 1).join();
   }
-  
+
   getFriendsNames(userStorage) {
     return this.friends.map(friendId => {
-      userStorage.getDataFromID(friendId).name;
+      return this.findFriendById(userStorage, friendId).name;
+    })
+  }
+
+  findFriendById(userStorage, friendId) {
+    return userStorage.find(user => {
+      return user.id === friendId
     })
   }
 
@@ -34,4 +40,3 @@ class User {
 }
 
 export default User;
-
