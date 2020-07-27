@@ -1,8 +1,8 @@
 .card {
   background-color: $white;
   @include card-border-radius;
-  height: auto;
   width: 28vw;
+  min-width: 250px;
   margin: 2.5% 2.5%;
   padding: 1em;
   text-align: center;
@@ -19,6 +19,9 @@
   flex-wrap: wrap;
   padding-top: 2em;
   justify-content: center;
+  position: absolute;
+  width: 85%;
+  margin-top: 2%;
   }
 
 

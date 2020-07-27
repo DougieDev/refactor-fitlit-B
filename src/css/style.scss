@@ -6,22 +6,27 @@
 @import 'card-design';
 @import 'reset';
 
-
-
 body {
   font-family: 'Open Sans';
   @include background;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: 100%;
+  position: absolute;
 }
 
 h1 {
-  text-align: center;
   color: $black;
-  height: 80px;
-  padding-top: 10px;
-  font-size: 1.5em;
-
+  margin: 10%;
+  overflow: hidden;
+  text-align: center;
+  
   @include header-animation;
 }
 
@@ -34,11 +39,6 @@ h3 {
   width: 100%;
 }
 
-.main {
-  display: flex;
-  flex-direction: row;
-  height: 1500px;
-}
 
 table, th, td {
  @include card-border;
@@ -53,11 +53,11 @@ table {
   width: 100%;
 }
 
-.body-main-infoContainter {
-  padding: 2%;
-  display: flex;
-  flex-direction: column;
-}
+// .body-main-infoContainter {
+//   padding: 2%;
+//   display: flex;
+//   flex-direction: column;
+// }
 
 .calendar-button {
     width: 31%;
@@ -88,6 +88,8 @@ table {
 }
 
 .app-message {
+  width: 85%;
+  position: absolute;
   display: flex;
   justify-content: center;
   text-transform: capitalize;
@@ -99,8 +101,8 @@ table {
   @include title-animation;
 }
 
-.friend-label {
-  font-size: 2.5em;
+.friend-label  {
+  font-size: 1.5rem;
   text-decoration: underline;
   color: $white;
 }
@@ -111,6 +113,7 @@ table {
 
 .page-info {
   font-size: 1.5em;
+  margin-left: 2%;
 }
 
 .new-info-button{
@@ -118,6 +121,7 @@ table {
     height: 30px;
     border-radius: 12px;
     width: 15vw;
+    margin-left: 2%;
 }
 
 

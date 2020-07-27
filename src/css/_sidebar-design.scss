@@ -1,7 +1,8 @@
 .sidebar-container {
-  background-color: $sidebar-grey;
+  @include sidebar-color;
   text-align: center;
-  width: 25%;
+  width: 16%;
+  position: relative;
 }
 
 .sidebar-friendslist-header {
@@ -9,7 +10,6 @@
   font-weight: bold;
   font-size: 1.2em;
   margin: .5em;
-  width: inherit;
 }
 
 /*  This is just the lines above and below the 'Friends'
@@ -23,8 +23,9 @@ list on the left sidebar */
 
 .sidebar-header-userImage {
   border-radius: 50%;
-  height: 200px;
+  width: 90%;
   margin: 4px 8px 2px;
+  
   
   @include name-animation;
 }
