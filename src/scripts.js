@@ -4,48 +4,90 @@ import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
 import User from './User';
-import ActivityRepo from './ActivityRepo';
-import UserRepo from './UserRepo';
-import Repo from './Repo'
-
+import DOMmanipulator from './page-manipulation';
 import {
-  populateDailyData,
-  addInfoToUserSidebar,
-  insertForm, 
-  insertWeeklyDataLayouts,
-  addFriendSidebar
-} from './page-manipulation';
+  userRepo, 
+  hydrationRepo, 
+  activityRepo, 
+  sleepRepo, 
+  currentUserId, 
+} from './globals';
 
-const userRepo = new UserRepo();
-const hydrationRepo = new Repo();
-const activityRepo = new ActivityRepo(); 
-const sleepRepo = new Repo();
-
-const currentUserId = getRandomNumber()
+const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
+const page = new DOMmanipulator();
+let currentUser;
 let today;
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * 50)
-}
+const sideBar = document.querySelector('.sidebar-container')
+const selectBar = document.querySelector('#week-select')
+const buttons = document.querySelectorAll('button')
 
-function startApp() {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
-}
-
-const buttons = document.querySelectorAll('button');
-for(const button of buttons) {
+for (const button of buttons) {
   button.addEventListener('click', buttonHandler);
 }
+sideBar.addEventListener('click', sidebarHandler)
+selectBar.addEventListener('click', selectBarHandler)
 
 function buttonHandler(event) {
-  if (event.target.id.includes('new')) {
-    // originalCardContent = event.target.parentElement.innerHTML;
-    insertForm(event);
-  } else if (event.target.id === 'submit') {
-    console.log(`run populate data, POST function, and do something with new date information.`)
-  } else if (event.target.id.includes('weekly')) {
-    insertWeeklyDataLayouts(event);
+  let button = event.target;
+  if (button.id.includes('new')) {
+    page.insertForm(event);
+  } else if (button.id === 'submit') {
+    let newInfo = page.pullInfoFromPage(currentUserId);
+    let fetchPackage = organizePost(newInfo);
+    postAllData(fetchPackage);
+    page.clearInputForms()
+    page.goToDailyPage()
+  } else if (button.id.includes('weekly')) {
+    page.displayWeeklyData(event, currentUserId);
+  } else if (button.id.includes('user-stats')) {
+    page.goToUserPage(currentUser);
+  } else if (button.id.includes('daily-stats')) {
+    page.goToDailyPage(today);
+  } else if (button.id.includes('community-stats')) {
+    page.goToContestPage(today);
   }
+}
+
+function sidebarHandler(event) {
+  if (event.target.className === 'friend') {
+    page.seeFriendsStats(event, today)
+  }
+  if (event.target.id.includes('stats')) {
+    buttonHandler(event)
+  }
+}
+
+function selectBarHandler() {
+  page.unHideElements('#weekly-hydration', '#weekly-activity', '#weekly-sleep')
+}
+  
+const dataEventHandler = (dataSet) => {
+  if (dataSet === 'userData') {
+    currentUser = new User(userRepo.findUserById(currentUserId));
+    page.populateUserInfo(currentUser);
+  } else if (dataSet === 'hydrationData') {
+    today = hydrationRepo.getToday(currentUserId)
+    page.populateDailyData(
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
+    page.addCalendar(currentUserId)
+    page.addUserDate(today)
+    page.populateWeeklyDates(hydrationRepo, currentUserId)
+  } else if (dataSet === 'sleepData') {
+    today = sleepRepo.getToday(currentUserId)
+    page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
+  } else if (dataSet === 'activityData') {
+    today = activityRepo.getToday(currentUserId)
+    page.populateDailyData('activity-today', activityRepo, currentUserId, today)
+  }
+}
+
+const startApp = () => {
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 
 function catchAllData() {
@@ -53,55 +95,69 @@ function catchAllData() {
   args.forEach(arg => catchData(arg));
 }
 
-function catchData(src) {
-  const classInfo = findClassInfo(src);
-  return fetch(`https://fe-apps.herokuapp.com/api/v1/fitlit/1908/${classInfo.url}/${src}`)
+const postAllData = (data) => {
+  data.forEach(postObject => postData(postObject))
+}
+
+const postData = (data) => {
+  fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
     .then(response => response.json())
-    .then(data => data[src])
-    .then(result => classInfo.class.storeData(result, src))
-    .then(repo => dataEventHandler(src));
+    .then(() => page.changeSystemMessage('Success!'))
+    .catch(err => page.changeSystemMessage(err));
 }
 
 
-function dataEventHandler(src) {
-  if (src === 'userData') {
-    today = hydrationRepo.getToday(currentUserId)
-    console.log(userRepo);
-  } else if (src === 'hydrationData') {
-    today = hydrationRepo.getToday(currentUserId)
-    populateDailyData('hydration-today', hydrationRepo, currentUserId, today)
-    console.log(hydrationRepo);
-  } else if (src === 'sleepData') {
-    today = sleepRepo.getToday(currentUserId)
-    populateDailyData('sleep-today', sleepRepo, currentUserId, today)
-    console.log(sleepRepo);
-  } else if (src === 'activityData') {
-    today = activityRepo.getToday(currentUserId)
-    populateDailyData('activity-today', activityRepo, currentUserId, today)
-    console.log(activityRepo); 
-  }
+const catchData = (dataSet) => {
+  const classInfo = findClassInfo(dataSet);
+  return fetch(`${apiHead}/${classInfo.url}/${dataSet}`)
+    .then(response => response.json())
+    .then(data => data[dataSet])
+    .then(result => classInfo.class.storeData(result, dataSet))
+    .then(() => dataEventHandler(dataSet))
+    .catch(() => page.changeSystemMessage('Something went wrong ' +
+    'please try again'))
 }
 
-function findClassInfo(src) {
+const findClassInfo = (dataSet) => {
   const classInfo = {}
-  if (src.includes('user')) {
+  if (dataSet.includes('user')) {
     classInfo.url = 'users';
     classInfo.class = userRepo;
-  } else if (src.includes('sleep')) {
+  } else if (dataSet.includes('sleep')) {
     classInfo.url = 'sleep';
     classInfo.class = sleepRepo;
-  } else if (src.includes('activity')) {
+  } else if (dataSet.includes('activity')) {
     classInfo.url = 'activity';
     classInfo.class = activityRepo;
-  } else if (src.includes('hydration')) {
+  } else if (dataSet.includes('hydration')) {
     classInfo.url = 'hydration';
     classInfo.class = hydrationRepo;
   }
   return classInfo;
 }
 
+const makePostObject = (data) => {
+  return {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }
+}
+
+const organizePost = (info) => {
+  const dataSets = Object.keys(info);
+  return dataSets.reduce((postPackages, key) => {
+    postPackages.push({
+      path: key,
+      destination: key + 'Data',
+      postObject: makePostObject(info[key])
+    })
+    return postPackages
+  }, [])  
+}
 
 startApp();
 
-
-
+export {currentUser, today}

@@ -5,15 +5,8 @@ import User from './User';
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
-    this.currentUser = null;
+    
   }
-/* This exists in Repo class, so this child class already has access to it */
-  // storeData(data) {
-  //   if (Array.isArray(data)) {
-  //     this.data = data;
-  //     // this.findCurrentUser()
-  //   }
-  // }
 
   findCurrentUser() {
     let index = this.getRandomNumber()
@@ -30,6 +23,7 @@ class UserRepo extends Repo  {
         return dataPoint.id === id;
       });
     }
+
 
 
 /* BECAUSE OF THE findCurrentUser() METHOD, THIS HAD TO BE REFACTORED
@@ -135,6 +129,7 @@ THEY DO NOT APPEAR TO BE IN A SECTION THAT WE ARE DISPLAYING ANYMORE.
 IS THIS NECESSARY? */
 
 /* BEING USED IN page-manip*/
+
   showChallengeListAndWinner(user, date) {
     let rankedList = user.getFriendsAverageStepsForWeek(date, this.data);
     return rankedList.map(listItem => {
@@ -146,7 +141,7 @@ IS THIS NECESSARY? */
 
 /* BEING USED IN page-manip */
   showcaseWinner(user, date) {
-    let namedList = this.showChallengeListAndWinner(user, date);
+    // let namedList = this.showChallengeListAndWinner(user, date);
     let winner = this.showChallengeListAndWinner(user, date).shift();
     return winner;
   }
