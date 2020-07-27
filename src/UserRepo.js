@@ -5,13 +5,7 @@ import User from './User';
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
-  }
-
-  storeData(data) {
-    if (Array.isArray(data)) {
-      this.data = data;
-      // this.findCurrentUser()
-    }
+    
   }
 
   findCurrentUser() {
@@ -22,66 +16,13 @@ class UserRepo extends Repo  {
 
   findUserById(id) {
     return this.data.find((dataPoint) => {
-      return dataPoint.id === id;
-    });
-  }
-  
-  getRandomNumber() {
-    return Math.floor(Math.random() * 50)
-  }
-
-  isolateUsernameAndRelevantData(relevantData, listFromMethod) {
-    return listFromMethod.reduce((objectSoFar, dataItem) => {
-      if (!objectSoFar[dataItem.userID]) {
-        objectSoFar[dataItem.userID] = [dataItem[relevantData]]
-      } else {
-        objectSoFar[dataItem.userID].push(dataItem[relevantData])
-      }
-      return objectSoFar;
-    }, {});
-  }
-
-  determineBestSleepers(date) {
-    let timeline = this.data.chooseWeekDataForAllUsers(this.data, date);
-    let userSleepObject = this.data.isolateUsernameAndRelevantData(this.data, date, 'sleepQuality', timeline);
-
-    return Object.keys(userSleepObject).filter(function (key) {
-      return (userSleepObject[key].reduce(function (sumSoFar, sleepQualityValue) {
-        sumSoFar += sleepQualityValue
-        return sumSoFar;
-      }, 0) / userSleepObject[key].length) > 3
-    }).map(function (sleeper) {
-      return this.data.findById(parseInt(sleeper)).name;
-    })
-  }
-
-  determineSleepWinnerForWeek(date) {
-    let timeline = this.data.chooseWeekDataForAllUsers(this.data, date);
-    let sleepRankWithData = this.data.combineRankedUserIDsAndAveragedData(this.data, date, 'sleepQuality', timeline);
-
-    return this.getSleepWinnerNamesFromList(sleepRankWithData, this.data);
-  }
- 
-  determineSleepHoursWinnerForDay(date) {
-    let timeline = this.data.chooseDayDataForAllUsers(this.data, date);
-    let sleepRankWithData = this.data.combineRankedUserIDsAndAveragedData(this.data, date, 'hoursSlept', timeline);
-
-    return this.getSleepWinnerNamesFromList(sleepRankWithData, this.data);
-  }
-
-  getSleepWinnerNamesFromList(sortedArray) {
-    let bestSleepers = sortedArray.filter(function (element) {
-      return element[Object.keys(element)] === Object.values(sortedArray[0])[0]
-    });
-
-    let bestSleeperIds = bestSleepers.map(function (bestSleeper) {
-      return (Object.keys(bestSleeper));
-    });
-
-    return bestSleeperIds.map(function (sleepNumber) {
-      return this.data.findById(parseInt(sleepNumber)).name;
-    });
-  }
+      // console.log(typeof number)
+      // if (id != typeof 'number') {
+      //   console.log('DAS WRONG, BRUV!')
+      // } else {
+        return dataPoint.id === id;
+      });
+    }
 
   rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
@@ -96,6 +37,7 @@ class UserRepo extends Repo  {
     });
   }
 
+  
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     let rankedUsersAndAverages = this.rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod)
@@ -109,27 +51,29 @@ class UserRepo extends Repo  {
       }
       return rankedUser;
     });
+
+/* BECAUSE OF THE findCurrentUser() METHOD, THIS HAD TO BE REFACTORED
+SINCE THE RANDOM NUMBER WAS SOMETIMES THE SAME AS THE INDEX AND SOMETIMES NOT.
+THIS WAS RESULTING IN THE TEST PASSING SOMETIMES AND FAILING OTHER TIMES.*/
+  getRandomNumber() {
+    let randomNum = Math.floor(Math.random() * (3 - 1) + 1)
+    return randomNum
+
   }
+  
 
   showChallengeListAndWinner(user, date) {
     let rankedList = user.getFriendsAverageStepsForWeek(date, this.data);
     return rankedList.map(listItem => {
-      let userID = Object.keys(listItem)[0]; 
+      let userID = Object.keys(listItem)[0];
       let userName = this.data.findById(parseInt(userID)).name;
       return `${userName}: ${listItem[userID]}`
     })
   }
 
-  showcaseWinner(user, date) {
-    // let namedList = this.showChallengeListAndWinner(user, date);
+ showcaseWinner(user, date) {
     let winner = this.showChallengeListAndWinner(user, date).shift();
     return winner;
-  }
-
-  getWinnerId(user, date) {
-    let rankedList = user.getFriendsAverageStepsForWeek(user, date, this.data);
-    let keysList = rankedList.map(listItem => Object.keys(listItem));
-    return parseInt(keysList[0].join(''))
   }
 }
 

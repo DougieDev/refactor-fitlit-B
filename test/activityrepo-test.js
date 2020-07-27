@@ -12,7 +12,11 @@ describe('Activity', function() {
   let user3;
   let user4;
   let users;
- 
+
+  let repo;
+
+
+
   beforeEach(function() {
     activityData = [{
       "userID": 1,
@@ -195,13 +199,13 @@ describe('Activity', function() {
       dailyStepGoal: 13000,
       friends: [1, 2]
     };
-    
+
     users = [user1, user2, user3, user4];
     activity = new ActivityRepo();
     activity.storeData(activityData);
     userRepo = new UserRepo();
     userRepo.storeData(users);
-    
+
   });
 
 
@@ -214,12 +218,12 @@ describe('Activity', function() {
     expect(userRepo.data[0].id).to.eql(1);
   });
 
-  it('should return the miles a given user has walked on a given date', function() {
+  it.only('should return the miles a given user has walked on a given date', function() {
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 
 
-  it('should return total miles a given user has walked', function () {
+  it.only('should return total miles a given user has walked', function () {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
   });
 
@@ -228,7 +232,7 @@ describe('Activity', function() {
   });
 
 
-  it('should return steps remaining to accomplish goal', function () {
+  it.only('should return steps remaining to accomplish goal', function () {
     expect(activity.remainingSteps(1, "2019/06/18", userRepo)).to.eql(`You have 2000 steps to go.`);
     expect(activity.remainingSteps(1, "2019/06/22", userRepo)).to.eql('Step goal, crushed!, Keep it up!');
     expect(activity.remainingSteps(2, "2019/06/20", userRepo)).to.eql('No step activity found for 2019/06/20');
@@ -255,8 +259,6 @@ describe('Activity', function() {
 
   it('should show a 3-day increasing streak for a users minutes of activity', function () {
     expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18', '2019/06/21', '2019/06/22'])
+
   });
 });
-
-  
-

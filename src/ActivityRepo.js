@@ -1,25 +1,18 @@
 import Repo from "./Repo";
-import {
-  userRepo,
-  hydrationRepo,
-  activityRepo,
-  sleepRepo,
-  currentUserId,
-} from './globals';
 
 class ActivityRepo extends Repo {
   constructor(activityData) {
     super(activityData)
   }
 
-  getMilesFromStepsByDate(id, date) {
-    let user = userRepo.findUserById(id);
+  getMilesFromStepsByDate(id, date, users) {
+    let user = users.findUserById(id);
     let userMiles = this.findById(id, date);
     return parseFloat(((userMiles.numSteps * user.strideLength) / 5280).toFixed(1));
   }
 
-  getUserTotalMiles(id) {
-    let user = userRepo.findUserById(id);
+  getUserTotalMiles(id, users) {
+    let user = users.findUserById(id);
     let allSteps = this.getAllDataById(id);
     let miles = allSteps.reduce((total, steps) => {
       return total + steps.numSteps;
@@ -27,22 +20,17 @@ class ActivityRepo extends Repo {
     return parseFloat(((miles * user.strideLength) / 5280).toFixed(1));
   }
 
-  // getActiveMinutesByDate(id, date) {
-  //   let userActivityByDate = this.findById(id, date);
-  //   return userActivityByDate.minutesActive;
-  // } // this.findById
+  
 
-
-  //need to add sad path if date or user is not defined
-  accomplishedStepGoal(id, date) {
-    let user = userRepo.findUserById(id);
+  accomplishedStepGoal(id, date, users) {
+    let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     return (userActivityByDate.numSteps > user.dailyStepGoal) ? `Keep it up ${user.name}, you crushed your goal` : `You got this ${user.name}, just a few more steps`;
   };
 
-  remainingSteps(id, date) {
+  remainingSteps(id, date, users) {
     let completeMessage = 'Step goal, crushed!, Keep it up!';
-    let user = userRepo.findUserById(id);
+    let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     if (userActivityByDate === undefined) {
       return `No step activity found for ${date}`
@@ -51,8 +39,8 @@ class ActivityRepo extends Repo {
     return (steps < 0) ? completeMessage : `You have ${steps} steps to go.`;
   }
 
-  getDaysGoalExceeded(id) {
-    let user = userRepo.findUserById(id);
+  getDaysGoalExceeded(id, users) {
+    let user = users.findUserById(id);
     return this.data.reduce((dates, data) => {
       if (id === data.userID && data.numSteps > user.dailyStepGoal) {
         dates.push(data.date);
@@ -60,18 +48,6 @@ class ActivityRepo extends Repo {
       return dates;
     },[]);
   }
-// method needs to check if day before meet goal, and check each date that made that goal until a goal wasn't made or a date was skipped, need to iterate all of the user data, data is sorted by most recent and needs to iterate until either a day is not concurrent or goal not made return index that the iteration stops at as the streak total days.
-
-//reach for reduce if previousData meets goal and currentData meets goal add 1 if doesnt stop iterating and return streak number
-
-  // currentStreak(id, activityData) {
-  //   let userStreak = this.sortUserDataByDate(id);
-  //   let dates = [];
-  //   let streaks = userStreak.reduce((previous, streak) => {
-  //     if(previous[activityData] < streak[activityData])
-  //   });
-  //   return streaks;
-  // }
 
   getStreak(id, activityType) {
     let sortedUserArray = (this.sortUserDataByDate(id)).reverse();
@@ -80,7 +56,6 @@ class ActivityRepo extends Repo {
         return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType] && sortedUserArray[index - 1][activityType] < sortedUserArray[index][activityType])
       }
     });
-    console.log(streaks)
     return streaks.map(streak => {
       return streak.date;
     })
