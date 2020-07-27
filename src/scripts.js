@@ -44,8 +44,8 @@ function buttonHandler(event) {
     page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
-  } else if (button.id.includes('contest-stats')) {
-    page.goToContestPage();
+  } else if (button.id.includes('community-stats')) {
+    page.goToContestPage(today);
   }
 }
 
@@ -102,8 +102,8 @@ const postAllData = (data) => {
 const postData = (data) => {
   fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
     .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(err => console.log('YOU done did BAD:', err));
+    .then(() => page.changeSystemMessage('Success!'))
+    .catch(err => page.changeSystemMessage(err));
 }
 
 

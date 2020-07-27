@@ -71,8 +71,9 @@ class DOMmanipulator {
 
   
   populateWeeklyData(repo, userId) {
+    debugger
     const calendar = document.querySelectorAll('.historic-data')
-    const date = document.querySelector('select').value
+    const date = document.getElementById('week-select').value
     const week = repo.presentWeek(date, userId)
     for (var i = 0; i < 8; i++) {
       this.populateDailyData(calendar[i].id, repo, userId, week[i]);
@@ -114,7 +115,7 @@ class DOMmanipulator {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<li class="friend" id="${friend.id}">${friend.name}</li>`
+          `<p class="friend" id="${friend.id}">${friend.name}</p>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -143,7 +144,6 @@ class DOMmanipulator {
       }
     }
   }
-
 
   hideElements() {
     const args = Array.from(arguments)
@@ -186,11 +186,12 @@ class DOMmanipulator {
     this.clearInputForms();
   }
 
-  goToContestPage() {
+  goToContestPage(today) {
     this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
+    this.displayCommunitySection(currentUserId, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -287,6 +288,7 @@ class DOMmanipulator {
     }
   }
 
+
   checkValueFields() {
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
@@ -335,6 +337,78 @@ class DOMmanipulator {
     let hydrationData = hydrationRepo.sortUserDataByDate(id)
     return hydrationData.map(date => date.date)
   }
+
+  displayCommunitySection(id, date) {
+    console.log(currentUserId)
+    const user = userRepo.findUserById(currentUserId);
+    console.log(user)
+    const totalMiles = activityRepo.getUserTotalMiles(currentUserId);
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(id, date);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(id, date);
+    const stepsToGo = activityRepo.remainingSteps(id, date);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(id);
+    const numStepsStreak = activityRepo.getStreak(id, 'numSteps');
+    const minutesActiveStreak = activityRepo.getStreak(id, 'minutesActive');
+    const flightsStreak = activityRepo.getStreak(id, 'flightsOfStairs');
+    const stairRecord = activityRepo.getStairRecord(id);
+    
+    // const stepWinner = userRepo.showcaseWinner(user, date);
+    // const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+    
+
+
+    const milesHtml = `
+      <p class="message-miles">-----</p>
+      <span class="number" id= "miles" >${userMilesToday}</span>
+      <p class="message-miles">-----</p>
+      your all time miles walked:
+      <span class="number" id= "miles-total">${totalMiles}</span>
+      <p class="message-miles">-----</p>`;
+
+    const stepsHtml = `
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      <p class="message-step">Last three step streaks:</p>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
+    `;
+
+
+    //this may need to become a winners section or may a top user showcase
+    const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform"></span>
+      <p class="message-comm">Friend Activity:</p>
+      <span class="message-friend" id="friend-activity"></span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id=""></span>
+    `;
+
+    const streaksHtml = `
+      <p class="message-comm">Minutes Active:</p>
+      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <p class="message-comm">Step Goal Total:</p>
+      <span class="number" id="">${numStepsStreak.length}</span>
+      <p class="message-comm">Stair Goal Total:</p>
+      <span class="number" id="">${flightsStreak.length}</span>
+      <p class="message-comm"Stair record:</p>
+      <span class="number" id="">${stairRecord}</span>
+    `;
+
+    const displayCards = [
+      {html: milesHtml, selector: "miles"},
+      {html: stepsHtml, selector: "steps"},
+      {html: friendsHtml, selector: "friends"},
+      {html: streaksHtml, selector: "streaks"}
+    ];
+
+    displayCards.forEach(card => {
+      let select = document.getElementById(card.selector)
+      select.innerHTML = card.html;
+    })
+  }
 }
+
 
 export default DOMmanipulator
