@@ -9,12 +9,6 @@ $pink: #EC96A4;
 $yellow: #DFE166;
 
 
-//? COLOR SCHEME 
-$friends-color: #fc09f0;
-$steps-color: #1b4c8b;
-$miles-color: #1b8b82;
-$streaks-color: #fc09f0;
-
 //STYLING ELEMENTS
 $card-shadow: #3b3b0f;
 $solid-border: 1px solid $black;
@@ -31,6 +25,12 @@ $solid-border: 1px solid $black;
   -webkit-border-radius: 15px;
      -moz-border-radius: 15px;
           border-radius: 15px;
+}
+
+@mixin background {
+  background: $background-grey;
+  background: -webkit-linear-gradient(to right, #373b44, #4286f4);
+  background: linear-gradient(to right, #373b44, #4286f4);
 }
 
 @mixin card-border {
