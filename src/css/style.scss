@@ -1,10 +1,9 @@
-// Is this working properly??
-@use './node_modules/pikaday/css/pikaday.scss';
 @import 'media-query';
 @import 'variables';
 @import 'sidebar-design';
 @import 'card-design';
 @import 'reset';
+@use './node_modules/pikaday/css/pikaday.scss';
 
 body {
   font-family: 'Open Sans';
@@ -35,7 +34,7 @@ h2 {
 }
 
 h3 {
-  color: white;
+  color: $white;
   width: 100%;
 }
 
@@ -108,7 +107,7 @@ table {
 }
 
 .friend {
-  font-size: 1.4em;
+  font-size: 1em;
 }
 
 .page-info {

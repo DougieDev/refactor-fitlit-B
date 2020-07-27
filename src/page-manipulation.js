@@ -371,6 +371,7 @@ class DOMmanipulator {
   }
 
   communitySectionSteps(date) {
+    console.log(date);
     const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date, userRepo);
     const stepsToGo = activityRepo.remainingSteps(currentUserId, date, userRepo);
     const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
