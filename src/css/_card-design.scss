@@ -1,8 +1,8 @@
 .card {
   background-color: $white;
   @include card-border-radius;
-  height: auto;
-  width: 40%;
+  width: 28vw;
+  min-width: 250px;
   margin: 2.5% 2.5%;
   padding: 1em;
   text-align: center;
@@ -15,12 +15,13 @@
 
 
   &-container {
-  width: 100%;
-  height: auto;
   display: flex;
   flex-wrap: wrap;
   padding-top: 2em;
   justify-content: center;
+  position: absolute;
+  width: 85%;
+  margin-top: 2%;
   }
 
 
@@ -44,19 +45,20 @@
     background-color: $white;
     @include card-animation-bottom(1.2s);
   }
-  
-  
+}
 
 
+.info-card > .number {
+  font-size: 18px;
 }
 
 .week-card {
   display: flex;
   flex-direction: column;
   background-color: $white;
-  border-radius: 15px;
+  @include card-border-radius;
   height: auto;
-  width: 85%;
+  width: 600px;
   margin: 0 2.5% 2.5%;
 
   #weekly-data-options {
@@ -67,7 +69,7 @@
 
 .hydration-card {
   background-color: $teal;
-  @include card-animation-top(1.2s);
+  @include card-animation-bottom(1.2s);
 }
 
 .sleep-card {
@@ -81,10 +83,14 @@
 }
 
 .calendar-card {
-  @include card-animation-bottom(1.2s);
+  @include card-animation-top(1.2s);
 }
 
-.pika-button {
+.pika-lendar {
+  font-size: .5em;
+}
+
+.pika-button{
   background-color: $white;
   border: none;
   height: 100%;
@@ -102,9 +108,16 @@
 As of right now, I can't see any other use for it.
 Likely needs its name changed.*/
 
-#new-info {
-  width: 100%
+.new-info {
+width: 100%;
+
+
+  &-button {
+    
+  }
 }
+
+
 
 
 

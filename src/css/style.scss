@@ -1,53 +1,47 @@
-// Is this working properly??
-@use './node_modules/pikaday/css/pikaday.scss';
 @import 'media-query';
 @import 'variables';
 @import 'sidebar-design';
 @import 'card-design';
 @import 'reset';
+@use './node_modules/pikaday/css/pikaday.scss';
 
 body {
   font-family: 'Open Sans';
-  background-color: $background-grey;
-}
-
-h1 {
-  text-align: center;
-  color: $black;
-  height: 80px;
-  padding-top: 10px;
-
-  @include header-animation;
-}
-
-h2 {
-  color: $white;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-h3 {
-  color: white;
-  width: 100%;
-}
-
-#app-message {
-  display: flex;
-  justify-content: center;
-
-  @include title-animation;
-
+  @include background;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .main {
   display: flex;
   flex-direction: row;
-  height: 1500px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
+
+h1 {
+  color: $black;
+  margin: 10%;
+  overflow: hidden;
+  text-align: center;
+  
+  @include header-animation;
+}
+
+h2 {
+  color: $white;
+}
+
+h3 {
+  color: $white;
+  width: 100%;
+}
+
 
 table, th, td {
  @include card-border;
+ 
 }
 
 .historic-data {
@@ -58,14 +52,15 @@ table {
   width: 100%;
 }
 
-.body-main-infoContainter {
-  padding: 2%;
-  width: 100%;
-  height: 100%;
-  @include card-border;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+// .body-main-infoContainter {
+//   padding: 2%;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+.calendar-button {
+    width: 31%;
+    margin-left: 1.3%;
 }
 
 .number {
@@ -91,5 +86,41 @@ table {
   display: none;
 }
 
+.app-message {
+  width: 85%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+  line-height: 1.5;
+  font-size: 2.5em;
+  letter-spacing: 1.5px;
+  text-shadow: 5px 6px 3px $black;
+
+  @include title-animation;
+}
+
+.friend-label  {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  color: $white;
+}
+
+.friend {
+  font-size: 1em;
+}
+
+.page-info {
+  font-size: 1.5em;
+  margin-left: 2%;
+}
+
+.new-info-button{
+    font-size: 1em;
+    height: 30px;
+    border-radius: 12px;
+    width: 15vw;
+    margin-left: 2%;
+}
 
 

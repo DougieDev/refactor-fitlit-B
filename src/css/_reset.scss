@@ -1,1 +1,6 @@
 @include page-reset;
+
+html {
+  max-height: 900px;
+  max-width: 1200px;
+}

@@ -71,7 +71,6 @@ class DOMmanipulator {
 
   
   populateWeeklyData(repo, userId) {
-    debugger
     const calendar = document.querySelectorAll('.historic-data')
     const date = document.getElementById('week-select').value
     const week = repo.presentWeek(date, userId)
@@ -191,7 +190,7 @@ class DOMmanipulator {
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
-    this.displayCommunitySection(currentUserId, today)
+    this.displayCommunitySection(today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
@@ -338,53 +337,26 @@ class DOMmanipulator {
     return hydrationData.map(date => date.date)
   }
 
-  displayCommunitySection(id, date) {
-    console.log(currentUserId)
-    const user = userRepo.findUserById(currentUserId);
-    console.log(user)
-    const totalMiles = activityRepo.getUserTotalMiles(currentUserId);
-    const userMilesToday = activityRepo.getMilesFromStepsByDate(id, date);
-    const stepGoalStatus = activityRepo.accomplishedStepGoal(id, date);
-    const stepsToGo = activityRepo.remainingSteps(id, date);
-    const stepGoalDates = activityRepo.getDaysGoalExceeded(id);
-    const numStepsStreak = activityRepo.getStreak(id, 'numSteps');
-    const minutesActiveStreak = activityRepo.getStreak(id, 'minutesActive');
-    const flightsStreak = activityRepo.getStreak(id, 'flightsOfStairs');
-    const stairRecord = activityRepo.getStairRecord(id);
-    
-    // const stepWinner = userRepo.showcaseWinner(user, date);
-    // const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
-    
-
-
+  communitySectionMiles(date) {
+    const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, date, userRepo);
+    console.log(totalMiles, userMilesToday); 
+    const display = document.getElementById('miles');
     const milesHtml = `
-      <p class="message-miles">-----</p>
+      <p class="message-miles">Total Miles For Today:</p>
       <span class="number" id= "miles" >${userMilesToday}</span>
-      <p class="message-miles">-----</p>
-      your all time miles walked:
+      <p class="message-miles">Total All-Time Miles:</p>
       <span class="number" id= "miles-total">${totalMiles}</span>
-      <p class="message-miles">-----</p>`;
+      <p class="message-miles">WOW!</p>`;
+    display.innerHTML = milesHtml;
+  }
 
-    const stepsHtml = `
-      <span class="message" id="steps-left">${stepsToGo}</span>
-      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
-      <p class="message-step">Last three step streaks:</p>
-      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
-      <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
-      <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
-    `;
-
-
-    //this may need to become a winners section or may a top user showcase
-    const friendsHtml = `
-      <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform"></span>
-      <p class="message-comm">Friend Activity:</p>
-      <span class="message-friend" id="friend-activity"></span>
-      <p class="message-comm">Todays Winner:</p>
-      <span class="number" id=""></span>
-    `;
-
+  communitySectionStreak() {
+    const numStepsStreak = activityRepo.getStreak(currentUserId, 'numSteps');
+    const minutesActiveStreak = activityRepo.getStreak(currentUserId, 'minutesActive');
+    const flightsStreak = activityRepo.getStreak(currentUserId, 'flightsOfStairs');
+    const stairRecord = activityRepo.getStairRecord(currentUserId);
+    const display = document.getElementById('streaks');
     const streaksHtml = `
       <p class="message-comm">Minutes Active:</p>
       <span class="number" id="streak">${minutesActiveStreak.length}</span>
@@ -395,18 +367,46 @@ class DOMmanipulator {
       <p class="message-comm"Stair record:</p>
       <span class="number" id="">${stairRecord}</span>
     `;
+    display.innerHTML = streaksHtml;
+  }
 
-    const displayCards = [
-      {html: milesHtml, selector: "miles"},
-      {html: stepsHtml, selector: "steps"},
-      {html: friendsHtml, selector: "friends"},
-      {html: streaksHtml, selector: "streaks"}
-    ];
+  communitySectionSteps(date) {
+    console.log(date);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date, userRepo);
+    const stepsToGo = activityRepo.remainingSteps(currentUserId, date, userRepo);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
+    let display = document.getElementById('steps');
+    const stepsHtml = `
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      <p class="message-step">Last time goal hit:</p>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <p class="message-step>Keep it up!</p>
+    `;
+    display.innerHTML = stepsHtml;
+  }
 
-    displayCards.forEach(card => {
-      let select = document.getElementById(card.selector)
-      select.innerHTML = card.html;
-    })
+  communitySectionCompetitive(date) {
+    const user = userRepo.findUserById(currentUserId);
+    const stepWinner = userRepo.showcaseWinner(user, date);
+    const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+    const display = document.getElementById('friends');
+    const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform">${stepWinner}</span>
+      <p class="message-comm">Most Rested:</p>
+      <span class="message-friend" id="friend-activity">${bestSleeper}</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">TBD</span>
+    `;
+    display.innerHTML = friendsHtml;
+  }
+
+  displayCommunitySection() {
+    this.communitySectionMiles();
+    this.communitySectionStreak();
+    this.communitySectionSteps();
+    this.communitySectionCompetitive();
   }
 }
 
