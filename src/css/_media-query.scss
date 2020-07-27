@@ -1,53 +1,5 @@
-//MEDIA QUERY SETUP
-
-//MEDIA VARIABLES
-
-$phone-width: 320px;
-$tablet-width: 768px;
-$desktop-width: 1024px;
-
-//MIXIN MEDIA QUERY
-
-// @mixin phone {
-//   @media (min-width: #{}) and 
-//   (max-width: #{$tablet-width}) {
-//     @content;
-//   }
-// }
 
 
-@media (max-width: #{$tablet-width - 1px}) {
-  
-  body {
-    position: relative;
-    width: 100%;
-    
-
-  }
-
-  h1 {
-    font-size: .5em;
-  }
-
-  .sidebar-header-userImage {
-    visibility: hidden;
-  }
-
-  .sidebar-container {
-    width: 100%;
-    
-  }
-
-  .main {
-    display: block;
-  }
-
-  .card-container {
-    position: absolute;
-    
-  }
-
-}
 
 
 

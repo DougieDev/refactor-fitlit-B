@@ -1,8 +1,8 @@
 .sidebar-container {
-  height: 900px;
+  height: 150vh;
   position: relative;
   text-align: center;
-  width: 16%;
+  width: 18vw;
   
   @include sidebar-color;
 }
@@ -50,22 +50,16 @@
   text-align: center;
 }
 
-.friend {
-  font-size: 1em;
-
-  &-label  {
-  color: $white;
+.friend-label {
+  color: $black;
   font-size: 1.5rem;
   text-decoration: underline;
-  }
 }
-/* What is this doing? Come back to this later */
-// .card-vertical-list {
-//   font-size: 1em;
-//   font-style: italic;
-//   font-weight: lighter;
-//   padding-left: 0;
-// }
+
+.friend {
+  color: $white;
+  font-weight: 400;
+}
 
 .profile-link {
   color: $black;

@@ -1,6 +1,12 @@
 @include page-reset;
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
-  max-height: 900px;
-  max-width: 1200px;
+  height: 100%;
+  width: 100%;
 }

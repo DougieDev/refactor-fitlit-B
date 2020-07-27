@@ -7,8 +7,8 @@
 
 body {
   font-family: 'Open Sans';
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
 
   @include background;
 }
@@ -16,7 +16,6 @@ body {
 .main {
   display: flex;
   flex-direction: row;
-  height: 100%;
   position: absolute;
   width: 100%;
 }
@@ -36,7 +35,7 @@ h2 {
 
 .app-message {
   display: flex;
-  font-size: 2.5em;
+  font-size: 1.8em;
   justify-content: center;
   letter-spacing: 1.5px;
   line-height: 1.5;
@@ -54,24 +53,23 @@ h3 {
   width: 100%;
 }
 
+.page-info {
+  font-size: 1.5em;
+  margin: 2% 2% 0;
+}
+
 table, th, td {
  @include card-border;
  
-}
-
-.historic-data {
-  height: 10em;
 }
 
 table {
   width: 100%;
 }
 
-// .body-main-infoContainter {
-//   padding: 2%;
-//   display: flex;
-//   flex-direction: column;
-// }
+.historic-data {
+  height: 10em;
+}
 
 .calendar-button {
     margin-left: 1.3%;
@@ -96,21 +94,92 @@ table {
   @extend .historical-week;
 }
 
-.hidden {
-  display: none;
-}
-
-.page-info {
-  font-size: 1.5em;
-  margin-left: 2%;
-}
-
 .new-info-button{
   border-radius: 12px;
   font-size: 1em;
   height: 30px;
   margin-left: 2%;
   width: 15vw;
+}
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  
+  .main {
+    display: block;
+    postion: fixed;
+    max-width: 100%;
+  }
+
+  body {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  h1 {
+
+  }
+
+  .sidebar-container {
+    display: inline-block;
+    height: 28vh;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    @include sidebar-color;
+
+  }
+
+  .sidebar-header-userImage {
+    visibility: hidden;
+    position:absolute;
+  }
+
+  .app-message {
+    font-size: 1.2em; 
+    justify-content: center; 
+    line-height: 1.5; 
+    margin: 15% 5% 0 5%; 
+    position: absolute; 
+    text-transform: capitalize; 
+    width: 85%; 
+    animation: moveInRight 1.2s ease-out; 
+  }
+
+  .card-container {
+     width: 100%;
+     height: 100%;
+     margin-top: 20%;
+  }
+
+  .friend-label {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .friend {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .page-info {
+    font-size: 1em;
+    margin: 2% 2% 0;
+  }
+
+  .week-card {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+
 }
 
 
