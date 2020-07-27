@@ -30,13 +30,17 @@
   @include name-animation;
 }
 
+
 .sidebar-buttons {
   align-content: center;
-  display: inline-grid;
   height: 30px;
   margin-bottom: 10px;
   text-transform: uppercase;
-  width: 100%;
+  
+    &-container {
+    display: inline-grid;
+    width: 100%;
+    }
   }
 
 .sidebar-body-friendContainer {

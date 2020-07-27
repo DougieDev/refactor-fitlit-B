@@ -47,10 +47,16 @@ background-attachment: fixed;
 
 @mixin page-reset {
   * {
-    margin: 0;
-    list-style: none;
     box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
+}
+
+@mixin hide-elements {
+  visibility: hidden;
+  position: fixed;
 }
 
 //ANIMATION
