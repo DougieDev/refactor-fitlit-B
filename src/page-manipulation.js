@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Pikaday from 'pikaday';
+
 import {
   userRepo,
   hydrationRepo,
@@ -302,26 +302,6 @@ class DOMmanipulator {
     } else {
       return false
     }
-  }
-
-  addCalendar(id) {
-    const pikaday = new Pikaday({
-      field: document.getElementById('calendar-container'),
-      bound: false,
-      container: document.getElementById('calendar-container'),
-      disableDayFn: (date) => {
-        date = moment(date).format('YYYY/MM/DD')
-        const datesWithData = this.findEligibleDates(id)
-        if (!datesWithData.includes(date)) return date
-      },
-      onSelect: () => {
-        let calDate = pikaday.getMoment().format('YYYY/MM/DD');
-        this.goToDailyPage(calDate)
-        this.changeSystemMessage('Here are your stats form ' +
-        `${moment(calDate).format('MMMM Do YYYY')}`)
-      }
-    })
-
   }
 
   addUserDate(today) {

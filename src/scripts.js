@@ -5,6 +5,8 @@ import './images/arnie.jpg';
 
 import User from './User';
 import DOMmanipulator from './page-manipulation';
+import addCalendar from './calendar'
+
 import {
   userRepo, 
   hydrationRepo, 
@@ -74,7 +76,7 @@ const dataEventHandler = (dataSet) => {
       currentUserId, 
       today
     )
-    page.addCalendar(currentUserId)
+    addCalendar(currentUserId)
     page.addUserDate(today)
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {
@@ -160,4 +162,4 @@ const organizePost = (info) => {
 
 startApp();
 
-export {currentUser, today}
+export {currentUser, today, page}
