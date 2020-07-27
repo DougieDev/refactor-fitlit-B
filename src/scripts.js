@@ -12,9 +12,7 @@ import {
   sleepRepo, 
   currentUserId, 
 } from './globals';
-import { object } from 'chai-spies';
 
-console.log(currentUserId)
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
@@ -46,8 +44,8 @@ function buttonHandler(event) {
     page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
-  } else if (button.id.includes('contest-stats')) {
-    page.goToContestPage();
+  } else if (button.id.includes('community-stats')) {
+    page.goToContestPage(today);
   }
 }
 
@@ -76,6 +74,8 @@ const dataEventHandler = (dataSet) => {
       currentUserId, 
       today
     )
+    page.addCalendar(currentUserId)
+    page.addUserDate(today)
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
@@ -87,7 +87,7 @@ const dataEventHandler = (dataSet) => {
 }
 
 const startApp = () => {
-  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData')
+  catchAllData('userData', 'hydrationData', 'sleepData', 'activityData');
 }
 
 function catchAllData() {
@@ -102,8 +102,8 @@ const postAllData = (data) => {
 const postData = (data) => {
   fetch(`${apiHead}/${data.path}/${data.destination}`, data.postObject)
     .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(err => console.log('YOU done did BAD:', err));
+    .then(() => page.changeSystemMessage('Success!'))
+    .catch(err => page.changeSystemMessage(err));
 }
 
 
@@ -114,7 +114,7 @@ const catchData = (dataSet) => {
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
     .then(() => dataEventHandler(dataSet))
-    .catch(() => page.changeSystemMessage('Something went wrong' +
+    .catch(() => page.changeSystemMessage('Something went wrong ' +
     'please try again'))
 }
 

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import Pikaday from 'pikaday';
 import {
   userRepo,
   hydrationRepo,
@@ -10,6 +11,8 @@ import {
 class DOMmanipulator {
   constructor() {
     this.dateField = document.getElementById('new-date');
+    this.calendar = document.querySelector('#calendar-container')
+    this.comingSoon = document.querySelector('#friends-calendar')
   }
   
   populateWeeklyDates(repo, id) {
@@ -68,8 +71,9 @@ class DOMmanipulator {
 
   
   populateWeeklyData(repo, userId) {
+    debugger
     const calendar = document.querySelectorAll('.historic-data')
-    const date = document.querySelector('select').value
+    const date = document.getElementById('week-select').value
     const week = repo.presentWeek(date, userId)
     for (var i = 0; i < 8; i++) {
       this.populateDailyData(calendar[i].id, repo, userId, week[i]);
@@ -111,11 +115,12 @@ class DOMmanipulator {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<li class="friend" id="${friend.id}">${friend.name}</li>`
+          `<p class="friend" id="${friend.id}">${friend.name}</p>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
+   
   }
   
   populateUserCard(user) {
@@ -140,7 +145,6 @@ class DOMmanipulator {
     }
   }
 
-
   hideElements() {
     const args = Array.from(arguments)
     args.forEach(element => {
@@ -156,36 +160,44 @@ class DOMmanipulator {
   }
 
   goToUserPage(user) {
+    this.comingSoon.classList.add('hidden')
+    this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
     this.populateUserCard(user);
     this.populateInfoCard(user);
-    this.clearInputForms();
     this.changeSystemMessage('Looking in the mirror never felt so good')
   }
 
   goToDailyPage(today) {
+    this.comingSoon.classList.add('hidden')
+    this.calendar.classList.remove('hidden')
     this.unHideElements('#daily-cards', '#new-info')
     this.hideElements('#user-cards', '#community-cards')
     this.populateDailyData(
-    'hydration-today', 
-    hydrationRepo, 
-    currentUserId, 
-    today)
+      'hydration-today', 
+      hydrationRepo, 
+      currentUserId, 
+      today
+    )
     this.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
     this.populateDailyData('activity-today', activityRepo, currentUserId, today)
     this.changeSystemMessage('Here are your stats for today')
     this.clearInputForms();
   }
 
-  goToContestPage() {
+  goToContestPage(today) {
+    this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
     this.clearInputForms();
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
+    this.displayCommunitySection(currentUserId, today)
     this.changeSystemMessage('Here`s how the community`s doing')
   }
 
   seeFriendsStats(event, today) {
+    this.calendar.classList.add('hidden')
+    this.comingSoon.classList.remove('hidden')
     let userId = parseInt(event.target.id);
     this.unHideElements('#daily-cards')
     this.clearInputForms();
@@ -197,6 +209,7 @@ class DOMmanipulator {
   }
 
   insertForm(event) {
+    this.calendar.classList.add('hidden')
     const inputElements = document.querySelectorAll('.number');
     for (var i = 0; i < inputElements.length; i++) {
       if (inputElements[i].classList.contains('number')
@@ -217,7 +230,7 @@ class DOMmanipulator {
         numOunces: '',
         date: newDate
       },
-      sleep:{
+      sleep: {
         userID: id,
         hoursSlept: '',
         sleepQuality: '',
@@ -234,6 +247,7 @@ class DOMmanipulator {
   }
 
   pullInfoFromPage(id) {
+    
     if (this.checkValueFields() === false) {
       this.changeSystemMessage('Please fill in all of the information')
       return `All required values are not present`
@@ -268,12 +282,14 @@ class DOMmanipulator {
     }
     this.dateField.classList.add('hidden')
     const submit = document.getElementById('submit')
-    submit.id = `new-fitness-entry`;
-    event.target.innerText = `add new info`;
+    if (inputs === null) {
+      submit.innerText = `add new info`;
+      submit.id = `new-fitness-entry`;
+    }
   }
 
+
   checkValueFields() {
-    // debugger
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
     for (var i = 0; i < inputNodes.length; i++) {
@@ -289,8 +305,110 @@ class DOMmanipulator {
     }
   }
 
+  addCalendar(id) {
+    const pikaday = new Pikaday({
+      field: document.getElementById('calendar-container'),
+      bound: false,
+      container: document.getElementById('calendar-container'),
+      disableDayFn: (date) => {
+        date = moment(date).format('YYYY/MM/DD')
+        const datesWithData = this.findEligibleDates(id)
+        if (!datesWithData.includes(date)) return date
+      },
+      onSelect: () => {
+        let calDate = pikaday.getMoment().format('YYYY/MM/DD');
+        this.goToDailyPage(calDate)
+        this.changeSystemMessage('Here are your stats form ' +
+        `${moment(calDate).format('MMMM Do YYYY')}`)
+      }
+    })
+
+  }
+
+  addUserDate(today) {
+    const currentDate = document.getElementById('user-date')
+    currentDate.insertAdjacentHTML(
+      'afterbegin', `Your most recent entry is from <br />
+      ${moment(today).format('MMMM Do YYYY')}`
+    )
+  }
+
+  findEligibleDates(id) {
+    let hydrationData = hydrationRepo.sortUserDataByDate(id)
+    return hydrationData.map(date => date.date)
+  }
+
+  displayCommunitySection(id, date) {
+    console.log(currentUserId)
+    const user = userRepo.findUserById(currentUserId);
+    console.log(user)
+    const totalMiles = activityRepo.getUserTotalMiles(currentUserId);
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(id, date);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(id, date);
+    const stepsToGo = activityRepo.remainingSteps(id, date);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(id);
+    const numStepsStreak = activityRepo.getStreak(id, 'numSteps');
+    const minutesActiveStreak = activityRepo.getStreak(id, 'minutesActive');
+    const flightsStreak = activityRepo.getStreak(id, 'flightsOfStairs');
+    const stairRecord = activityRepo.getStairRecord(id);
+    
+    // const stepWinner = userRepo.showcaseWinner(user, date);
+    // const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+    
 
 
+    const milesHtml = `
+      <p class="message-miles">-----</p>
+      <span class="number" id= "miles" >${userMilesToday}</span>
+      <p class="message-miles">-----</p>
+      your all time miles walked:
+      <span class="number" id= "miles-total">${totalMiles}</span>
+      <p class="message-miles">-----</p>`;
+
+    const stepsHtml = `
+      <span class="message" id="steps-left">${stepsToGo}</span>
+      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
+      <p class="message-step">Last three step streaks:</p>
+      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[1]}</a>
+      <a class="message step-list" id="best-steps">${stepGoalDates[2]}</a>
+    `;
+
+
+    //this may need to become a winners section or may a top user showcase
+    const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform"></span>
+      <p class="message-comm">Friend Activity:</p>
+      <span class="message-friend" id="friend-activity"></span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id=""></span>
+    `;
+
+    const streaksHtml = `
+      <p class="message-comm">Minutes Active:</p>
+      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <p class="message-comm">Step Goal Total:</p>
+      <span class="number" id="">${numStepsStreak.length}</span>
+      <p class="message-comm">Stair Goal Total:</p>
+      <span class="number" id="">${flightsStreak.length}</span>
+      <p class="message-comm"Stair record:</p>
+      <span class="number" id="">${stairRecord}</span>
+    `;
+
+    const displayCards = [
+      {html: milesHtml, selector: "miles"},
+      {html: stepsHtml, selector: "steps"},
+      {html: friendsHtml, selector: "friends"},
+      {html: streaksHtml, selector: "streaks"}
+    ];
+
+    displayCards.forEach(card => {
+      let select = document.getElementById(card.selector)
+      select.innerHTML = card.html;
+    })
+  }
 }
+
 
 export default DOMmanipulator
