@@ -83,8 +83,8 @@
   @include card-animation-top(1.2s);
 }
 
-.pika-table {
-  ;
+.pika-lendar {
+  font-size: .5em;
 }
 
 .pika-button{
@@ -105,9 +105,16 @@
 As of right now, I can't see any other use for it.
 Likely needs its name changed.*/
 
-// #new-info {
-//   width: 100%
-// }
+.new-info {
+width: 100%;
+
+
+  &-button {
+    
+  }
+}
+
+
 
 
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Activity Tracker</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet"/>
+    <meta name="Description" content="A lovely website to help you track your daily step goals, compete with friends and get a streak going">
   </head>
   <body>
     <main>
@@ -17,13 +18,13 @@
           <button id="user-stats" class="sidebar-buttons">User Profile</button>
           <button id="community-stats" class="sidebar-buttons">Community Data</button>
           </section>
-          <h2>Friends</h2>
+          <h2 class="friend-label">Friends</h2>
           <div class="friends-list" id="friends-list"></div>
         </nav>
         <section class="body-main-infoContainter" tabindex="0">
-          <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
+          <h2 id="app-message" class="app-message" tabindex="0">Welcome to FitLit!</h2>
           <section class="card-container" id="daily-cards" tabindex="0">
-            <h3 tabindex="0">Daily Fitness</h3>
+            <h3 class="page-info" tabindex="0">Daily Fitness</h3>
             <section class="card hydration-card" id="hydration-today" tabindex="0">
                 You drank
                 <p class="number" id="numOunces">0<span>oz.</span></p>
