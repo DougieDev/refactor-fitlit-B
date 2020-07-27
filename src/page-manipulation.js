@@ -340,18 +340,18 @@ class DOMmanipulator {
   communitySectionMiles(date) {
     const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
     const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, date, userRepo);
+    console.log(totalMiles, userMilesToday); 
     const display = document.getElementById('miles');
     const milesHtml = `
       <p class="message-miles">Total Miles For Today:</p>
       <span class="number" id= "miles" >${userMilesToday}</span>
       <p class="message-miles">Total All-Time Miles:</p>
-      your all time miles walked:
       <span class="number" id= "miles-total">${totalMiles}</span>
       <p class="message-miles">WOW!</p>`;
     display.innerHTML = milesHtml;
   }
 
-  communitySectionStreak(date) {
+  communitySectionStreak() {
     const numStepsStreak = activityRepo.getStreak(currentUserId, 'numSteps');
     const minutesActiveStreak = activityRepo.getStreak(currentUserId, 'minutesActive');
     const flightsStreak = activityRepo.getStreak(currentUserId, 'flightsOfStairs');
@@ -385,45 +385,27 @@ class DOMmanipulator {
     display.innerHTML = stepsHtml;
   }
 
+  communitySectionCompetitive(date) {
+    const user = userRepo.findUserById(currentUserId);
+    const stepWinner = userRepo.showcaseWinner(user, date);
+    const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+    const display = document.getElementById('friends');
+    const friendsHtml = `
+      <p class="message-comm">Top Performer:</p>
+      <span class="message-friend" id="friend-perform">${stepWinner}</span>
+      <p class="message-comm">Most Rested:</p>
+      <span class="message-friend" id="friend-activity">${bestSleeper}</span>
+      <p class="message-comm">Todays Winner:</p>
+      <span class="number" id="">TBD</span>
+    `;
+    display.innerHTML = friendsHtml;
+  }
 
-  displayCommunitySection(date) {
-    // const user = userRepo.findUserById(currentUserId);
-    
-    
-    
-    // const stepWinner = users.showcaseWinner(user, date);
-    // const bestSleeper = users.determineSleepWinnerForWeek(date);
-    
-
-
-    
-
-    
-
-
-    // //this may need to become a winners section or may a top user showcase
-    // const friendsHtml = `
-    //   <p class="message-comm">Top Performer:</p>
-    //   <span class="message-friend" id="friend-perform">${stepWinner}</span>
-    //   <p class="message-comm">Most Rested:</p>
-    //   <span class="message-friend" id="friend-activity">${bestSleeper}</span>
-    //   <p class="message-comm">Todays Winner:</p>
-    //   <span class="number" id="">TBD</span>
-    // `;
-
-    
-
-    // const displayCards = [
-    //   {html: milesHtml, selector: "miles"},
-    //   {html: stepsHtml, selector: "steps"},
-    //   {html: friendsHtml, selector: "friends"},
-    //   {html: streaksHtml, selector: "streaks"}
-    // ];
-
+  displayCommunitySection() {
     this.communitySectionMiles();
     this.communitySectionStreak();
     this.communitySectionSteps();
-    
+    this.communitySectionCompetitive();
   }
 }
 

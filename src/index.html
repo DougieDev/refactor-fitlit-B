@@ -3,140 +3,144 @@
   <head>
     <meta charset="UTF-8">
     <title>Activity Tracker</title>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet"/>
   </head>
   <body>
-    <section class="main" tabindex="0">
-      <section class="sidebar-container" id="user-sidebar" tabindex="0">
-        <h1 id="header-text" tabindex="0">Activity Tracker</h1>
-        <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
-        <p id="steps-goal-message"></p> 
-        <button id="daily-stats">Daily Fitness</button>
-        <button id="user-stats">User Profile</button>
-        <button id="community-stats">Community Data</button>
-        <h2>Friends</h2>
-        <div class="friends-list" id="friends-list"></div>
-      </section>
-      <section class="body-main-infoContainter" tabindex="0">
-        <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
-        <section class="card-container" id="daily-cards" tabindex="0">
-          <h3 tabindex="0">Daily Fitness</h3>
-          <section class="card hydration-card" id="hydration-today" tabindex="0">
-              You drank
-              <span class="number" id="numOunces">0</span>
-              oz today. <br />
-              Your average water intake is
-              <span class="number" id="numOunces-average">0</span>
+    <main>
+      <section class="main" tabindex="0">
+        <nav class="sidebar-container" id="user-sidebar" tabindex="0">
+          <h1 id="header-text" tabindex="0">Activity Tracker</h1>
+          <img src="./images/arnie.jpg" class="sidebar-header-userImage" alt= "Arnold Schwarzenegger flexing" tabindex="0"></img>
+          <p id="steps-goal-message"></p>
+          <section class="sidebar-buttons-container">
+          <button id="daily-stats" class="sidebar-buttons">Daily Fitness</button>
+          <button id="user-stats" class="sidebar-buttons">User Profile</button>
+          <button id="community-stats" class="sidebar-buttons">Community Data</button>
           </section>
-          <section class="card activity-card" id="activity-today" tabindex="0">
-              Your step count today: <br />
-              <span class="number" id="numSteps">0</span><br />
-              Your stair count today: <br />
-              <span class="number" id="flightsOfStairs">0</span> <br />
-              Your minutes active today: <br />
-              <span class="number" id="minutesActive">0</span>  
-          </section>
-          <section class="card sleep-card" id="sleep-today" tabindex="0">
-              You slept
-              <span class="number" id="hoursSlept">0</span>
-              hours today.<br />
-              Your sleep quality was
-              <span class="number" id="sleepQuality">0</span>
-              out of 5.
-          </section>
-          <section class="card" id="calendar" tabindex="0">
-            <h4 id="user-date"></h4>
-            <span id="calendar-container">
+          <h2>Friends</h2>
+          <div class="friends-list" id="friends-list"></div>
+        </nav>
+        <section class="body-main-infoContainter" tabindex="0">
+          <h2 id="app-message" tabindex="0">Welcome to FitLit!</h2>
+          <section class="card-container" id="daily-cards" tabindex="0">
+            <h3 tabindex="0">Daily Fitness</h3>
+            <section class="card hydration-card" id="hydration-today" tabindex="0">
+                You drank
+                <p class="number" id="numOunces">0<span>oz.</span></p>
+                oz today. <br />
+                Your average water intake is
+                <span class="number" id="numOunces-average">0</span>
+            </section>
+            <section class="card activity-card" id="activity-today" tabindex="0">
+                Your step count today: <br />
+                <span class="number" id="numSteps">0</span><br />
+                Your stair count today: <br />
+                <span class="number" id="flightsOfStairs">0</span> <br />
+                Your minutes active today: <br />
+                <span class="number" id="minutesActive">0</span>  
+            </section>
+            <section class="card sleep-card" id="sleep-today" tabindex="0">
+                You slept
+                <span class="number" id="hoursSlept">0</span>
+                hours today.<br />
+                Your sleep quality was
+                <span class="number" id="sleepQuality">0</span>
+                out of 5.
+            </section>
+            <section class="card calendar-card" id="calendar" tabindex="0">
+              <h4 id="user-date"></h4>
+              <span id="calendar-container">
+              </span>
+              <span class="hidden" id="friends-calendar">Friend's calendar coming soon!</span>
+              <span class="hidden" id="new-date">Date:<input id="new-date-field" /></span>
+            </section>
+            <span id="new-info" class="new-info">
+              <button id="new-fitness-entry" class="new-info-button">add new info</button>
             </span>
-            <span class="hidden" id="friends-calendar">Friend's calendar coming soon!</span>
-            <span class="hidden" id="new-date">Date:<input id="new-date-field" /></span>
           </section>
-          <span id="new-info">
-            <button id="new-fitness-entry">add new info</button>
-          </span>
-        </section>
-        <section class="card-container hidden" id="user-cards" tabindex="0">
-          <h2>User / Account</h2>
-          <section class="card" id="training-stats" tabindex="0">
-            Training Statistics
-            <button id="update-goals">Update Info</button>
-            Stride Length: 
-            <span class="number" id="strideLength"></span>
-            Daily Step Goal: 
-            <span class="number" id="dailyStepGoal"></span>
-            Community Average Step Goal: 
-            <span class="number" id="dailyStepGoal-average"></span>
-          </section>
-          <section class="card" id="account-info" tabindex="0">
-            Account Info
-            <button id="update-info">Update Info</button>
-            Address: 
-            <span class="number" id="address"></span>
-            Email Address: 
-            <span class="number" id="email"></span>
-          </section>
-          <section class="week-card" id="user-trends" tabindex="0">
-            <label>
-              Use to select the week
-            </label>
-              <select name="week" id="week-select">
-                <option value='blank'>
-                  --
-                 </option>
-             </select>
-             <section class="calendar-container" tabindex="0">
-               <nav class="weekly-nav" id="weekly-data-options">
-                 <button class="hidden" id="weekly-hydration">Hydration</button>
-                 <button class="hidden" id="weekly-activity">Activity</button>
-                 <button class="hidden" id="weekly-sleep">Sleep</button>
-               </nav>
-               <table>
-                 <tr>
-                   <th id="mon-date">Monday</th>
-                   <th id="tues-date">Tuesday</th>
-                   <th id="weds-date">Wednesday</th>
-                   <th id="thurs-date">Thursday</th>
-                   <th id="fri-date">Friday</th>
-                   <th id="sat-date">Saturday</th>
-                   <th id="sun-date">Sunday</th>
-                  </tr>
+          <section class="card-container hidden" id="user-cards" tabindex="0">
+            <h2>User / Account</h2>
+            <section class="card info-card" id="training-stats" tabindex="0">
+              Training Statistics
+              <button id="update-goals">Update Info</button>
+              Stride Length: 
+              <span class="number" id="strideLength"></span>
+              Daily Step Goal: 
+              <span class="number" id="dailyStepGoal"></span>
+              Community Average Step Goal: 
+              <span class="number" id="dailyStepGoal-average"></span>
+            </section>
+            <section class="card info-card" id="account-info" tabindex="0">
+              Account Info
+              <button id="update-info" class="update-info">Update Info</button>
+              Address: 
+              <span class="number info-text" id="address"></span>
+              Email Address: 
+              <span class="number info-text" id="email"></span>
+            </section>
+            <section class="week-card" id="user-trends" tabindex="0">
+              <label>
+                Use to select the week
+              </label>
+                <select name="week" id="week-select">
+                  <option value='blank'>
+                    --
+                  </option>
+              </select>
+              <section class="calendar-container" tabindex="0">
+                <nav class="weekly-nav" id="weekly-data-options">
+                  <button class="hidden calendar-button" id="weekly-hydration">Hydration</button>
+                  <button class="hidden calendar-button" id="weekly-activity">Activity</button>
+                  <button class="hidden calendar-button" id="weekly-sleep">Sleep</button>
+                </nav>
+                <table>
                   <tr>
-                    <th class="historic-data" id="monday-data"></th>
-                    <th class="historic-data" id="tuesday-data"></th>
-                    <th class="historic-data" id="wednesday-data"></th>
-                    <th class="historic-data" id="thursday-data"></th>
-                    <th class="historic-data" id="friday-data"></th>
-                    <th class="historic-data" id="saturday-data"></th>
-                    <th class="historic-data" id="sunday-data"></th>
-                  </tr>
-                </table>
-              </section>
+                    <th id="mon-date">Monday</th>
+                    <th id="tues-date">Tuesday</th>
+                    <th id="weds-date">Wednesday</th>
+                    <th id="thurs-date">Thursday</th>
+                    <th id="fri-date">Friday</th>
+                    <th id="sat-date">Saturday</th>
+                    <th id="sun-date">Sunday</th>
+                    </tr>
+                    <tr>
+                      <th class="historic-data" id="monday-data"></th>
+                      <th class="historic-data" id="tuesday-data"></th>
+                      <th class="historic-data" id="wednesday-data"></th>
+                      <th class="historic-data" id="thursday-data"></th>
+                      <th class="historic-data" id="friday-data"></th>
+                      <th class="historic-data" id="saturday-data"></th>
+                      <th class="historic-data" id="sunday-data"></th>
+                    </tr>
+                  </table>
+                </section>
+            </section>
           </section>
-        </section>
-        <section class="card-container hidden" id="community-cards" tabindex="0">
-          <section class="card card-streak" id="streaks">
-            <!-- <span class="number" id="streak-numSteps"></span>
-            <span class="number" id="streak-flights"></span>
-            <span class="number" id="streak-minutes"></span>
-            <span class="number" id="streak-stair"></span> -->
-          </section>
-          <section class="card card-steps" id="steps">
-            <span class="message-steps" id="steps-remain"></span>
-            <span class="message-steps" id="steps-status"></span>
-            <span class="number" id="steps-goal"></span>
-            <span class="number" id="steps-date"></span>
-          </section>
-          <section class="card card-friends" id="friends">
-            <span class="number" id="friends-winner"></span>
-            <span class="number" id="friends-compare"></span>
-            <span class="number" id="friends-minutes"></span>
-          </section>
-          <section class="card card-miles" id="miles">
-            <span class="number" id="miles-today"></span>
-            <span class="number" id="miles-total"></span>
+          <section class="card-container hidden" id="community-cards" tabindex="0">
+            <section class="card card-streak" id="streaks">
+              <!-- <span class="number" id="streak-numSteps"></span>
+              <span class="number" id="streak-flights"></span>
+              <span class="number" id="streak-minutes"></span>
+              <span class="number" id="streak-stair"></span> -->
+            </section>
+            <section class="card card-steps" id="steps">
+              <span class="message-steps" id="steps-remain"></span>
+              <span class="message-steps" id="steps-status"></span>
+              <span class="number" id="steps-goal"></span>
+              <span class="number" id="steps-date"></span>
+            </section>
+            <section class="card card-friends" id="friends">
+              <span class="number" id="friends-winner"></span>
+              <span class="number" id="friends-compare"></span>
+              <span class="number" id="friends-minutes"></span>
+            </section>
+            <section class="card card-miles" id="miles">
+              <span class="number" id="miles-today"></span>
+              <span class="number" id="miles-total"></span>
+            </section>
           </section>
         </section>
       </section>
-    </section>
+    </main>
   </body>
   </html>

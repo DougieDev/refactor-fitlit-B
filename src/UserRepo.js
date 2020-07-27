@@ -121,13 +121,6 @@ class UserRepo extends Repo  {
     })
   }
 
-  getFriendsAverageStepsForWeek(user, date, userRepo) {
-    let friendsActivity = this.getFriendsActivity(user, userRepo);
-    let timeline = userRepo.chooseWeekDataForAllUsers(friendsActivity, date);
-    return userRepo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
-  }
-
-
 
   showcaseWinner(user, date) {
     let winner = this.showChallengeListAndWinner(user, date).shift();

@@ -6,9 +6,13 @@
 @import 'card-design';
 @import 'reset';
 
+
+
 body {
   font-family: 'Open Sans';
   background-color: $background-grey;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -48,6 +52,7 @@ h3 {
 
 table, th, td {
  @include card-border;
+ 
 }
 
 .historic-data {
@@ -60,12 +65,13 @@ table {
 
 .body-main-infoContainter {
   padding: 2%;
-  width: 100%;
-  height: 100%;
-  @include card-border;
-  margin: 0;
   display: flex;
   flex-direction: column;
+}
+
+.calendar-button {
+    width: 31%;
+    margin-left: 1.3%;
 }
 
 .number {
