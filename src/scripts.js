@@ -160,4 +160,23 @@ const organizePost = (info) => {
 
 startApp();
 
-export {currentUser, today}
+export {
+  apiHead,
+  page,
+  currentUser,
+  today,
+  sideBar,
+  selectBar,
+  buttons,
+  buttonHandler,
+  sidebarHandler,
+  dataEventHandler,
+  startApp,
+  catchAllData,
+  postAllData,
+  postData,
+  catchData,
+  findClassInfo,
+  makePostObject,
+  organizePost 
+}

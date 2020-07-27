@@ -157,7 +157,7 @@ describe('Repo', () => {
     sleepRepo.storeData(rawSleep);
   });
 
-  it('should be an instance of Repo', () => {
+  it.only('should be an instance of Repo', () => {
     expect(repo).to.be.an.instanceOf(Repo)
   });  
 

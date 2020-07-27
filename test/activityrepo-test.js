@@ -223,7 +223,7 @@ describe('Activity', function() {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
   });
 
-  it.only('should return true/false if the given user met their step goal on a given day', function() {
+  it('should return true/false if the given user met their step goal on a given day', function() {
     expect(activity.accomplishedStepGoal(4, "2019/06/15", userRepo)).to.eql(`You got this Patrick the Starfish, just a few more steps`);
   });
 

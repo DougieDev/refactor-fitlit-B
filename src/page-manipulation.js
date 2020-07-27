@@ -71,7 +71,6 @@ class DOMmanipulator {
 
   
   populateWeeklyData(repo, userId) {
-    debugger
     const calendar = document.querySelectorAll('.historic-data')
     const date = document.getElementById('week-select').value
     const week = repo.presentWeek(date, userId)
@@ -322,7 +321,6 @@ class DOMmanipulator {
         `${moment(calDate).format('MMMM Do YYYY')}`)
       }
     })
-
   }
 
   addUserDate(today) {
