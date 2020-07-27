@@ -8,20 +8,8 @@ class UserRepo extends Repo  {
     
   }
 
-  findCurrentUser() {
-    let index = this.getRandomNumber()
-    let user = this.data.find(user => user.id === index)
-    this.currentUser = new User(user)
-  }
-
   findUserById(id) {
-    return this.data.find((dataPoint) => {
-      // console.log(typeof number)
-      // if (id != typeof 'number') {
-      //   console.log('DAS WRONG, BRUV!')
-      // } else {
-        return dataPoint.id === id;
-      });
+    return this.data.find(dataPoint => dataPoint.id === id)
     }
 
   rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod) {
@@ -36,7 +24,6 @@ class UserRepo extends Repo  {
       }, 0) / sortedObjectKeys[b].length)
     });
   }
-
   
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
@@ -51,16 +38,7 @@ class UserRepo extends Repo  {
       }
       return rankedUser;
     });
-
-/* BECAUSE OF THE findCurrentUser() METHOD, THIS HAD TO BE REFACTORED
-SINCE THE RANDOM NUMBER WAS SOMETIMES THE SAME AS THE INDEX AND SOMETIMES NOT.
-THIS WAS RESULTING IN THE TEST PASSING SOMETIMES AND FAILING OTHER TIMES.*/
-  getRandomNumber() {
-    let randomNum = Math.floor(Math.random() * (3 - 1) + 1)
-    return randomNum
-
   }
-  
 
   showChallengeListAndWinner(user, date) {
     let rankedList = user.getFriendsAverageStepsForWeek(date, this.data);
