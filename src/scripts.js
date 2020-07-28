@@ -4,8 +4,7 @@ import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
 import User from './User';
-import DOMmanipulator from './page-manipulation';
-import Time from './Time'
+import PageController from './PageController';
 
 import {
   userRepo, 
@@ -17,7 +16,7 @@ import {
 } from './globals';
 
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
-const page = new DOMmanipulator();
+const page = new PageController();
 let currentUser;
 let today; 
 
@@ -164,3 +163,20 @@ const organizePost = (info) => {
 startApp();
 
 export {currentUser, today, page}
+export {
+  apiHead,
+  sideBar,
+  selectBar,
+  buttons,
+  buttonHandler,
+  sidebarHandler,
+  dataEventHandler,
+  startApp,
+  catchAllData,
+  postAllData,
+  postData,
+  catchData,
+  findClassInfo,
+  makePostObject,
+  organizePost
+}

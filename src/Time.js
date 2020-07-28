@@ -2,8 +2,6 @@ import moment from 'moment';
 import Pikaday from 'pikaday';
 import Repo from './Repo.js'
 import {page} from './scripts.js';
-import FileLoader from 'file-loader';
-import FileLoader from 'file-loader';
 
 // We acknowledge this class probably isn't best practice (addCalendar originally)
 // lived in DOMmanipulation and findWeeklyStartDates lived in Repo. They've been 

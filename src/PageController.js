@@ -9,7 +9,8 @@ import {
   time
 } from './globals';
 
-class DOMmanipulator {
+class PageController {
+  
   constructor() {
     this.dateField = document.getElementById('new-date');
     this.calendar = document.querySelector('#calendar-container')
@@ -392,4 +393,4 @@ class DOMmanipulator {
 }
 
 
-export default DOMmanipulator
+export default PageController
