@@ -188,7 +188,7 @@ class DOMmanipulator {
   goToContestPage(today) {
     this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
-    this.clearInputForms()
+    // this.clearInputForms()
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
     this.displayCommunitySection(today)
     this.changeSystemMessage('Here`s how the community`s doing')
@@ -386,26 +386,25 @@ class DOMmanipulator {
   }
 
   communitySectionCompetitive(today) {
-    // const user = userRepo.findUserById(currentUserId);
-    // const stepWinner = userRepo.showcaseWinner(user, today);
+    const stepWinner = userRepo.getTopPerformer(today, "numSteps", activityRepo);
     // const bestSleeper = userRepo.determineSleepWinnerForWeek(today);
     const display = document.getElementById('friends');
     const friendsHtml = `
       <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform"></span>
-      <p class="message-comm">Most Rested:</p>
-      <span class="message-friend" id="friend-activity"></span>
-      <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">TBD</span>
+      <span class="message-friend" id="friend-perform">${stepWinner.name}</span>
+      <p class="message-comm">Steps Today:</p>
+      <span class="message-friend" id="friend-activity">${stepWinner.numSteps}</span>
+      <p class="message-comm">Active Minutes:</p>
+      <span class="number" id="">${stepWinner.minutesActive}</span>
     `;
     display.innerHTML = friendsHtml;
   }
 
-  displayCommunitySection() {
-    this.communitySectionMiles();
+  displayCommunitySection(today) {
+    this.communitySectionMiles(today);
     this.communitySectionStreak();
-    this.communitySectionSteps();
-    this.communitySectionCompetitive();
+    this.communitySectionSteps(today);
+    this.communitySectionCompetitive(today);
   }
 }
 
