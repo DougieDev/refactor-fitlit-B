@@ -1,4 +1,5 @@
 class User {
+  
   constructor(userDetails) {
     this.id = userDetails.id;
     this.name = userDetails.name;
@@ -8,6 +9,7 @@ class User {
     this.dailyStepGoal = userDetails.dailyStepGoal;
     this.friends = userDetails.friends;
   }
+
   getFirstName() {
     return this.name.split(' ', 1).join();
   }
@@ -24,19 +26,12 @@ class User {
     })
   }
 
-
   getFriendsActivity() {
     return this.friends.reduce((friendsActivities, friend) => {
       friendsActivities = friendsActivities.concat(activityRepo.getAllDataById(friend))
       return friendsActivities
     }, [])
   }
-
-//   getFriendsAverageForWeek(date, repo) {
-//     let friendsActivity = this.getFriendsActivity();
-//     let timeline = this.getAllDataByWeek(friendsActivity, date);
-//     return repo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
-//   }
 }
 
 export default User;

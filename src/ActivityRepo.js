@@ -20,13 +20,15 @@ class ActivityRepo extends Repo {
     return parseFloat(((miles * user.strideLength) / 5280).toFixed(1));
   }
 
-  
-
   accomplishedStepGoal(id, date, users) {
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
-    return (userActivityByDate.numSteps > user.dailyStepGoal) ? `Keep it up ${user.name}, you crushed your goal` : `You got this ${user.name}, just a few more steps`;
-  };
+    if (userActivityByDate.numSteps > user.dailyStepGoal) {
+      return `Keep it up ${user.name}, you crushed your goal`
+    } else {
+      return `You got this ${user.name}, just a few more steps`;
+    }
+  }
 
   remainingSteps(id, date, users) {
     let completeMessage = 'Step goal, crushed!, Keep it up!';
@@ -53,7 +55,8 @@ class ActivityRepo extends Repo {
     let sortedUserArray = (this.sortUserDataByDate(id)).reverse();
     let streaks = sortedUserArray.filter((activity, index) => {
       if (index >= 2) {
-        return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType] && sortedUserArray[index - 1][activityType] < sortedUserArray[index][activityType])
+        return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType] 
+        && sortedUserArray[index - 1][activityType] < sortedUserArray[index][activityType])
       }
     });
     return streaks.map(streak => {
@@ -67,7 +70,7 @@ class ActivityRepo extends Repo {
       .reduce((record, user) => {
         return (user.flightsOfStairs > record) ? user.flightsOfStairs : record
       }, 0);
-    }
   }
+}
 
 export default ActivityRepo;

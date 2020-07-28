@@ -5,7 +5,7 @@
   font-family: sans-serif;
   font-size: 1.5em;
   min-width: 250px;
-  margin: 2.5% 2.5%;
+  margin: 1.5% 2.5%;
   padding: 1em;
   justify-content: space-between;
   text-align: center;
@@ -26,21 +26,29 @@
 
   &-streak {
     background-color: $teal;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-top(1.2s);
   }
 
   &-steps {
     background-color: $yellow;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-left(1.2s);
   }
 
   &-friends {
     background-color: $pink;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-right(1.2s);
   }
 
   &-miles {
     background-color: $white;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-bottom(1.2s);
   }
 }
@@ -60,21 +68,15 @@
 }
 
 #weekly-sleep {
-  background-color: $yellow;
+  background-color: #DFE166;
 }
 
 .info-card > .number {
   font-size: 18px;
 }
 
-.week-card {
-  display: flex;
-  flex-direction: column;
-  background-color: $white;
-  @include card-border-radius;
-  height: auto;
-  width: 600px;
-  margin: 0 2.5% 2.5%;
+.historic-data > .number {
+  font-size: 1em;
 }
 
 .hydration-card {
@@ -112,8 +114,9 @@
   flex-direction: column;
   height: auto;
   margin: 0 2.5% 2.5%;
-  width: 600px;
-  
+  width: 71%;
+  overflow-y: scroll;
+
   @include card-border-radius;
   @include card-animation-bottom(1.5s);
 }

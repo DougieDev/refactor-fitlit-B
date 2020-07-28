@@ -33,12 +33,6 @@ describe('Page controller', () => {
   let hydrationRepo;
   let activityRepo;
 
-  let event = {
-    target: {
-      id: 'hydration'
-    }
-  }
-
   beforeEach(() => {
     global.document = {}
     chai.spy.on(document, ['querySelector', 'querySelectorAll'], () => {
@@ -47,9 +41,11 @@ describe('Page controller', () => {
     chai.spy.on(document, ['getElementById'], () => {
       return {
         value: '07/27/2020',
-        children: {
-          classList: () => {}
-        }
+        children: [{
+          id: 'hoursSlept',
+          classList: {contains: () => {}
+          }
+        }]
       }  
     })
     page = new PageController();
@@ -59,7 +55,14 @@ describe('Page controller', () => {
       'createWeeklyLayoutHtml',
       'insertWeekLayout',
       'createWeeklyLayout',
-      'displayWeeklyData'
+      'displayWeeklyData',
+
+
+      'communitySectionMiles',
+      'communitySectionStreak',
+      'communitySectionSteps',
+      'communitySectionCompetitive',
+      'displayCommunitySection'
     ], () => {})
 
     user1 = {
@@ -232,21 +235,4 @@ describe('Page controller', () => {
     expect(result.weeklyActivity)
     expect(result['weekly-sleep'])
   }) 
-
-  // it('should populate 7 days of the week', () => {
-  //   page.populateWeeklyData(hydrationRepo, 3000) 
-  //   expect(document.querySelectorAll).to.have.been.called(1)
-  //   expect(document.querySelectorAll).to.have.been.called.on('.historical-data')
-  //   expect(document.getElementById).to.have.been.called(2)
-  //   expect(page.populateDailyData).to.have.been.called(7)
-  //   // cannot read property id of undefined
-  // })
-
-  // it('should display weekly data', () => {
-  //   page.displayWeeklyData(event, 3000)
-  //   expect(page.determineRepo).to.be.called(1)
-  //   expect(page.createWeeklyLayoutHtml).to.be.called(1)
-  //   expect(page.insertWeekLayout).to.be.called(1)
-  //   expect(page.populateWeeklyData).to.be.called(1)
-  // })
 })
