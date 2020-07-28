@@ -210,14 +210,14 @@ describe('Page controller', () => {
   
   it('should set a message to the DOM', () => {
     page.changeSystemMessage()
-    expect(document.getElementById).to.have.been.called(2)
+    expect(document.getElementById).to.have.been.called(3)
   })
   //the test sees instantiation on line 7 as well.
-  //each test will therefor expect a getElementById and
+  //each test will therefor expect two getElementByIds and
   //two query selectors from the constructor
   it('should find the location of the first parameter', () => {
     page.populateDailyData('foo', ['bar'], 12, '12/80/20')
-    expect(document.getElementById).to.have.been.called(2)
+    expect(document.getElementById).to.have.been.called(3)
     expect(document.getElementById).to.have.been.called.with('foo')
   })
 

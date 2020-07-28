@@ -49,16 +49,15 @@ function buttonHandler(event) {
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
   } else if (button.id.includes('community-stats')) {
-    page.goToContestPage(today);
+    page.goToContestPage(today);  
   }
 }
-
+  
 function sidebarHandler(event) {
-  if (event.target.className === 'friend') {
-    page.seeFriendsStats(event, today)
-  }
   if (event.target.id.includes('stats')) {
-    buttonHandler(event)
+      buttonHandler(event)    
+  } else if (event.target.className.includes('friend')) {
+    page.seeFriendsStats(event, today)
   }
 }
 
@@ -166,20 +165,3 @@ const organizePost = (info) => {
 startApp();
 
 export {currentUser, today, page}
-export {
-  apiHead,
-  sideBar,
-  selectBar,
-  buttons,
-  buttonHandler,
-  sidebarHandler,
-  dataEventHandler,
-  startApp,
-  catchAllData,
-  postAllData,
-  postData,
-  catchData,
-  findClassInfo,
-  makePostObject,
-  organizePost
-}

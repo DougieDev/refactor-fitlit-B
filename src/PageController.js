@@ -11,9 +11,11 @@ import {
 class PageController {
 
   constructor() {
-    this.dateField = document.getElementById('new-date');
+    this.dateField = document.getElementById('new-date')
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
+    this.currentDate = document.getElementById('user-date')
+    
   }
   
   changeSystemMessage(message = '') {
@@ -100,7 +102,7 @@ class PageController {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<p class="friend" id="${friend.id}">${friend.name}</p>`
+          `<button class="friend sidebar-buttons" id="${friend.id}">${friend.name}</button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -144,7 +146,6 @@ class PageController {
   }
 
   goToUserPage(user) {
-    this.comingSoon.classList.add('hidden')
     this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
@@ -154,6 +155,7 @@ class PageController {
   }
 
   goToDailyPage(today) {
+    this.currentDate.classList.remove('hidden')
     this.comingSoon.classList.add('hidden')
     this.calendar.classList.remove('hidden')
     this.unHideElements('#daily-cards', '#new-info')
@@ -180,6 +182,7 @@ class PageController {
   }
 
   seeFriendsStats(event, today) {
+    this.currentDate.classList.add('hidden')
     this.calendar.classList.add('hidden')
     this.comingSoon.classList.remove('hidden')
     let userId = parseInt(event.target.id);
@@ -289,8 +292,7 @@ class PageController {
   }
 
   addUserDate(today) {
-    const currentDate = document.getElementById('user-date')
-    currentDate.insertAdjacentHTML(
+    this.currentDate.insertAdjacentHTML(
       'afterbegin', `Your most recent entry is from <br />
       ${moment(today).format('MMMM Do YYYY')}`
     )
