@@ -87,7 +87,7 @@ table {
 
 .number {
   color: $background-grey;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: bolder;
 
   &-pink {
@@ -150,7 +150,7 @@ table {
     min-width: 321px;
     overflow-x: scroll;
   }
-
+  
   body {
     max-width: 100%;
     overflow-x: hidden;

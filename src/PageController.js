@@ -15,7 +15,6 @@ class PageController {
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
     this.currentDate = document.getElementById('user-date')
-    
   }
   
   changeSystemMessage(message = '') {
@@ -49,12 +48,18 @@ class PageController {
       'weekly-hydration': `
         <span class="number number-teal" id="numOunces">0</span><br />oz drank`,
       'weekly-activity': 
-        `Step Count:<br /><span class="number number-pink" id="numSteps">0</span><br />
-        Stair Count:<br /><span class="number number-pink" id="flightsOfStairs">0</span><br />
-        Minutes Active:<br /><span class="number number-pink" id="minutesActive">0</span>`,
+        `Step Count:<br />
+        <span class="number number-pink" id="numSteps">0</span><br />
+        Stair Count:<br />
+        <span class="number number-pink" id="flightsOfStairs">0</span><br />
+        Minutes Active:<br />
+        <span class="number number-pink" id="minutesActive">0</span>`,
       'weekly-sleep': 
-        `Hours Asleep:<br /><span class="number number-yellow" id="hoursSlept">0</span><br />
-        Sleep Quality:<br /><span class="number number-yellow" id="sleepQuality">0</span><br />out of 5`
+        `Hours Asleep:<br />
+        <span class="number number-yellow" id="hoursSlept">0</span><br />
+        Sleep Quality:<br />
+        <span class="number number-yellow" id="sleepQuality">0</span><br />
+        out of 5`
     }
   }
 
@@ -102,7 +107,7 @@ class PageController {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<button class="friend sidebar-buttons" id="${friend.id}">${friend.name}</button>`
+          `<button class="friend sidebar-buttons" tabindex="0" id="${friend.id}">${friend.name}</button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -374,6 +379,5 @@ class PageController {
     this.communitySectionCompetitive(today);
   }
 }
-
 
 export default PageController
