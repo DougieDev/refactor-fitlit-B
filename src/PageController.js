@@ -106,7 +106,10 @@ class PageController {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<button class="friend sidebar-buttons" tabindex="0" id="${friend.id}">${friend.name}</button>`
+          `<button class="friend sidebar-buttons" 
+          tabindex="0" id="${friend.id}">
+            ${friend.name}
+          </button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -309,8 +312,11 @@ class PageController {
 
   communitySectionMiles(today) {
     const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
-    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, today, userRepo);
-    console.log(today); 
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(
+      currentUserId, 
+      today, 
+      userRepo
+    );
     const display = document.getElementById('miles');
     const milesHtml = `
       <p class="message-miles">Total Miles For Today:</p>
@@ -323,8 +329,14 @@ class PageController {
 
   communitySectionStreak() {
     const numStepsStreak = activityRepo.getStreak(currentUserId, 'numSteps');
-    const minutesActiveStreak = activityRepo.getStreak(currentUserId, 'minutesActive');
-    const flightsStreak = activityRepo.getStreak(currentUserId, 'flightsOfStairs');
+    const minutesActiveStreak = activityRepo.getStreak(
+      currentUserId, 
+      'minutesActive'
+    );
+    const flightsStreak = activityRepo.getStreak(
+      currentUserId, 
+      'flightsOfStairs'
+    );
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
     const streaksHtml = `
@@ -342,9 +354,18 @@ class PageController {
   }
 
   communitySectionSteps(today) {
-    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, today, userRepo);
-    const stepsToGo = activityRepo.remainingSteps(currentUserId, today, userRepo);
-    const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(
+      currentUserId, 
+      today, 
+      userRepo);
+    const stepsToGo = activityRepo.remainingSteps(
+      currentUserId, 
+      today, 
+      userRepo);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(
+      currentUserId, 
+      userRepo
+    );
     let display = document.getElementById('steps');
     const stepsHtml = `
       <span class="message" id="steps-left">${stepsToGo}</span>
@@ -360,16 +381,31 @@ class PageController {
     const stepWinner = userRepo.getTopPerformer(today, "numSteps", activityRepo);
     const mostActive = userRepo.getTopPerformer(today, 'minutesActive', activityRepo);
     const display = document.getElementById('friends');
-    const friendsHtml = `
-      <p class="message-comm">Top Stepper:</p>
-      <span class="message-friend" id="friend-perform">${stepWinner.name}</span>
-      <p class="message-comm">with</p>
-      <span class="message-friend" id="friend-activity">${stepWinner.activity} steps!</span>
-      <p class="message-comm">Most Active:</p>
-      <span class="message-friend" id="">${mostActive.name}</span>
-      <p class="message-comm">with</p>
-      <span class="message-com" id="">${mostActive.activity} minutes!</span>
-    `;
+    const friendsHtml = 
+      `<p class="message-comm">
+        Top Stepper:
+      </p>
+      <span class="message-friend" id="friend-perform">
+        ${stepWinner.name}
+      </span>
+      <p class="message-comm">
+        with
+      </p>
+      <span class="message-friend" id="friend-activity">
+        ${stepWinner.activity} steps!
+      </span>
+      <p class="message-comm">
+        Most Active:
+      </p>
+      <span class="message-friend" id="">
+        ${mostActive.name}
+      </span>
+      <p class="message-comm">
+        with
+      </p>
+      <span class="message-com" id="">
+        ${mostActive.activity} minutes!
+      </span>`;
     display.innerHTML = friendsHtml;
   }
 

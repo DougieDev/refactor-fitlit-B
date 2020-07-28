@@ -3,7 +3,6 @@ import Repo from './Repo'
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
-    
   }
 
   findUserById(id) {

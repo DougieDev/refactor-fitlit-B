@@ -32,14 +32,6 @@ describe('Page controller', () => {
   let sleepRepo;
   let hydrationRepo;
   let activityRepo;
-  let currentUserId = 3000
-  let today = '2040/01/10';
-
-  let event = {
-    target: {
-      id: 'hydration'
-    }
-  }
 
   beforeEach(() => {
     global.document = {}
@@ -243,36 +235,4 @@ describe('Page controller', () => {
     expect(result.weeklyActivity)
     expect(result['weekly-sleep'])
   }) 
-
-  // it('should populate 7 days of the week', () => {
-  //   page.populateWeeklyData(sleepRepo, 3000) 
-  //   expect(document.querySelectorAll).to.have.been.called(1)
-  //   expect(document.querySelectorAll).to.have.been.called.on('.historical-data')
-  //   expect(document.getElementById).to.have.been.called(2)
-  //   expect(page.populateDailyData).to.have.been.called(7)
-  //   // cannot read property id of undefined, cannot figure out what is undefined
-  // })
-
-  // it('should display weekly data', () => {
-  //   page.displayWeeklyData(event, 3000)
-  //   expect(page.determineRepo).to.be.called(1)
-  //   expect(page.createWeeklyLayoutHtml).to.be.called(1)
-  //   expect(page.insertWeekLayout).to.be.called(1)
-  //   expect(page.populateWeeklyData).to.be.called(1)
-  // })
-
-  // it('should be able to find miles' + 
-  // 'from the community for a given date', () => {
-  //   page.communitySectionMiles('2020/01/01')
-  //   expect(document.getElementById).toHaveBeenCalled(3)
-  // })
-
-  // it('should call each community display function', () => {
-  //   page.displayCommunitySection('2020/01/01')
-  //   expect(page.communitySectionMiles).to.have.been.called(1)
-  //   expect(page.communitySectionStreak).to.have.been.called(1)
-  //   expect(page.communitySectionSteps).to.have.been.called(1)
-  //   expect(page.communitySectionCompetitive).to.have.been.called(1)
-
-  // })
 })
