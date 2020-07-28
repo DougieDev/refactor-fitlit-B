@@ -45,12 +45,9 @@ background-attachment: fixed;
   border: $solid-border;
 }
 
-@mixin page-reset {
-  * {
-    margin: 0;
-    list-style: none;
-    box-sizing: border-box;
-  }
+@mixin hide-elements {
+  visibility: hidden;
+  position: fixed;
 }
 
 //ANIMATION

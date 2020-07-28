@@ -1,18 +1,17 @@
 .card {
   background-color: $white;
-  @include card-border-radius;
-  width: 28vw;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  font-size: 1.5em;
   min-width: 250px;
   margin: 2.5% 2.5%;
   padding: 1em;
-  text-align: center;
-  font-size: 1.5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  text-align: center;
+  width: 28vw;
   @include shadow;
-
+  @include card-border-radius;
 
   &-container {
   display: flex;
@@ -21,10 +20,9 @@
   justify-content: center;
   position: absolute;
   width: 85%;
+  max-height: 100%;
   margin-top: 2%;
   }
-
-
 
   &-streak {
     background-color: $teal;
@@ -77,7 +75,6 @@
   height: auto;
   width: 600px;
   margin: 0 2.5% 2.5%;
-
 }
 
 .hydration-card {
@@ -99,6 +96,28 @@
   @include card-animation-top(1.2s);
 }
 
+.info-card > .number {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.info-card {
+  background-color: $teal;
+  @include card-animation-right(1.5s);
+}
+
+.week-card {
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 0 2.5% 2.5%;
+  width: 600px;
+  
+  @include card-border-radius;
+  @include card-animation-bottom(1.5s);
+}
+
 .pika-lendar {
   font-size: .5em;
 }
@@ -113,21 +132,9 @@
 .is-disabled > * {
   color: $sidebar-grey;
 }
-// .calendar-container {
-//   @include card-animation-bottom(1.4s);  
-//   }
-
-/* This controls the friends list on the left-sidebar.
-As of right now, I can't see any other use for it.
-Likely needs its name changed.*/
 
 .new-info {
 width: 100%;
-
-
-  &-button {
-    
-  }
 }
 
 
