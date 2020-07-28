@@ -11,10 +11,16 @@ class User {
   getFirstName() {
     return this.name.split(' ', 1).join();
   }
-  
+
   getFriendsNames(userStorage) {
     return this.friends.map(friendId => {
-      userStorage.getDataFromID(friendId).name;
+      return this.findFriendById(userStorage, friendId).name;
+    })
+  }
+
+  findFriendById(userStorage, friendId) {
+    return userStorage.find(user => {
+      return user.id === friendId
     })
   }
 
@@ -26,12 +32,11 @@ class User {
     }, [])
   }
 
-  getFriendsAverageForWeek(date, repo) {
-    let friendsActivity = this.getFriendsActivity();
-    let timeline = this.getAllDataByWeek(friendsActivity, date);
-    return repo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
-  }
-}
+//   getFriendsAverageForWeek(date, repo) {
+//     let friendsActivity = this.getFriendsActivity();
+//     let timeline = this.getAllDataByWeek(friendsActivity, date);
+//     return repo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
+//   }
+// }
 
 export default User;
-
