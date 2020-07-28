@@ -31,14 +31,14 @@ class ActivityRepo extends Repo {
   }
 
   remainingSteps(id, date, users) {
-    let completeMessage = 'Step goal, crushed!, Keep it up!';
+    let completeMessage = 'Step goal crushed!';
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
     if (userActivityByDate === undefined) {
       return `No step activity found for ${date}`
     }
     let steps = user.dailyStepGoal - userActivityByDate.numSteps;
-    return (steps < 0) ? completeMessage : `You have ${steps} steps to go.`;
+    return (steps < 0) ? completeMessage : `${steps} steps to go.`;
   }
 
   getDaysGoalExceeded(id, users) {
