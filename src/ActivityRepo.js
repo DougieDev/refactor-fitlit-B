@@ -20,8 +20,6 @@ class ActivityRepo extends Repo {
     return parseFloat(((miles * user.strideLength) / 5280).toFixed(1));
   }
 
-  
-
   accomplishedStepGoal(id, date, users) {
     let user = users.findUserById(id);
     let userActivityByDate = this.findById(id, date);
@@ -67,7 +65,7 @@ class ActivityRepo extends Repo {
       .reduce((record, user) => {
         return (user.flightsOfStairs > record) ? user.flightsOfStairs : record
       }, 0);
-    }
   }
+}
 
 export default ActivityRepo;

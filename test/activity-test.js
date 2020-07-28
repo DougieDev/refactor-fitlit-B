@@ -4,7 +4,7 @@ import UserRepo from '../src/UserRepo';
 
 let userRepo;
 
-describe('Activity', function() {
+describe('Activity',  () => {
   let activityData;
   let activity;
   let user1;
@@ -13,11 +13,7 @@ describe('Activity', function() {
   let user4;
   let users;
 
-  let repo;
-
-
-
-  beforeEach(function() {
+  beforeEach( () => {
     activityData = [{
       "userID": 1,
       "date": "2019/06/15",
@@ -209,7 +205,7 @@ describe('Activity', function() {
   });
 
 
-  it('should take in data', function() {
+  it('should take in data',  () => {
     expect(activity.data[0].userID).to.eql(1);
     expect(activity.data[4].date).to.eql("2019/06/15");
     expect(activity.data[3].numSteps).to.eql(3486);
@@ -218,27 +214,27 @@ describe('Activity', function() {
     expect(userRepo.data[0].id).to.eql(1);
   });
 
-  it('should return the miles a given user has walked on a given date', function() {
+  it('should return the miles a given user has walked on a given date',  () => {
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
   });
 
 
-  it('should return total miles a given user has walked', function () {
+  it('should return total miles a given user has walked', () => {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);
   });
 
-  it('should return true/false if the given user met their step goal on a given day', function() {
+  it('should return true/false if the given user met their step goal on a given day',  () => {
     expect(activity.accomplishedStepGoal(4, "2019/06/15", userRepo)).to.eql(`You got this Patrick the Starfish, just a few more steps`);
   });
 
 
-  it('should return steps remaining to accomplish goal', function () {
+  it('should return steps remaining to accomplish goal', () => {
     expect(activity.remainingSteps(1, "2019/06/18", userRepo)).to.eql(`You have 2000 steps to go.`);
     expect(activity.remainingSteps(1, "2019/06/22", userRepo)).to.eql('Step goal, crushed!, Keep it up!');
     expect(activity.remainingSteps(2, "2019/06/20", userRepo)).to.eql('No step activity found for 2019/06/20');
   })
 
-  it('should return all days that a given user exceeded their step goal', function () {
+  it('should return all days that a given user exceeded their step goal', () => {
     expect(activity.getDaysGoalExceeded(1, userRepo)).to.eql([
       "2019/06/17",
       "2019/06/19",
@@ -249,16 +245,15 @@ describe('Activity', function() {
     ]);
   });
 
-  it('should return the highest number of stairs climbed in a day for all time', function () {
+  it('should return the highest number of stairs climbed in a day for all time', () => {
     expect(activity.getStairRecord(11)).to.eql(33);
   });
 
-  it('should show a 3-day increasing streak for a users step count', function () {
+  it('should show a 3-day increasing streak for a users step count', () => {
     expect(activity.getStreak(1, 'numSteps')).to.eql(['2019/06/17'])
   });
 
-  it('should show a 3-day increasing streak for a users minutes of activity', function () {
+  it('should show a 3-day increasing streak for a users minutes of activity', () => {
     expect(activity.getStreak(1, 'minutesActive')).to.eql(['2019/06/18', '2019/06/21', '2019/06/22'])
-
   });
 });

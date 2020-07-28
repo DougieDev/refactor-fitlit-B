@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 import {
   userRepo,
   hydrationRepo,
@@ -15,7 +14,6 @@ class PageController {
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
     this.currentDate = document.getElementById('user-date')
-    
   }
   
   changeSystemMessage(message = '') {
@@ -47,14 +45,20 @@ class PageController {
   createWeeklyLayoutHtml() {
     return {
       'weekly-hydration': `
-        <span class="number" id="numOunces">0</span> oz drank`,
+        <span class="number number-teal" id="numOunces">0</span><br />oz drank`,
       'weekly-activity': 
-        `Step Count: <span class="number" id="numSteps">0</span>
-        Stair Count: <span class="number" id="flightsOfStairs">0</span>
-        Minutes Active: <span class="number" id="minutesActive">0</span>`,
+        `Step Count:<br />
+        <span class="number number-pink" id="numSteps">0</span><br />
+        Stair Count:<br />
+        <span class="number number-pink" id="flightsOfStairs">0</span><br />
+        Minutes Active:<br />
+        <span class="number number-pink" id="minutesActive">0</span>`,
       'weekly-sleep': 
-        `Hours Asleep: <span class="number" id="hoursSlept">0</span>
-        Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
+        `Hours Asleep:<br />
+        <span class="number number-yellow" id="hoursSlept">0</span><br />
+        Sleep Quality:<br />
+        <span class="number number-yellow" id="sleepQuality">0</span><br />
+        out of 5`
     }
   }
 
@@ -102,7 +106,7 @@ class PageController {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<button class="friend sidebar-buttons" id="${friend.id}">${friend.name}</button>`
+          `<button class="friend sidebar-buttons" tabindex="0" id="${friend.id}">${friend.name}</button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -175,7 +179,7 @@ class PageController {
   goToContestPage(today) {
     this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
-    this.clearInputForms();
+    // this.clearInputForms()
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
     this.displayCommunitySection(today)
     this.changeSystemMessage('Here`s how the community`s doing')
@@ -303,10 +307,10 @@ class PageController {
     return hydrationData.map(date => date.date)
   }
 
-  communitySectionMiles(date) {
+  communitySectionMiles(today) {
     const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
-    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, date, userRepo);
-    console.log(totalMiles, userMilesToday); 
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, today, userRepo);
+    console.log(today); 
     const display = document.getElementById('miles');
     const milesHtml = `
       <p class="message-miles">Total Miles For Today:</p>
@@ -324,22 +328,22 @@ class PageController {
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
     const streaksHtml = `
+      <p class="message-comm-head">Streak Records:</p>
       <p class="message-comm">Minutes Active:</p>
-      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <span class="number" id="streak">${minutesActiveStreak.length}x</span>
       <p class="message-comm">Step Goal Total:</p>
-      <span class="number" id="">${numStepsStreak.length}</span>
+      <span class="number" id="">${numStepsStreak.length}x</span>
       <p class="message-comm">Stair Goal Total:</p>
-      <span class="number" id="">${flightsStreak.length}</span>
-      <p class="message-comm"Stair record:</p>
-      <span class="number" id="">${stairRecord}</span>
+      <span class="number" id="">${flightsStreak.length}x</span>
+      <p class="message-comm">Stair record:</p>
+      <span class="number" id="">${stairRecord}x</span>
     `;
     display.innerHTML = streaksHtml;
   }
 
-  communitySectionSteps(date) {
-    console.log(date);
-    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date, userRepo);
-    const stepsToGo = activityRepo.remainingSteps(currentUserId, date, userRepo);
+  communitySectionSteps(today) {
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, today, userRepo);
+    const stepsToGo = activityRepo.remainingSteps(currentUserId, today, userRepo);
     const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
     let display = document.getElementById('steps');
     const stepsHtml = `
@@ -352,29 +356,29 @@ class PageController {
     display.innerHTML = stepsHtml;
   }
 
-  communitySectionCompetitive(date) {
-    const user = userRepo.findUserById(currentUserId);
-    const stepWinner = userRepo.showcaseWinner(user, date);
-    const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+  communitySectionCompetitive(today) {
+    const stepWinner = userRepo.getTopPerformer(today, "numSteps", activityRepo);
+    const mostActive = userRepo.getTopPerformer(today, 'minutesActive', activityRepo);
     const display = document.getElementById('friends');
     const friendsHtml = `
-      <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform">${stepWinner}</span>
-      <p class="message-comm">Most Rested:</p>
-      <span class="message-friend" id="friend-activity">${bestSleeper}</span>
-      <p class="message-comm">Todays Winner:</p>
-      <span class="number" id="">TBD</span>
+      <p class="message-comm">Top Stepper:</p>
+      <span class="message-friend" id="friend-perform">${stepWinner.name}</span>
+      <p class="message-comm">with</p>
+      <span class="message-friend" id="friend-activity">${stepWinner.activity} steps!</span>
+      <p class="message-comm">Most Active:</p>
+      <span class="message-friend" id="">${mostActive.name}</span>
+      <p class="message-comm">with</p>
+      <span class="message-com" id="">${mostActive.activity} minutes!</span>
     `;
     display.innerHTML = friendsHtml;
   }
 
-  displayCommunitySection() {
-    this.communitySectionMiles();
+  displayCommunitySection(today) {
+    this.communitySectionMiles(today);
     this.communitySectionStreak();
-    this.communitySectionSteps();
-    this.communitySectionCompetitive();
+    this.communitySectionSteps(today);
+    this.communitySectionCompetitive(today);
   }
 }
-
 
 export default PageController
