@@ -6,7 +6,7 @@ const User = require('../src/User').default;
 const Repo = require('../src/Repo').default;
 const ActivityRepo = require('../src/ActivityRepo').default;
 
-describe.only('UserRepo',  () => {
+describe('UserRepo',  () => {
   let user1, user2, userRepo, sleepRepo, activityRepo, hydrationRepo;
   beforeEach( () => {
 
