@@ -1,74 +1,61 @@
 .sidebar-container {
-  height: 150vh;
-  position: relative;
-  text-align: center;
-  width: 18vw;
-  
   @include sidebar-color;
+  text-align: center;
+  width: 16%;
+  position: relative;
 }
 
 .sidebar-friendslist-header {
   font-family: sans-serif;
-  font-size: 1.2em;
   font-weight: bold;
+  font-size: 1.2em;
   margin: .5em;
 }
 
+/*  This is just the lines above and below the 'Friends'
+list on the left sidebar */
 .sidebar-header-line {
   color: $white;
+  @include card-border;
   margin: 1em 1em 0 1em;
   width: 80%;
-
-  @include card-border;
 }
 
 .sidebar-header-userImage {
   border-radius: 50%;
-  margin: 4px 8px 2px;
   width: 90%;
+  margin: 4px 8px 2px;
+  
   
   @include name-animation;
 }
 
-
 .sidebar-buttons {
-  align-content: center;
-  height: 20px;
-  margin-bottom: 6px;
+  width: 100%;
+  height: 30px;
+  display: inline-grid;
   text-transform: uppercase;
-  
-    &-container {
-    display: inline-grid;
-    width: 100%;
-    }
+  margin-bottom: 10px;
+  align-content: center;
   }
 
 .sidebar-body-friendContainer {
   display: flex;
   flex-direction: column;
-
   @include name-animation;
 }
 
 .sidebar-friendContainer-listItems {
   text-align: center;
 }
-
-.friend-label {
-  color: $black;
-  font-size: 2em;
-  text-decoration: underline;
-}
-
-.friend {
-  color: $white;
-  font-weight: 400;
+/* What is this doing? Come back to this later */
+.card-vertical-list {
+  font-weight: lighter;
+  font-style: italic;
+  padding-left: 0;
+  font-size: 1em;
 }
 
 .profile-link {
   color: $black;
 }
-
-
-
-
