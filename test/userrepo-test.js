@@ -1,14 +1,13 @@
 const chai = require('chai');
-const { activityRepo } = require('../src/globals');
 const expect = chai.expect;
 
-const UserRepo = require('../src/UserRepo').default;
-const User = require('../src/User').default;
-const Repo = require('../src/User').default;
-const ActivityRepo = require('../src/ActivityRepo').default;
+const UserRepo = require('../src/UserRepo')
+const User = require('../src/User')
+const Repo = require('../src/Repo')
+const ActivityRepo = require('../src/ActivityRepo')
 
 describe('UserRepo', function() {
-  let user1, user2, rawUsers, userRepo, sleepRepo, activityRepo, hydrationRepo;
+  let user1, user2, userRepo, sleepRepo, activityRepo, hydrationRepo;
   beforeEach(function() {
     user1 = new User ({
       id: 1,
@@ -180,8 +179,20 @@ METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
     expect(userRepo.getRandomNumber()).to.be.a('number')
   });
 
-  it('should return the most active steps user' function() {
-    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activity)).to.be.a('object').eql.to()
+  it.only('should return the most active steps user', function() {
+    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  })
+
+  it.only('should return the most active steps user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  })
+
+  it.only('should return the most active steps user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  })
+
+  it.only('should return the most active steps user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
   })
   // it.only('', function() {
   //   expect().to.equal()
