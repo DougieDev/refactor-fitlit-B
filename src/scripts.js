@@ -41,6 +41,7 @@ function buttonHandler(event) {
     page.clearInputForms()
     page.goToDailyPage()
   } else if (button.id.includes('weekly')) {
+    // if value is not blank
     page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
     page.goToUserPage(currentUser);

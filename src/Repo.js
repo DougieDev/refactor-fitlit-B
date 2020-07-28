@@ -43,7 +43,6 @@ class Repo {
 
   getAllDataById(id, repo = this.data) {
     if (typeof id !== "number") return "This id is incorrect";
-    console.log(repo)
     return repo.filter((dataPoint) => {
       if (dataPoint.userID === id) return dataPoint
     })
@@ -149,8 +148,6 @@ class Repo {
         .toFixed(1)
     );
   }
-
-
 
   presentWeek(date, id) {
     let allDates = this.sortUserDataByDate(id);
