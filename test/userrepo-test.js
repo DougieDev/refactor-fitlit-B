@@ -6,9 +6,9 @@ const User = require('../src/User').default;
 const Repo = require('../src/Repo').default;
 const ActivityRepo = require('../src/ActivityRepo').default;
 
-describe.only('UserRepo', function() {
+describe.only('UserRepo',  () => {
   let user1, user2, userRepo, sleepRepo, activityRepo, hydrationRepo;
-  beforeEach(function() {
+  beforeEach( () => {
 
     user1 = new User({
       id: 1,
@@ -144,21 +144,21 @@ describe.only('UserRepo', function() {
     userRepo.storeData(users);
   });
 
-  it('should be a function', function() {
+  it('should be a function',  () => {
     expect(UserRepo).to.be.a('function')
   });
 
-  it('should be an instance of UserRepo', function() {
+  it('should be an instance of UserRepo',  () => {
     expect(userRepo).to.be.an.instanceof(UserRepo)
   });
 
-  it('should be able to store data', function() {
+  it('should be able to store data',  () => {
     userRepo.storeData(users)
 
     expect(userRepo.data).to.deep.equal(users)
   });
 
-  it('should be able to find a user by their ID', function() {
+  it('should be able to find a user by their ID',  () => {
     userRepo.storeData(users)
     userRepo.findUserById(1)
     let results = userRepo.findUserById(1)
@@ -166,7 +166,7 @@ describe.only('UserRepo', function() {
     expect(results.name).to.equal('Joshua Danger Sevy')
   });
 
-  it('should return the greatest steps user', function() {
+  it('should return the greatest steps user',  () => {
     expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo))
       .to.be.an('object')
       .to.eql({name: '#D0UG13', activity: 4294 });
@@ -182,10 +182,7 @@ describe.only('UserRepo', function() {
     expect(userRepo.getTopPerformer("2019/06/15", "numOunces", hydrationRepo)).to.eql({ name: '#D0UG13', activity: 600 });
   })
 
-  it.skip('should return the most rested user', function () {
-    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  it('should return the most rested user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "hoursSlept", sleepRepo)).to.eql({ name: '#D0UG13', activity: 6 });
   })
-  // it.only('', function() {
-  //   expect().to.equal()
-  // })
 })
