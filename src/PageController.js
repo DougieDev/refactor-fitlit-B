@@ -107,7 +107,10 @@ class PageController {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<button class="friend sidebar-buttons" tabindex="0" id="${friend.id}">${friend.name}</button>`
+          `<button class="friend sidebar-buttons" 
+          tabindex="0" id="${friend.id}">
+            ${friend.name}
+          </button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
@@ -310,8 +313,11 @@ class PageController {
 
   communitySectionMiles(today) {
     const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
-    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, today, userRepo);
-    console.log(today); 
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(
+      currentUserId, 
+      today, 
+      userRepo
+    );
     const display = document.getElementById('miles');
     const milesHtml = `
       <p class="message-miles">Total Miles For Today:</p>
@@ -324,8 +330,14 @@ class PageController {
 
   communitySectionStreak() {
     const numStepsStreak = activityRepo.getStreak(currentUserId, 'numSteps');
-    const minutesActiveStreak = activityRepo.getStreak(currentUserId, 'minutesActive');
-    const flightsStreak = activityRepo.getStreak(currentUserId, 'flightsOfStairs');
+    const minutesActiveStreak = activityRepo.getStreak(
+      currentUserId, 
+      'minutesActive'
+    );
+    const flightsStreak = activityRepo.getStreak(
+      currentUserId, 
+      'flightsOfStairs'
+    );
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
     const streaksHtml = `
@@ -343,9 +355,18 @@ class PageController {
   }
 
   communitySectionSteps(today) {
-    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, today, userRepo);
-    const stepsToGo = activityRepo.remainingSteps(currentUserId, today, userRepo);
-    const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(
+      currentUserId, 
+      today, 
+      userRepo);
+    const stepsToGo = activityRepo.remainingSteps(
+      currentUserId, 
+      today, 
+      userRepo);
+    const stepGoalDates = activityRepo.getDaysGoalExceeded(
+      currentUserId, 
+      userRepo
+    );
     let display = document.getElementById('steps');
     const stepsHtml = `
       <span class="message" id="steps-left">${stepsToGo}</span>
@@ -358,17 +379,29 @@ class PageController {
   }
 
   communitySectionCompetitive(today) {
-    const stepWinner = userRepo.getTopPerformer(today, "numSteps", activityRepo);
-    // const bestSleeper = userRepo.determineSleepWinnerForWeek(today);
+    const stepWinner = userRepo.getTopPerformer(
+      today, 
+      "numSteps", 
+      activityRepo
+    );
     const display = document.getElementById('friends');
-    const friendsHtml = `
-      <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform">${stepWinner.name}</span>
+    const friendsHtml = 
+      `<p class="message-comm">
+        Top Performer:
+      </p>
+      <span class="message-friend" id="friend-perform">
+        ${stepWinner.name}
+      </span>
       <p class="message-comm">Steps Today:</p>
-      <span class="message-friend" id="friend-activity">${stepWinner.numSteps}</span>
-      <p class="message-comm">Active Minutes:</p>
-      <span class="number" id="">${stepWinner.minutesActive}</span>
-    `;
+      <span class="message-friend" id="friend-activity">
+        ${stepWinner.numSteps}
+      </span>
+      <p class="message-comm">
+        Active Minutes:
+      </p>
+      <span class="number" id="">
+        ${stepWinner.minutesActive}
+      </span>`;
     display.innerHTML = friendsHtml;
   }
 

@@ -5,7 +5,6 @@ import Repo from './Repo'
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
-    
   }
 
   findUserById(id) {
@@ -15,12 +14,15 @@ class UserRepo extends Repo  {
   getTopPerformer(date, activityType, repo) {
     const winner = repo.getAllDataByDay(date);
     const topPerformer = winner.reduce((compare, currentValue) => {
-      return (compare[activityType] > currentValue[activityType] ? compare : currentValue);
+      if (compare[activityType] > currentValue[activityType]) {
+        return compare;
+      } else {
+        return currentValue;
+      }
     });
     const user = this.findUserById(topPerformer.userID);
     topPerformer.name = user.name;
     topPerformer.activity = topPerformer[activityType];
-    console.log(topPerformer);
     return topPerformer;
   }
 
@@ -81,7 +83,7 @@ class UserRepo extends Repo  {
     })
   }
 
- showcaseWinner(user, date) {
+  showcaseWinner(user, date) {
     let winner = this.showChallengeListAndWinner(user, date).shift();
     return winner;
   }

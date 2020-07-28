@@ -24,7 +24,6 @@ class User {
     })
   }
 
-
   getFriendsActivity() {
     return this.friends.reduce((friendsActivities, friend) => {
       friendsActivities = friendsActivities.concat(activityRepo.getAllDataById(friend))
