@@ -19,19 +19,6 @@ class User {
       return this.findFriendById(userStorage, friendId).name;
     })
   }
-
-  findFriendById(userStorage, friendId) {
-    return userStorage.find(user => {
-      return user.id === friendId
-    })
-  }
-
-  getFriendsActivity() {
-    return this.friends.reduce((friendsActivities, friend) => {
-      friendsActivities = friendsActivities.concat(activityRepo.getAllDataById(friend))
-      return friendsActivities
-    }, [])
-  }
 }
 
 export default User;

@@ -53,6 +53,24 @@
   }
 }
 
+.message {
+
+  &-result {
+    font-size: 1em;
+    text-transform: capitalize;
+  }
+
+  &-comm {
+    font-size: 1.5em;
+  }
+
+  &-head{
+      font-size: 1.75em;
+  }
+  
+}
+
+
 .calendar-button {
   font-weight: heavy;
   font-size: 1.25em;
