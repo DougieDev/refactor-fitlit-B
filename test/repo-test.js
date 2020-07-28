@@ -144,7 +144,17 @@ describe('Repo', () => {
     rawUsers = [user1, user2];
     rawHydration = [hydration1, hydration2];
     rawActivity = [activity1, activity2]
-    rawSleep = [sleep1, sleep2, sleep3, sleep4, sleep5, sleep6, sleep7, sleep8, sleep0]
+    rawSleep = [
+      sleep1, 
+      sleep2, 
+      sleep3, 
+      sleep4, 
+      sleep5, 
+      sleep6, 
+      sleep7, 
+      sleep8, 
+      sleep0
+    ]
 
     repo = new Repo();
     userRepo = new Repo();
@@ -163,7 +173,7 @@ describe('Repo', () => {
 
   it('should be able to save data', () => {
     repo.storeData(rawUsers)
-    expect(repo.users).to.deep.equal(rawUsers)
+    expect(repo.data).to.deep.equal(rawUsers)
   })
 
   it('should only save data that is an array', () => {
@@ -183,7 +193,8 @@ describe('Repo', () => {
     expect(sleep).to.equal('This id is incorrect')
   });
   
-  it('should only search for dates that are strings in the correct format', () => {
+  it('should only search for dates that are strings' + 
+  'in the correct format', () => {
     repo.storeData(rawSleep);
     let result1 = repo.findById(3000, '240/1/1');
     let result2 = repo.findById(3000, "aaa/bb/r");
@@ -191,16 +202,19 @@ describe('Repo', () => {
     expect(result2).to.equal('This date is improperly formatted')
   })
 
-  it('should be able give to the average of a given key for all stored data', () => {
+  it('should be able give to the average' + 
+  'of a given key for all stored data', () => {
     repo.storeData(rawSleep)
     let averageSleep = repo.calculateAverage('hoursSlept') 
-    expect(averageSleep).to.equal(23)
+    expect(averageSleep).to.equal(23.0)
   });
 
-  it('should be able to calculate the average of a given key for a given user', () => {
+  it('should be able to calculate the average' + 
+  'of a given key for a given user', () => {
     let average = sleepRepo.calculateAverage('sleepQuality', 3000);
-    expect(average).to.equal(4.375)
+    expect(average).to.equal(4.4)
   })
+
   it('should be able to get all of a users data by id', () => {
     let result = sleepRepo.getAllDataById(3000)
     expect(result).to.deep.equal([
@@ -211,10 +225,12 @@ describe('Repo', () => {
       sleep6,
       sleep7,
       sleep8,
-      sleep0]);
+      sleep0
+    ]);
   })
 
-  it('should know when an id is incorrect when getting all of a users data', () => {
+  it('should know when an id is incorrect' + 
+  'when getting all of a users data', () => {
     let result = sleepRepo.getAllDataById('abe')
     expect(result).to.equal('This id is incorrect');
   })
@@ -229,7 +245,8 @@ describe('Repo', () => {
       sleep4,
       sleep3, 
       sleep1,
-      sleep0]);
+      sleep0
+    ]);
   });
 
   it('should be able to pick a date from the most recent data', () => {
@@ -246,7 +263,8 @@ describe('Repo', () => {
       sleep5,
       sleep4,
       sleep3,
-      sleep1])
+      sleep1
+    ])
   })
 
   it('should be able to get all data from a single day', ()=>{
@@ -269,7 +287,8 @@ describe('Repo', () => {
       sleep5,
       sleep6,
       sleep7,
-      sleep8])
+      sleep8
+    ])
   }) 
 
   it('should be able to get a Users the average for a week', () => {

@@ -63,7 +63,7 @@ class Repo {
         }
       }, 0)
       .toFixed(1);
-    return average;
+    return parseFloat(average);
   }
 
   sortUserDataByDate(id) {
