@@ -4,7 +4,7 @@ import UserRepo from '../src/UserRepo';
 
 let userRepo;
 
-describe('Activity', function() {
+describe('Activity',  () => {
   let activityData;
   let activity;
   let user1;
@@ -13,7 +13,7 @@ describe('Activity', function() {
   let user4;
   let users;
 
-  beforeEach(function() {
+  beforeEach( () => {
     activityData = [{
       "userID": 1,
       "date": "2019/06/15",
@@ -213,9 +213,14 @@ describe('Activity', function() {
     expect(userRepo.data[0].id).to.eql(1);
   });
 
-  it('should return the miles a given user has walked on a given date', () => {
-    expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo)).to.eql(2.9);
+  it('should return the miles a given user has walked on a given date',  () => {
+    expect(activity.getMilesFromStepsByDate(
+      1, 
+      "2019/06/15", 
+      userRepo
+    )).to.eql(2.9);
   });
+
 
   it('should return total miles a given user has walked', () => {
     expect(activity.getUserTotalMiles(1, userRepo)).to.eql(56.8);

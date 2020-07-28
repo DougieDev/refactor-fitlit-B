@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 import {
   userRepo,
   hydrationRepo,
@@ -379,28 +378,33 @@ class PageController {
   }
 
   communitySectionCompetitive(today) {
-    const stepWinner = userRepo.getTopPerformer(
-      today, 
-      "numSteps", 
-      activityRepo
-    );
+    const stepWinner = userRepo.getTopPerformer(today, "numSteps", activityRepo);
+    const mostActive = userRepo.getTopPerformer(today, 'minutesActive', activityRepo);
     const display = document.getElementById('friends');
     const friendsHtml = 
       `<p class="message-comm">
-        Top Performer:
+        Top Stepper:
       </p>
       <span class="message-friend" id="friend-perform">
         ${stepWinner.name}
       </span>
-      <p class="message-comm">Steps Today:</p>
+      <p class="message-comm">
+        with
+      </p>
       <span class="message-friend" id="friend-activity">
-        ${stepWinner.numSteps}
+        ${stepWinner.activity} steps!
       </span>
       <p class="message-comm">
-        Active Minutes:
+        Most Active:
       </p>
-      <span class="number" id="">
-        ${stepWinner.minutesActive}
+      <span class="message-friend" id="">
+        ${mostActive.name}
+      </span>
+      <p class="message-comm">
+        with
+      </p>
+      <span class="message-com" id="">
+        ${mostActive.activity} minutes!
       </span>`;
     display.innerHTML = friendsHtml;
   }

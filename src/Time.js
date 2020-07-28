@@ -4,7 +4,7 @@ import Repo from './Repo.js'
 import {page} from './scripts.js';
 
 // We acknowledge this class probably isn't best practice (addCalendar 
-// originally lived in DOMmanipulation and findWeeklyStartDates lived 
+// originally lived in PageController and findWeeklyStartDates lived 
 // in Repo). They've been moved here because they were not playing 
 // nicely with testing for either file.
 
