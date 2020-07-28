@@ -188,7 +188,7 @@ class DOMmanipulator {
   goToContestPage(today) {
     this.comingSoon.classList.add('hidden')
     this.unHideElements('#community-cards')
-    this.clearInputForms();
+    this.clearInputForms()
     this.hideElements('#daily-cards', '#user-cards', '#new-info')
     this.displayCommunitySection(today)
     this.changeSystemMessage('Here`s how the community`s doing')
@@ -321,7 +321,6 @@ class DOMmanipulator {
         `${moment(calDate).format('MMMM Do YYYY')}`)
       }
     })
-
   }
 
   addUserDate(today) {
@@ -337,10 +336,10 @@ class DOMmanipulator {
     return hydrationData.map(date => date.date)
   }
 
-  communitySectionMiles(date) {
+  communitySectionMiles(today) {
     const totalMiles = activityRepo.getUserTotalMiles(currentUserId, userRepo);
-    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, date, userRepo);
-    console.log(totalMiles, userMilesToday); 
+    const userMilesToday = activityRepo.getMilesFromStepsByDate(currentUserId, today, userRepo);
+    console.log(today); 
     const display = document.getElementById('miles');
     const milesHtml = `
       <p class="message-miles">Total Miles For Today:</p>
@@ -358,22 +357,22 @@ class DOMmanipulator {
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
     const streaksHtml = `
+      <p class="message-comm-head">Streak Records:</p>
       <p class="message-comm">Minutes Active:</p>
-      <span class="number" id="streak">${minutesActiveStreak.length}</span>
+      <span class="number" id="streak">${minutesActiveStreak.length}x</span>
       <p class="message-comm">Step Goal Total:</p>
-      <span class="number" id="">${numStepsStreak.length}</span>
+      <span class="number" id="">${numStepsStreak.length}x</span>
       <p class="message-comm">Stair Goal Total:</p>
-      <span class="number" id="">${flightsStreak.length}</span>
-      <p class="message-comm"Stair record:</p>
-      <span class="number" id="">${stairRecord}</span>
+      <span class="number" id="">${flightsStreak.length}x</span>
+      <p class="message-comm">Stair record:</p>
+      <span class="number" id="">${stairRecord}x</span>
     `;
     display.innerHTML = streaksHtml;
   }
 
-  communitySectionSteps(date) {
-    console.log(date);
-    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, date, userRepo);
-    const stepsToGo = activityRepo.remainingSteps(currentUserId, date, userRepo);
+  communitySectionSteps(today) {
+    const stepGoalStatus = activityRepo.accomplishedStepGoal(currentUserId, today, userRepo);
+    const stepsToGo = activityRepo.remainingSteps(currentUserId, today, userRepo);
     const stepGoalDates = activityRepo.getDaysGoalExceeded(currentUserId, userRepo);
     let display = document.getElementById('steps');
     const stepsHtml = `
@@ -386,16 +385,16 @@ class DOMmanipulator {
     display.innerHTML = stepsHtml;
   }
 
-  communitySectionCompetitive(date) {
-    const user = userRepo.findUserById(currentUserId);
-    const stepWinner = userRepo.showcaseWinner(user, date);
-    const bestSleeper = userRepo.determineSleepWinnerForWeek(date);
+  communitySectionCompetitive(today) {
+    // const user = userRepo.findUserById(currentUserId);
+    // const stepWinner = userRepo.showcaseWinner(user, today);
+    // const bestSleeper = userRepo.determineSleepWinnerForWeek(today);
     const display = document.getElementById('friends');
     const friendsHtml = `
       <p class="message-comm">Top Performer:</p>
-      <span class="message-friend" id="friend-perform">${stepWinner}</span>
+      <span class="message-friend" id="friend-perform"></span>
       <p class="message-comm">Most Rested:</p>
-      <span class="message-friend" id="friend-activity">${bestSleeper}</span>
+      <span class="message-friend" id="friend-activity"></span>
       <p class="message-comm">Todays Winner:</p>
       <span class="number" id="">TBD</span>
     `;

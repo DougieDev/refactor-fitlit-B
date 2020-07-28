@@ -26,21 +26,29 @@
 
   &-streak {
     background-color: $teal;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-top(1.2s);
   }
 
   &-steps {
     background-color: $yellow;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-left(1.2s);
   }
 
   &-friends {
     background-color: $pink;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-right(1.2s);
   }
 
   &-miles {
     background-color: $white;
+    font-size: 1em;
+    font-weight: 800;
     @include card-animation-bottom(1.2s);
   }
 }
