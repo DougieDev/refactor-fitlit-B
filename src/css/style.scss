@@ -3,7 +3,6 @@
 @import 'card-design';
 @use './node_modules/pikaday/css/pikaday.scss';
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -114,23 +113,22 @@ table {
 
 .user-account {
     position: relative;
-    width: 100%;
     margin-left: 2%;
+    width: 100%;
   }
 
-.app-message {
+
+.app-message-mobile {
     @include hide-elements;
-  }
+}
 
 .hidden {
   display: none;
 }
 
+//MEDIA QUERY SMALL TABLET AND PHONE
 
-
-//MEDIA QUERY
-
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 620px) {
   
   .main {
     display: block;
@@ -225,6 +223,11 @@ table {
   .hidden {
     display: none;
   }
+
+}
+
+
+@media only screen and (min-width: 620px) {
 
 }
 
