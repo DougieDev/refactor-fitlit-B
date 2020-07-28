@@ -16,7 +16,7 @@ class PageController {
     this.comingSoon = document.querySelector('#friends-calendar')
   }
   
-  changeSystemMessage(message) {
+  changeSystemMessage(message = '') {
     let display = document.getElementById('app-message')
     display.innerText = message
   }
@@ -105,7 +105,6 @@ class PageController {
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
-   
   }
   
   populateUserCard(user) {
