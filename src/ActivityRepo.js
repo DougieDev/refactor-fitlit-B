@@ -48,14 +48,14 @@ class ActivityRepo extends Repo {
         dates.push(data.date);
       }
       return dates;
-    },[]);
+    }, []);
   }
 
   getStreak(id, activityType) {
     let sortedUserArray = (this.sortUserDataByDate(id)).reverse();
     let streaks = sortedUserArray.filter((activity, index) => {
       if (index >= 2) {
-        return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType] 
+        return (sortedUserArray[index - 2][activityType] < sortedUserArray[index - 1][activityType]
         && sortedUserArray[index - 1][activityType] < sortedUserArray[index][activityType])
       }
     });
@@ -63,7 +63,7 @@ class ActivityRepo extends Repo {
       return streak.date;
     })
   }
-  
+
   getStairRecord(id) {
     return this.data
       .filter(data => id === data.userID)

@@ -7,7 +7,8 @@ const Repo = require('../src/Repo').default;
 const ActivityRepo = require('../src/ActivityRepo').default;
 
 describe('UserRepo',  () => {
-  let user1, user2, userRepo, sleepRepo, activityRepo, hydrationRepo;
+  let user1, user2, users, userRepo, sleepRepo, activityRepo, hydrationRepo,
+    activityData, hydrationData, sleepData;
   beforeEach( () => {
 
     user1 = new User({
@@ -109,29 +110,29 @@ describe('UserRepo',  () => {
       "date": "2019/06/17",
       "hoursSlept": 4,
       "sleepQuality": 5
-      }];
+    }];
 
     hydrationData = [
-    {
-      "userID": 1,
-      "date": "2019/06/15",
-      "numOunces": 60
-    },
-    {
-      "userID": 2,
-      "date": "2019/06/15",
-      "numOunces": 600
-    },
-    {
-      "userID": 1,
-      "date": "2019/06/16",
-      "numOunces": 60
-    },
-    {
-      "userID": 2,
-      "date": "2019/06/16",
-      "numOunces": 600
-    }];
+      {
+        "userID": 1,
+        "date": "2019/06/15",
+        "numOunces": 60
+      },
+      {
+        "userID": 2,
+        "date": "2019/06/15",
+        "numOunces": 600
+      },
+      {
+        "userID": 1,
+        "date": "2019/06/16",
+        "numOunces": 60
+      },
+      {
+        "userID": 2,
+        "date": "2019/06/16",
+        "numOunces": 600
+      }];
 
     users = [user1, user2];
     sleepRepo = new Repo();
