@@ -134,6 +134,9 @@ table {
     display: block;
     position: fixed;
     max-width: 100%;
+    height: 100%;
+    min-width: 321px;
+    overflow-x: scroll;
   }
 
   body {
@@ -176,31 +179,24 @@ table {
     &-container {
     display: inline-block;
     width: 100%;
-    margin: 18% 0;
+    margin-top: 10vh;
     
     }
   }
   .app-message-mobile {
     color: $black;
-    font-size: 2em; 
+    font-size: 1.6em; 
     line-height: 2; 
     position: absolute; 
     text-transform: capitalize; 
     width: 100%; 
-    animation: moveInRight 1.2s ease-out; 
+    visibility: visible;
+    @include card-animation-right(1.2s);
   }
 
   .card-container {
      width: 100%;
      height: 100%;
-  }
-
-  .friend-label {
-    @include hide-elements;
-  }
-
-  .friend {
-    @include hide-elements;
   }
 
   .number {
@@ -210,6 +206,14 @@ table {
   .info-text > .number {
     font-size: .8em;
   }
+
+  .new-info-button {
+    border-radius: 12px;
+    font-size: 1em;
+    height: 30px;
+    width: 35%;
+    margin: 5% 10%;
+}
 
   .page-info {
     font-size: 1em;
@@ -224,12 +228,20 @@ table {
     display: none;
   }
 
+  .app-message {
+    @include hide-elements;
+  }
+
+  .friend-label {
+    @include hide-elements;
+  }
+
+  .friend {
+    @include hide-elements;
+  }
+
 }
 
-
-@media only screen and (min-width: 620px) {
-
-}
 
 
 
