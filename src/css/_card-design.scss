@@ -5,7 +5,7 @@
   font-family: sans-serif;
   font-size: 1.5em;
   min-width: 250px;
-  margin: 2.5% 2.5%;
+  margin: 1.5% 2.5%;
   padding: 1em;
   justify-content: space-between;
   text-align: center;
@@ -53,6 +53,32 @@
   }
 }
 
+.calendar-button {
+  font-weight: heavy;
+  font-size: 1.25em;
+  border: 1px solid;
+}
+
+#weekly-hydration {
+  background-color: $teal;
+}
+
+#weekly-activity {
+  background-color: $pink;
+}
+
+#weekly-sleep {
+  background-color: #DFE166;
+}
+
+.info-card > .number {
+  font-size: 18px;
+}
+
+.historic-data > .number {
+  font-size: 1em;
+}
+
 .hydration-card {
   background-color: $teal;
   @include card-animation-bottom(1.2s);
@@ -88,8 +114,9 @@
   flex-direction: column;
   height: auto;
   margin: 0 2.5% 2.5%;
-  width: 600px;
-  
+  width: 71%;
+  overflow-y: scroll;
+
   @include card-border-radius;
   @include card-animation-bottom(1.5s);
 }

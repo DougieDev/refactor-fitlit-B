@@ -4,7 +4,9 @@ import './images/person walking on path.jpg';
 import './images/arnie.jpg';
 
 import User from './User';
-import DOMmanipulator from './page-manipulation';
+import PageController from './PageController';
+import Time from './Time';
+
 import {
   userRepo, 
   hydrationRepo, 
@@ -14,9 +16,10 @@ import {
 } from './globals';
 
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
-const page = new DOMmanipulator();
+const time = new Time();
+const page = new PageController();
 let currentUser;
-let today;
+let today; 
 
 const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
@@ -39,22 +42,22 @@ function buttonHandler(event) {
     page.clearInputForms()
     page.goToDailyPage()
   } else if (button.id.includes('weekly')) {
+    // if value is not blank
     page.displayWeeklyData(event, currentUserId);
   } else if (button.id.includes('user-stats')) {
     page.goToUserPage(currentUser);
   } else if (button.id.includes('daily-stats')) {
     page.goToDailyPage(today);
   } else if (button.id.includes('community-stats')) {
-    page.goToContestPage(today);
+    page.goToContestPage(today);  
   }
 }
-
+  
 function sidebarHandler(event) {
-  if (event.target.className === 'friend') {
-    page.seeFriendsStats(event, today)
-  }
   if (event.target.id.includes('stats')) {
-    buttonHandler(event)
+      buttonHandler(event)    
+  } else if (event.target.className.includes('friend')) {
+    page.seeFriendsStats(event, today)
   }
 }
 
@@ -74,9 +77,9 @@ const dataEventHandler = (dataSet) => {
       currentUserId, 
       today
     )
-    page.addCalendar(currentUserId)
+    time.addCalendar(currentUserId)
     page.addUserDate(today)
-    page.populateWeeklyDates(hydrationRepo, currentUserId)
+    time.populateWeeklyDates(currentUserId, hydrationRepo)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
@@ -114,6 +117,7 @@ const catchData = (dataSet) => {
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
     .then(() => dataEventHandler(dataSet))
+    .catch((error) => console.log(error))
     .catch(() => page.changeSystemMessage('Something went wrong ' +
     'please try again'))
 }
@@ -160,4 +164,4 @@ const organizePost = (info) => {
 
 startApp();
 
-export {currentUser, today}
+export {currentUser, today, page}

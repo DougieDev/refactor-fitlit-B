@@ -1,35 +1,22 @@
 import moment from 'moment';
-// import Pikaday from 'pikaday';
 import {
   userRepo,
   hydrationRepo,
   activityRepo,
   sleepRepo,
-  currentUserId,
+  currentUserId
 } from './globals';
 
-class DOMmanipulator {
+class PageController {
+
   constructor() {
-    this.dateField = document.getElementById('new-date');
+    this.dateField = document.getElementById('new-date')
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
+    this.currentDate = document.getElementById('user-date')
   }
   
-  populateWeeklyDates(repo, id) {
-    const mondays = repo.findWeeklyStartDates(id);
-    const select = document.querySelector("#week-select");
-    let options = mondays.reduce((week, monday) => {
-      const momentMonday = moment(monday).format('MMMM Do YYYY')
-      week += `
-      <option value="${monday}">
-        Week of ${momentMonday}
-      </option>`;
-      return week;
-    }, "");
-    select.insertAdjacentHTML("beforeend", options);
-  }
-  
-  changeSystemMessage(message) {
+  changeSystemMessage(message = '') {
     let display = document.getElementById('app-message')
     display.innerText = message
   }
@@ -58,18 +45,23 @@ class DOMmanipulator {
   createWeeklyLayoutHtml() {
     return {
       'weekly-hydration': `
-        <span class="number" id="numOunces">0</span> oz drank`,
+        <span class="number number-teal" id="numOunces">0</span><br />oz drank`,
       'weekly-activity': 
-        `Step Count: <span class="number" id="numSteps">0</span>
-        Stair Count: <span class="number" id="flightsOfStairs">0</span>
-        Minutes Active: <span class="number" id="minutesActive">0</span>`,
+        `Step Count:<br />
+        <span class="number number-pink" id="numSteps">0</span><br />
+        Stair Count:<br />
+        <span class="number number-pink" id="flightsOfStairs">0</span><br />
+        Minutes Active:<br />
+        <span class="number number-pink" id="minutesActive">0</span>`,
       'weekly-sleep': 
-        `Hours Asleep: <span class="number" id="hoursSlept">0</span>
-        Sleep Quality: <span class="number" id="sleepQuality">0</span>out of 5`
+        `Hours Asleep:<br />
+        <span class="number number-yellow" id="hoursSlept">0</span><br />
+        Sleep Quality:<br />
+        <span class="number number-yellow" id="sleepQuality">0</span><br />
+        out of 5`
     }
   }
 
-  
   populateWeeklyData(repo, userId) {
     const calendar = document.querySelectorAll('.historic-data')
     const date = document.getElementById('week-select').value
@@ -114,12 +106,11 @@ class DOMmanipulator {
         friendsHtml = user.friends.reduce((listItems, id) => {
           let friend = userRepo.findUserById(id);
           return listItems += 
-          `<p class="friend" id="${friend.id}">${friend.name}</p>`
+          `<button class="friend sidebar-buttons" tabindex="0" id="${friend.id}">${friend.name}</button>`
         }, '');
         sidebarElements[i].innerHTML = friendsHtml;
       }
     }
-   
   }
   
   populateUserCard(user) {
@@ -159,7 +150,6 @@ class DOMmanipulator {
   }
 
   goToUserPage(user) {
-    this.comingSoon.classList.add('hidden')
     this.clearInputForms();
     this.unHideElements('#user-cards')
     this.hideElements('#daily-cards', '#community-cards', '#new-info')
@@ -169,6 +159,7 @@ class DOMmanipulator {
   }
 
   goToDailyPage(today) {
+    this.currentDate.classList.remove('hidden')
     this.comingSoon.classList.add('hidden')
     this.calendar.classList.remove('hidden')
     this.unHideElements('#daily-cards', '#new-info')
@@ -195,6 +186,7 @@ class DOMmanipulator {
   }
 
   seeFriendsStats(event, today) {
+    this.currentDate.classList.add('hidden')
     this.calendar.classList.add('hidden')
     this.comingSoon.classList.remove('hidden')
     let userId = parseInt(event.target.id);
@@ -246,7 +238,6 @@ class DOMmanipulator {
   }
 
   pullInfoFromPage(id) {
-    
     if (this.checkValueFields() === false) {
       this.changeSystemMessage('Please fill in all of the information')
       return `All required values are not present`
@@ -304,28 +295,8 @@ class DOMmanipulator {
     }
   }
 
-  addCalendar(id) {
-    const pikaday = new Pikaday({
-      field: document.getElementById('calendar-container'),
-      bound: false,
-      container: document.getElementById('calendar-container'),
-      disableDayFn: (date) => {
-        date = moment(date).format('YYYY/MM/DD')
-        const datesWithData = this.findEligibleDates(id)
-        if (!datesWithData.includes(date)) return date
-      },
-      onSelect: () => {
-        let calDate = pikaday.getMoment().format('YYYY/MM/DD');
-        this.goToDailyPage(calDate)
-        this.changeSystemMessage('Here are your stats form ' +
-        `${moment(calDate).format('MMMM Do YYYY')}`)
-      }
-    })
-  }
-
   addUserDate(today) {
-    const currentDate = document.getElementById('user-date')
-    currentDate.insertAdjacentHTML(
+    this.currentDate.insertAdjacentHTML(
       'afterbegin', `Your most recent entry is from <br />
       ${moment(today).format('MMMM Do YYYY')}`
     )
@@ -410,5 +381,4 @@ class DOMmanipulator {
   }
 }
 
-
-export default DOMmanipulator
+export default PageController

@@ -1,15 +1,16 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const UserRepo = require('../src/UserRepo')
-const User = require('../src/User')
-const Repo = require('../src/Repo')
-const ActivityRepo = require('../src/ActivityRepo')
+const UserRepo = require('../src/UserRepo').default;
+const User = require('../src/User').default;
+const Repo = require('../src/Repo').default;
+const ActivityRepo = require('../src/ActivityRepo').default;
 
-describe('UserRepo', function() {
+describe.only('UserRepo', function() {
   let user1, user2, userRepo, sleepRepo, activityRepo, hydrationRepo;
   beforeEach(function() {
-    user1 = new User ({
+
+    user1 = new User({
       id: 1,
       name: 'Joshua Danger Sevy',
       address: "3000 Champions Lane, Mars",
@@ -18,6 +19,7 @@ describe('UserRepo', function() {
       dailyStepGoal: 1,
       friends: [1]
     });
+
     user2 = new User({
       id: 2,
       name: '#D0UG13',
@@ -112,7 +114,7 @@ describe('UserRepo', function() {
     hydrationData = [
     {
       "userID": 1,
-        "ate": "2019/06/15",
+      "date": "2019/06/15",
       "numOunces": 60
     },
     {
@@ -132,13 +134,14 @@ describe('UserRepo', function() {
     }];
 
     users = [user1, user2];
-    userRepo = new UserRepo();
-    activityRepo = new ActivityRepo;
-    activityRepo.storeData(activityData);
     sleepRepo = new Repo();
     sleepRepo.storeData(sleepData);
     hydrationRepo = new Repo();
     hydrationRepo.storeData(hydrationData);
+    activityRepo = new ActivityRepo;
+    activityRepo.storeData(activityData);
+    userRepo = new UserRepo();
+    userRepo.storeData(users);
   });
 
   it('should be a function', function() {
@@ -155,16 +158,6 @@ describe('UserRepo', function() {
     expect(userRepo.data).to.deep.equal(users)
   });
 
-/* THE EXPECTATION HERE IS AN INSTANCEOF RESULT BECAUSE OF THE getRandomNumber
-METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
-  it('should be able to find the current user', function() {
-    userRepo.storeData(users)
-
-    expect(userRepo.currentUser).to.equal(null)
-    userRepo.findCurrentUser()
-    expect(userRepo.currentUser).to.be.an.instanceof(User)
-  });
-
   it('should be able to find a user by their ID', function() {
     userRepo.storeData(users)
     userRepo.findUserById(1)
@@ -173,25 +166,23 @@ METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
     expect(results.name).to.equal('Joshua Danger Sevy')
   });
 
-  it('should return a random number', function() {
-    userRepo.getRandomNumber()
-
-    expect(userRepo.getRandomNumber()).to.be.a('number')
-  });
-
-  it.only('should return the most active steps user', function() {
-    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  it('should return the greatest steps user', function() {
+    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo))
+      .to.be.an('object')
+      .to.eql({name: '#D0UG13', activity: 4294 });
   })
 
-  it.only('should return the most active steps user', function () {
-    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  it('should return the most active user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "minutesActive", activityRepo))
+      .to.be.an('object')
+      .to.eql({ name: 'Joshua Danger Sevy', activity: 140 });
   })
 
-  it.only('should return the most active steps user', function () {
-    expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
+  it('should return the most hydrated user', function () {
+    expect(userRepo.getTopPerformer("2019/06/15", "numOunces", hydrationRepo)).to.eql({ name: '#D0UG13', activity: 600 });
   })
 
-  it.only('should return the most active steps user', function () {
+  it.skip('should return the most rested user', function () {
     expect(userRepo.getTopPerformer("2019/06/15", "numSteps", activityRepo)).to.eql({ name: 'Joshua Danger Sevy', activity: 3577 });
   })
   // it.only('', function() {
