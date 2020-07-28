@@ -1,5 +1,6 @@
 import Repo from './Repo'
 import User from './User';
+import { activityRepo } from './globals';
 
 
 
@@ -64,13 +65,18 @@ THIS WAS RESULTING IN THE TEST PASSING SOMETIMES AND FAILING OTHER TIMES.*/
   }
 
   getTopPerformer(date, activityType, repo) {
-    const winner = repo.getAllDataByDay(date);
-    const topPerformer = winner.reduce((compare, currentValue) => {
+    const winnerData = repo.getAllDataByDay(date);
+    let topPerformer = winnerData.reduce((compare, currentValue) => {
       return (compare[activityType] > currentValue[activityType] ? compare : currentValue);
     });
     const user = this.findUserById(topPerformer.userID);
-    topPerformer.name = user.name;
-    topPerformer.activity = topPerformer[activityType];
+
+    topPerformer = {
+      name: user.name,
+      activity: topPerformer[activityType]
+    }
+    // topPerformer.name = user.name;
+    // topPerformer.activity = topPerformer[activityType];
     console.log(topPerformer);
     return topPerformer;
   }

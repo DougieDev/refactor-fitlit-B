@@ -38,5 +38,6 @@ class User {
 //     return repo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
 //   }
 // }
+}
 
 export default User;
