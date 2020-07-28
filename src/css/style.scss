@@ -49,7 +49,7 @@ h2 {
   letter-spacing: 1.5px;
   line-height: 1.5;
   margin-top: 1.5%;
-  padding: 0em, 1em;
+  padding: 0em, 2em;
   position: absolute;
   text-align: center;
   text-transform: capitalize;
@@ -67,6 +67,7 @@ h3 {
 .page-info {
   font-size: 1.5em;
   margin: 2em 1em 0;
+  width: 100%;
 }
 
 table, th, td {
@@ -159,7 +160,7 @@ table {
   }
 
   h1 {
-    margin: 5%;
+    margin: .8em;
     font-size: .8em;
     overflow: hidden;
     text-align: center;
@@ -169,7 +170,7 @@ table {
   .sidebar-container {
     box-shadow: 8px 14px 10px 0px $black;
     display: inline-block;
-    height: 26vh;
+    height: 8em;
     position: relative;
     text-align: center;
     width: 100%;
@@ -193,7 +194,7 @@ table {
     &-container {
     display: inline-block;
     width: 100%;
-    margin-top: 10vh;
+    margin-top: 3em;
     
     }
   }
@@ -203,7 +204,6 @@ table {
     font-size: 1.6em; 
     line-height: 2; 
     position: absolute; 
-    text-transform: capitalize; 
     width: 100%; 
     visibility: visible;
     @include card-animation-right(1.2s);
@@ -232,7 +232,7 @@ table {
 
   .page-info {
     font-size: 1em;
-    margin: 2% 2% 0;
+    margin: 2% 2em 0;
   }
 
   .week-card {
