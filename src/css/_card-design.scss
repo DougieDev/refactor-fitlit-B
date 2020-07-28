@@ -51,6 +51,7 @@
 
 .info-card > .number {
   font-size: 18px;
+  overflow-wrap: anywhere;
 }
 
 .week-card {
@@ -61,11 +62,6 @@
   height: auto;
   width: 600px;
   margin: 0 2.5% 2.5%;
-
-  #weekly-data-options {
-      // display: flex;
-      // flex-direction: column;
-  }
 }
 
 .hydration-card {
@@ -101,21 +97,9 @@
 .is-disabled > * {
   color: $sidebar-grey;
 }
-// .calendar-container {
-//   @include card-animation-bottom(1.4s);  
-//   }
-
-/* This controls the friends list on the left-sidebar.
-As of right now, I can't see any other use for it.
-Likely needs its name changed.*/
 
 .new-info {
 width: 100%;
-
-
-  &-button {
-    
-  }
 }
 
 

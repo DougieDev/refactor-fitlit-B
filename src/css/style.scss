@@ -1,9 +1,19 @@
-@import 'media-query';
 @import 'variables';
 @import 'sidebar-design';
 @import 'card-design';
-@import 'reset';
 @use './node_modules/pikaday/css/pikaday.scss';
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
 
 body {
   font-family: 'Open Sans';
@@ -102,9 +112,126 @@ table {
   width: 15vw;
 }
 
+.user-account {
+    position: relative;
+    width: 100%;
+    margin-left: 2%;
+  }
+
+.app-message {
+    @include hide-elements;
+  }
+
 .hidden {
   display: none;
 }
+
+
+
+//MEDIA QUERY
+
+@media only screen and (max-width: 768px) {
+  
+  .main {
+    display: block;
+    position: fixed;
+    max-width: 100%;
+  }
+
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    margin: 5%;
+    font-size: .8em;
+    overflow: hidden;
+    text-align: center;
+    animation: moveInLeft 1.2s ease-out;
+  }
+
+  .sidebar-container {
+    box-shadow: 8px 14px 10px 0px $black;
+    display: inline-block;
+    height: 26vh;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    
+    @include sidebar-color;
+  }
+
+  .sidebar-header-userImage {
+    @include hide-elements;
+  }
+
+  .sidebar-buttons {
+  align-content: center;
+  border-radius: 10px;
+  font-size: .6em;
+  height: 25px;
+  margin: 0 1%;
+  text-transform: uppercase;
+  width: 29%;
+
+    &-container {
+    display: inline-block;
+    width: 100%;
+    margin: 18% 0;
+    
+    }
+  }
+  .app-message-mobile {
+    color: $black;
+    font-size: 2em; 
+    line-height: 2; 
+    position: absolute; 
+    text-transform: capitalize; 
+    width: 100%; 
+    animation: moveInRight 1.2s ease-out; 
+  }
+
+  .card-container {
+     width: 100%;
+     height: 100%;
+  }
+
+  .friend-label {
+    @include hide-elements;
+  }
+
+  .friend {
+    @include hide-elements;
+  }
+
+  .number {
+    font-size: 1em;
+  }
+
+  .info-text > .number {
+    font-size: .8em;
+  }
+
+  .page-info {
+    font-size: 1em;
+    margin: 2% 2% 0;
+  }
+
+  .week-card {
+    @include hide-elements;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+}
+
+
+
+
+
 
 
 
