@@ -129,7 +129,7 @@ This strategy was also particularly helpful when gathering a User's new data to 
 
 ### Joshua Sevy - [GitHub](https://github.com/joshsevy/) - [LinkedIn](https://www.linkedin.com/in/joshua-sevy/) - joshuasevy@outlook.com
 
-### Carlyle Douglas - [GitHub](https://github.com/DougieDev) - [LinkedIn](https:/www.linkedin.com/in/carlyle-douglas-9b812490/) 
+### Carlyle Douglas - [GitHub](https://github.com/DougieDev) - [LinkedIn](https:/www.linkedin.com/in/carlyle-douglas-9b812490/) - cdouglascorp@gmail.com
 
 Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
