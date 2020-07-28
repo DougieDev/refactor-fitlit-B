@@ -37,6 +37,6 @@ class User {
 //     let timeline = this.getAllDataByWeek(friendsActivity, date);
 //     return repo.combineRankedUserIDsAndAveragedData(friendsActivity, date, 'numSteps', timeline)
 //   }
-// }
+}
 
 export default User;

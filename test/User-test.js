@@ -5,6 +5,7 @@ const User = require('../src/User').default;
 
 describe('User', function() {
   let user1, user2, user3, user4;
+  let mockUserStorage
   beforeEach(function() {
     user1 = new User({
       id: 1,
@@ -45,81 +46,85 @@ describe('User', function() {
     mockUserStorage = [user1, user2, user3, user4]
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(User).to.be.a('function')
   });
 
-  it.only('should be an instance of User', function() {
+  it('should be an instance of User', function() {
     expect(user1).to.be.an.instanceof(User)
   });
 
-  it.only('should have a name', function() {
+  it('should have a name', function() {
     expect(user1.name).to.equal('Alex Roth')
   });
 
-  it.only('should be able to have a different name', function() {
+  it('should be able to have a different name', function() {
     expect(user2.name).to.equal('Allie McCarthy')
   });
 
-  it.only('should have an id', function() {
+  it('should have an id', function() {
     expect(user1.id).to.equal(1)
   });
 
-  it.only('should be able to have a different id', function() {
+  it('should be able to have a different id', function() {
     expect(user2.id).to.equal(2)
   });
 
-  it.only('should have an address', function() {
+  it('should have an address', function() {
     expect(user1.address).to.equal("1234 Turing Street, Denver CO 80301-1697")
   });
 
-  it.only('should be able to have a different address', function() {
+  it('should be able to have a different address', function() {
     expect(user2.address).to.equal('1235 Turing Street, Denver CO 80301-1697')
   });
 
-  it.only('should have an email address', function() {
+  it('should have an email address', function() {
     expect(user1.email).to.equal('alex.roth1@hotmail.com')
   });
 
-  it.only('should be able to have a different email address', function() {
+  it('should be able to have a different email address', function() {
     expect(user2.email).to.equal('allie.mcc1@hotmail.com')
   });
 
-  it.only('should have a stride length', function() {
+  it('should have a stride length', function() {
     expect(user1.strideLength).to.equal(4.3)
   });
 
-  it.only('should have a different stride length', function() {
+  it('should have a different stride length', function() {
     expect(user2.strideLength).to.equal(3.3)
   });
 
-  it.only('should have a daily step goal', function() {
+  it('should have a daily step goal', function() {
     expect(user1.dailyStepGoal).to.equal(10000)
   });
 
-  it.only('should be able to have a different daily step goal', function() {
+  it('should be able to have a different daily step goal', function() {
     expect(user2.dailyStepGoal).to.equal(9000)
   });
 
 
-  it.only('should have friends', function() {
+  it('should have friends', function() {
     expect(user1.friends).to.deep.equal([2, 3, 4])
   });
 
-  it.only('should have a different set of friends', function() {
+  it('should have a different set of friends', function() {
     expect(user2.friends).to.deep.equal([1, 3, 4])
   });
 
-  it.only('should be able to return a users first name', function() {
+  it('should be able to return a users first name', function() {
     user1.getFirstName()
 
     expect(user1.getFirstName()).to.equal('Alex')
   });
 
-  it.only('should be able to see their friends names', function() {
+  it('should be able to see their friends names', function() {
     user1.getFriendsNames(mockUserStorage)
 
-    expect(user1.getFriendsNames(mockUserStorage)).to.deep.equal(['Allie McCarthy', 'The Rock', 'Rainbow Dash'])
+    expect(user1.getFriendsNames(mockUserStorage)).to.deep.equal([
+      'Allie McCarthy', 
+      'The Rock', 
+      'Rainbow Dash'
+    ])
   });
 
 })
