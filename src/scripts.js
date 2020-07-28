@@ -5,7 +5,7 @@ import './images/arnie.jpg';
 
 import User from './User';
 import DOMmanipulator from './page-manipulation';
-import addCalendar from './calendar'
+import Time from './Time'
 
 import {
   userRepo, 
@@ -13,12 +13,13 @@ import {
   activityRepo, 
   sleepRepo, 
   currentUserId, 
+  time
 } from './globals';
 
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
 const page = new DOMmanipulator();
 let currentUser;
-let today;
+let today; 
 
 const sideBar = document.querySelector('.sidebar-container')
 const selectBar = document.querySelector('#week-select')
@@ -76,7 +77,7 @@ const dataEventHandler = (dataSet) => {
       currentUserId, 
       today
     )
-    addCalendar(currentUserId)
+    time.addCalendar(currentUserId)
     page.addUserDate(today)
     page.populateWeeklyDates(hydrationRepo, currentUserId)
   } else if (dataSet === 'sleepData') {

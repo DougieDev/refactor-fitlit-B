@@ -1,7 +1,5 @@
-/* eslint-disable curly */
-import moment from 'moment';
-
 class Repo {
+
   constructor() {
     this.data;
   }
@@ -149,15 +147,7 @@ class Repo {
     );
   }
 
-  findWeeklyStartDates(id) {
-    const sortedData = this.sortDataByDate(id);
-    return sortedData.reduce((mondays, dataPoint) => {
-      if (moment(dataPoint.date).format("dddd") === "Monday") {
-        mondays.push(dataPoint.date);
-      }
-      return mondays;
-    }, []);
-  }
+
 
   presentWeek(date, id) {
     let allDates = this.sortUserDataByDate(id);

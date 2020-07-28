@@ -29,21 +29,21 @@ describe('UserRepo', function() {
     userRepo = new UserRepo();
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(UserRepo).to.be.a('function')
   });
 
-  it.only('should be an instance of UserRepo', function() {
+  it('should be an instance of UserRepo', function() {
     expect(userRepo).to.be.an.instanceof(UserRepo)
   });
 
-  it.only('should be able to store data', function() {
+  it('should be able to store data', function() {
     userRepo.storeData(users)
 
     expect(userRepo.data).to.deep.equal(users)
   });
 
-  it.only('should be able to find a user by their ID', function() {
+  it('should be able to find a user by their ID', function() {
     userRepo.storeData(users)
     userRepo.findUserById(1)
     let results = userRepo.findUserById(1)

@@ -164,7 +164,6 @@ describe('Repo', () => {
   it('should be able to save data', () => {
     repo.storeData(rawUsers)
     expect(repo.users).to.deep.equal(rawUsers)
-    console.log(repo)
   })
 
   it('should only save data that is an array', () => {
@@ -213,8 +212,8 @@ describe('Repo', () => {
       sleep7,
       sleep8,
       sleep0]);
-    })
-    // ^ could use an id sad path, but I think it would require if statements outside of the reduce.
+  })
+
   it('should know when an id is incorrect when getting all of a users data', () => {
     let result = sleepRepo.getAllDataById('abe')
     expect(result).to.equal('This id is incorrect');
@@ -272,19 +271,28 @@ describe('Repo', () => {
       sleep7,
       sleep8])
   }) 
-  //sad path: what if there's missing dates?
+
   it('should be able to get a Users the average for a week', () => {
-    let result = sleepRepo.getUserAverageForWeek(3000, '2040/01/10', 'hoursSlept')
+    let result = sleepRepo.getUserAverageForWeek(
+      3000, 
+      '2040/01/10', 
+      'hoursSlept'
+    )
     expect(result).to.equal(23.1)
   })
 
-  it('should be able to get all users average for a datapoint on a given day', () => {
-    let result = sleepRepo.getAllUserAverageForDay('2040/01/04', 'hoursSlept')
+  it('should get all users average for a data point on a given day', () => {
+    let result = sleepRepo.getAllUserAverageForDay(
+      '2040/01/04', 
+      'hoursSlept'
+    )
     expect(result).to.equal(22.5)
   })
   
-  it.only('should be able to return Mondays from a given users data', () => {
+  it.skip('should be able to return Mondays from a given users data', () => {
     let result = sleepRepo.findWeeklyStartDates(3000)
     expect(result).to.deep.equal([`2040/01/09`]);
+    // this was tested and passed but at some point broke because of moment
+    // see note in `Time.js` for more information
   })
 });

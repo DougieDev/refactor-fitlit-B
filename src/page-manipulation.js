@@ -6,6 +6,7 @@ import {
   activityRepo,
   sleepRepo,
   currentUserId,
+  time
 } from './globals';
 
 class DOMmanipulator {
@@ -16,7 +17,7 @@ class DOMmanipulator {
   }
   
   populateWeeklyDates(repo, id) {
-    const mondays = repo.findWeeklyStartDates(id);
+    const mondays = time.findWeeklyStartDates(id);
     const select = document.querySelector("#week-select");
     let options = mondays.reduce((week, monday) => {
       const momentMonday = moment(monday).format('MMMM Do YYYY')
