@@ -11,3 +11,9 @@ describe('scripts', () => {
     global.window = { document: { querySelector: () => { } } }
     global.window = windowRef
   })
+
+  it('should be a function', () => {
+    expect(PageController).to.be.a('function')
+  })
+
+})

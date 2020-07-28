@@ -5,6 +5,7 @@ import './images/arnie.jpg';
 
 import User from './User';
 import PageController from './PageController';
+import Time from './Time';
 
 import {
   userRepo, 
@@ -12,10 +13,10 @@ import {
   activityRepo, 
   sleepRepo, 
   currentUserId, 
-  time
 } from './globals';
 
 const apiHead = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908';
+const time = new Time();
 const page = new PageController();
 let currentUser;
 let today; 
@@ -79,7 +80,7 @@ const dataEventHandler = (dataSet) => {
     )
     time.addCalendar(currentUserId)
     page.addUserDate(today)
-    page.populateWeeklyDates(currentUserId, hydrationRepo)
+    time.populateWeeklyDates(currentUserId, hydrationRepo)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)

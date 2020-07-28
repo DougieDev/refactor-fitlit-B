@@ -5,8 +5,7 @@ import {
   hydrationRepo,
   activityRepo,
   sleepRepo,
-  currentUserId,
-  time
+  currentUserId
 } from './globals';
 
 class PageController {
@@ -15,20 +14,6 @@ class PageController {
     this.dateField = document.getElementById('new-date');
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
-  }
-  
-  populateWeeklyDates(id, repo) {
-    const mondays = time.findWeeklyStartDates(id, repo);
-    const select = document.querySelector("#week-select");
-    let options = mondays.reduce((week, monday) => {
-      const momentMonday = moment(monday).format('MMMM Do YYYY')
-      week += `
-      <option value="${monday}">
-        Week of ${momentMonday}
-      </option>`;
-      return week;
-    }, "");
-    select.insertAdjacentHTML("beforeend", options);
   }
   
   changeSystemMessage(message) {

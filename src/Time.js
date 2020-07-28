@@ -33,7 +33,6 @@ class Time extends Repo {
   }
 
   findWeeklyStartDates(id, repo) {
-    // debugger
     const sortedData = this.sortUserDataByDate(id, repo.data);
     return sortedData.reduce((mondays, dataPoint) => {
       if (moment(dataPoint.date).format("dddd") === "Monday") {
@@ -41,6 +40,21 @@ class Time extends Repo {
       }
       return mondays;
     }, []);
+  }
+
+
+  populateWeeklyDates(id, repo) {
+    const mondays = this.findWeeklyStartDates(id, repo);
+    const select = document.querySelector("#week-select");
+    let options = mondays.reduce((week, monday) => {
+      const momentMonday = moment(monday).format('MMMM Do YYYY')
+      week += `
+      <option value="${monday}">
+        Week of ${momentMonday}
+      </option>`;
+      return week;
+    }, "");
+    select.insertAdjacentHTML("beforeend", options);
   }
 }
 
