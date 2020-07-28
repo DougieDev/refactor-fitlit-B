@@ -2,6 +2,7 @@ import Repo from './Repo'
 import User from './User';
 
 
+
 class UserRepo extends Repo  {
   constructor(usersData) {
     super(usersData)
@@ -39,6 +40,19 @@ class UserRepo extends Repo  {
       }
       return objectSoFar;
     }, {});
+  }
+
+
+  getTopPerformer(date, activityType, repo) {
+    const winner = repo.getAllDataByDay(date);
+    const topPerformer = winner.reduce((compare, currentValue) => {
+      return (compare[activityType] > currentValue[activityType] ? compare : currentValue);
+    });
+    const user = this.findUserById(topPerformer.userID);
+    topPerformer.name = user.name;
+    topPerformer.activity = topPerformer[activityType];
+    console.log(topPerformer);
+    return topPerformer;
   }
 
   determineBestSleepers(date) {
