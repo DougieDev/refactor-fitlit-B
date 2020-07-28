@@ -384,7 +384,7 @@ class PageController {
     const display = document.getElementById('friends');
     const friendsHtml = 
       `<p class="message-head">
-        Todays Leaders:
+        Leaderboard:
       </p>
       <p class="message-comm">
         Top Stepper:
