@@ -249,4 +249,6 @@ describe('Page controller', () => {
   //   expect(page.insertWeekLayout).to.be.called(1)
   //   expect(page.populateWeeklyData).to.be.called(1)
   // })
+
+
 })
