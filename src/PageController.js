@@ -56,7 +56,6 @@ class PageController {
     }
   }
 
-  
   populateWeeklyData(repo, userId) {
     const calendar = document.querySelectorAll('.historic-data')
     const date = document.getElementById('week-select').value
@@ -233,7 +232,6 @@ class PageController {
   }
 
   pullInfoFromPage(id) {
-    
     if (this.checkValueFields() === false) {
       this.changeSystemMessage('Please fill in all of the information')
       return `All required values are not present`

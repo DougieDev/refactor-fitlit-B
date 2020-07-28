@@ -58,5 +58,4 @@ class Time extends Repo {
   }
 }
 
-
 export default Time;
