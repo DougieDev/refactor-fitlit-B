@@ -45,6 +45,38 @@
   }
 }
 
+.calendar-button {
+  font-weight: heavy;
+  font-size: 1.25em;
+  border: 1px solid;
+}
+
+#weekly-hydration {
+  background-color: $teal;
+}
+
+#weekly-activity {
+  background-color: $pink;
+}
+
+#weekly-sleep {
+  background-color: $yellow;
+}
+
+.info-card > .number {
+  font-size: 18px;
+}
+
+.week-card {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  @include card-border-radius;
+  height: auto;
+  width: 600px;
+  margin: 0 2.5% 2.5%;
+}
+
 .hydration-card {
   background-color: $teal;
   @include card-animation-bottom(1.2s);

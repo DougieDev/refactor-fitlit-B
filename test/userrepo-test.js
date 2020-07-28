@@ -29,45 +29,25 @@ describe('UserRepo', function() {
     userRepo = new UserRepo();
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(UserRepo).to.be.a('function')
   });
 
-  it.only('should be an instance of UserRepo', function() {
+  it('should be an instance of UserRepo', function() {
     expect(userRepo).to.be.an.instanceof(UserRepo)
   });
 
-  it.only('should be able to store data', function() {
+  it('should be able to store data', function() {
     userRepo.storeData(users)
 
     expect(userRepo.data).to.deep.equal(users)
   });
 
-/* THE EXPECTATION HERE IS AN INSTANCEOF RESULT BECAUSE OF THE getRandomNumber
-METHOD IT UTILIZES. THE USER IT GRABS IS ALMOST ALWAYS A DIFFERENT ONE */
-  it.only('should be able to find the current user', function() {
-    userRepo.storeData(users)
-
-    expect(userRepo.currentUser).to.equal(null)
-    userRepo.findCurrentUser()
-    expect(userRepo.currentUser).to.be.an.instanceof(User)
-  });
-
-  it.only('should be able to find a user by their ID', function() {
+  it('should be able to find a user by their ID', function() {
     userRepo.storeData(users)
     userRepo.findUserById(1)
     let results = userRepo.findUserById(1)
 
     expect(results.name).to.equal('Joshua Danger Sevy')
   });
-
-  it.only('should return a random number', function() {
-    userRepo.getRandomNumber()
-
-    expect(userRepo.getRandomNumber()).to.be.a('number')
-  });
-
-  // it.only('', function() {
-  //   expect().to.equal()
-  // })
 })

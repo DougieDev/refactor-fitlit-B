@@ -1,7 +1,5 @@
-/* eslint-disable curly */
-import moment from 'moment';
-
 class Repo {
+
   constructor() {
     this.data;
   }
@@ -43,9 +41,11 @@ class Repo {
     this.data.every((dataPoint) => Object.keys(dataPoint).includes(key));
   }
 
-  getAllDataById(id) {
+  getAllDataById(id, repo = this.data) {
     if (typeof id !== "number") return "This id is incorrect";
-    return this.data.filter((dataPoint) => dataPoint.userID === id);
+    return repo.filter((dataPoint) => {
+      if (dataPoint.userID === id) return dataPoint
+    })
   }
 
   calculateAverage(key, id) {
@@ -65,12 +65,12 @@ class Repo {
         }
       }, 0)
       .toFixed(1);
-    return average;
+    return parseFloat(average);
   }
 
-  sortUserDataByDate(id) {
+  sortUserDataByDate(id, repo) {
     if (typeof id !== "number") return "This id is incorrect";
-    let selectedID = this.getAllDataById(id);
+    let selectedID = this.getAllDataById(id, repo);
     return selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 
@@ -147,16 +147,6 @@ class Repo {
         }, 0)
         .toFixed(1)
     );
-  }
-
-  findWeeklyStartDates(id) {
-    const sortedData = this.sortDataByDate(id);
-    return sortedData.reduce((mondays, dataPoint) => {
-      if (moment(dataPoint.date).format("dddd") === "Monday") {
-        mondays.push(dataPoint.date);
-      }
-      return mondays;
-    }, []);
   }
 
   presentWeek(date, id) {
