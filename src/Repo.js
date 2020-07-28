@@ -41,9 +41,12 @@ class Repo {
     this.data.every((dataPoint) => Object.keys(dataPoint).includes(key));
   }
 
-  getAllDataById(id) {
+  getAllDataById(id, repo = this.data) {
     if (typeof id !== "number") return "This id is incorrect";
-    return this.data.filter((dataPoint) => dataPoint.userID === id);
+    console.log(repo)
+    return repo.filter((dataPoint) => {
+      if (dataPoint.userID === id) return dataPoint
+    })
   }
 
   calculateAverage(key, id) {
@@ -66,9 +69,9 @@ class Repo {
     return parseFloat(average);
   }
 
-  sortUserDataByDate(id) {
+  sortUserDataByDate(id, repo) {
     if (typeof id !== "number") return "This id is incorrect";
-    let selectedID = this.getAllDataById(id);
+    let selectedID = this.getAllDataById(id, repo);
     return selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 

@@ -78,7 +78,7 @@ const dataEventHandler = (dataSet) => {
     )
     time.addCalendar(currentUserId)
     page.addUserDate(today)
-    page.populateWeeklyDates(hydrationRepo, currentUserId)
+    page.populateWeeklyDates(currentUserId, hydrationRepo)
   } else if (dataSet === 'sleepData') {
     today = sleepRepo.getToday(currentUserId)
     page.populateDailyData('sleep-today', sleepRepo, currentUserId, today)
@@ -116,6 +116,7 @@ const catchData = (dataSet) => {
     .then(data => data[dataSet])
     .then(result => classInfo.class.storeData(result, dataSet))
     .then(() => dataEventHandler(dataSet))
+    .catch((error) => console.log(error))
     .catch(() => page.changeSystemMessage('Something went wrong ' +
     'please try again'))
 }

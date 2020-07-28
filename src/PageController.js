@@ -10,15 +10,15 @@ import {
 } from './globals';
 
 class PageController {
-  
+
   constructor() {
     this.dateField = document.getElementById('new-date');
     this.calendar = document.querySelector('#calendar-container')
     this.comingSoon = document.querySelector('#friends-calendar')
   }
   
-  populateWeeklyDates(repo, id) {
-    const mondays = time.findWeeklyStartDates(id);
+  populateWeeklyDates(id, repo) {
+    const mondays = time.findWeeklyStartDates(id, repo);
     const select = document.querySelector("#week-select");
     let options = mondays.reduce((week, monday) => {
       const momentMonday = moment(monday).format('MMMM Do YYYY')

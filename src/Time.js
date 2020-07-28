@@ -7,6 +7,10 @@ import {page} from './scripts.js';
 // lived in DOMmanipulation and findWeeklyStartDates lived in Repo. They've been 
 // moved here because they were not playing nicely with testing for either file.
 
+// You may have noticed there was also an untested repo parameter getting passed through
+// from repo.sortDataByDate to repo.getAllDataById - where it receives a default definition
+// This was a last minute change in order to support the rehousing of moment.
+
 class Time extends Repo {
 
   addCalendar(id) {
@@ -28,8 +32,9 @@ class Time extends Repo {
     })
   }
 
-  findWeeklyStartDates(id) {
-    const sortedData = this.sortDataByDate(id);
+  findWeeklyStartDates(id, repo) {
+    // debugger
+    const sortedData = this.sortUserDataByDate(id, repo.data);
     return sortedData.reduce((mondays, dataPoint) => {
       if (moment(dataPoint.date).format("dddd") === "Monday") {
         mondays.push(dataPoint.date);
