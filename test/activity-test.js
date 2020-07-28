@@ -239,12 +239,12 @@ describe('Activity',  () => {
       1, 
       "2019/06/18", 
       userRepo
-    )).to.eql(`You have 2000 steps to go.`);
+    )).to.eql(`2000 steps to go.`);
     expect(activity.remainingSteps(
       1, 
       "2019/06/22", 
       userRepo
-    )).to.eql('Step goal, crushed!, Keep it up!');
+    )).to.eql('Step goal crushed!');
     expect(activity.remainingSteps(
       2, 
       "2019/06/20", 

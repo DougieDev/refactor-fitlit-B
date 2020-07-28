@@ -281,7 +281,6 @@ class PageController {
     }
   }
 
-
   checkValueFields() {
     const inputNodes = document.querySelectorAll('input')
     const visibleNodes = [];
@@ -319,11 +318,12 @@ class PageController {
     );
     const display = document.getElementById('miles');
     const milesHtml = `
-      <p class="message-miles">Total Miles For Today:</p>
-      <span class="number" id= "miles" >${userMilesToday}</span>
-      <p class="message-miles">Total All-Time Miles:</p>
-      <span class="number" id= "miles-total">${totalMiles}</span>
-      <p class="message-miles">WOW!</p>`;
+      <p class="message-head">Get Those Miles!</p>
+      <p class="message-comm">Total Miles For Today:</p>
+      <span class="message-result">${userMilesToday} Miles!</span>
+      <p class="message-comm">Total All-Time Miles:</p>
+      <span class="message-result">${totalMiles} Miles!</span>
+      <p class="message-comm">WOW!</p>`;
     display.innerHTML = milesHtml;
   }
 
@@ -340,15 +340,15 @@ class PageController {
     const stairRecord = activityRepo.getStairRecord(currentUserId);
     const display = document.getElementById('streaks');
     const streaksHtml = `
-      <p class="message-comm-head">Streak Records:</p>
+      <p class="message-head">Streak Records:</p>
       <p class="message-comm">Minutes Active:</p>
-      <span class="number" id="streak">${minutesActiveStreak.length}x</span>
+      <span class="message-result">${minutesActiveStreak.length}x</span>
       <p class="message-comm">Step Goal Total:</p>
-      <span class="number" id="">${numStepsStreak.length}x</span>
+      <span class="message-result">${numStepsStreak.length}x</span>
       <p class="message-comm">Stair Goal Total:</p>
-      <span class="number" id="">${flightsStreak.length}x</span>
+      <span class="message-result">${flightsStreak.length}x</span>
       <p class="message-comm">Stair record:</p>
-      <span class="number" id="">${stairRecord}x</span>
+      <span class="result">${stairRecord}x</span>
     `;
     display.innerHTML = streaksHtml;
   }
@@ -368,11 +368,12 @@ class PageController {
     );
     let display = document.getElementById('steps');
     const stepsHtml = `
-      <span class="message" id="steps-left">${stepsToGo}</span>
-      <p class="message-step" id="step-goal">${stepGoalStatus}</p>
-      <p class="message-step">Last time goal hit:</p>
-      <a class="message step-list" id="best-steps">${stepGoalDates[0]}</a>
-      <p class="message-step>Keep it up!</p>
+      <p class="message-head">Step Goal!</p>
+      <span class="message-result">${stepsToGo}</span>
+      <p class="message-result">${stepGoalStatus}</p>
+      <p class="message-comm">Last time goal hit:</p>
+      <a class="message message-result">${stepGoalDates[0]}</a>
+      <p class="message-comm>Keep it up!</p>
     `;
     display.innerHTML = stepsHtml;
   }
@@ -382,28 +383,31 @@ class PageController {
     const mostActive = userRepo.getTopPerformer(today, 'minutesActive', activityRepo);
     const display = document.getElementById('friends');
     const friendsHtml = 
-      `<p class="message-comm">
+      `<p class="message-head">
+        Leaderboard:
+      </p>
+      <p class="message-comm">
         Top Stepper:
       </p>
-      <span class="message-friend" id="friend-perform">
+      <span class="message-result" id="friend-perform">
         ${stepWinner.name}
       </span>
       <p class="message-comm">
-        with
+        ----
       </p>
-      <span class="message-friend" id="friend-activity">
+      <span class="message-result" id="friend-activity">
         ${stepWinner.activity} steps!
       </span>
       <p class="message-comm">
         Most Active:
       </p>
-      <span class="message-friend" id="">
+      <span class="message-result">
         ${mostActive.name}
       </span>
       <p class="message-comm">
-        with
+        ----
       </p>
-      <span class="message-com" id="">
+      <span class="message-result">
         ${mostActive.activity} minutes!
       </span>`;
     display.innerHTML = friendsHtml;

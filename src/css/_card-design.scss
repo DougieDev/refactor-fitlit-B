@@ -28,7 +28,7 @@
     background-color: $teal;
     font-size: 1em;
     font-weight: 800;
-    @include card-animation-top(1.2s);
+    @include card-animation-bottom(1.2s);
   }
 
   &-steps {
@@ -52,6 +52,25 @@
     @include card-animation-bottom(1.2s);
   }
 }
+
+.message {
+
+  &-result {
+    font-size: 1em;
+    text-transform: capitalize;
+  }
+
+  &-comm {
+    font-size: 1.25em;
+  }
+
+  &-head{
+      font-size: 1.4em;
+      text-decoration: underline;
+  }
+  
+}
+
 
 .calendar-button {
   font-weight: heavy;
